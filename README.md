@@ -7,3 +7,9 @@ This project is mainly developed and mantained by the *FPGA team* of the *Centre
 We try to develop portable code to be vendor independant. The main used HDL language is VHDL (93) and we use [GHDL](http://ghdl.free.fr/) to simulate.
 * Documentation is under construction.
 * Verilog (2001) code and iVerilog (Icarus) support will be added.
+
+## License
+
+FPGA Lib as project and the Software part (Tcl and Python scripts) are licensed under the GPL 3.
+HDL code is licensed under the BSD 3-clause.
+See [LICENSE](LICENSE) and [LICENSE-BSD](LICENSE-BSD) for details.
