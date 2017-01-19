@@ -198,6 +198,11 @@ proc fpga_device {FPGA {KEY ""} {VALUE ""}} {
 #
 
 proc fpga_file {FILE {KEY ""} {VALUE ""}} {
+   regexp -nocase {\.(\w*)$} $FILE -> ext
+   if {$ext == "tcl"} {
+      source $FILE
+      return
+   }
    if {$KEY!="" && $KEY!="-lib" && $KEY!="-top"} {
       puts "Valid options for fpga_file command are -lib and -top."
       exit 1
