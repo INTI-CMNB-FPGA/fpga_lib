@@ -88,7 +88,7 @@ ise_CLEAN            = iseconfig _ngo xst xlnx_auto_0_xdb _xmsgs *.bgn *.bld  \
                        *.cmd_log *.csv *.drc *.gise *.html *.log *.lso *.map  \
                        *.mrp *.ncd *.ngc *.ngd *.ngm *.ngr *.pad *.par *.pcf  \
                        *.prj *.ptwx *.stx *.syr *.twr *.twx *.unroutes *.ut   \
-                       *.txt *.xml *.xpi *.xrpt *.xst *.xwbt
+                       *.txt *.xml *.xpi *.xrpt *.xst *.xwbt _impact* temp-ise
 ise_CLEAN_ALL        = $(ise_CLEAN) ise.xise
 
 # Vivado - Xilinx
@@ -98,7 +98,7 @@ vivado_TCL_PRG       = vivado -mode batch -notrace -quiet -source $(PRG_FILE) -t
 vivado_TCL_CON       = vivado -mode tcl
 vivado_GUI           = vivado vivado.xpr
 vivado_CLEAN         = .Xil *.cache *.hw *.ip_user_files *.jou *.log *.rpt    \
-                       *.runs *.sim *.srcs vivado_*.zip
+                       *.runs *.sim *.srcs vivado_*.zip temp-vivado
 vivado_CLEAN_ALL     = $(vivado_CLEAN) vivado.xpr
 
 # Quartus 2/Prime - Intel (Altera)
@@ -108,7 +108,8 @@ quartus_TCL_PRG      = quartus_sh --script $(PRG_FILE)
 quartus_TCL_CON      = quartus_sh -s
 quartus_GUI          = quartus quartus.qpf
 quartus_CLEAN        = db incremental_db output_files *.done *.jdi *.log *.pin\
-                        *.qws *.rpt *.sld *.sof *.sop *.summary *.txt
+                        *.qws *.rpt *.smsg *.sld *.sof *.sop *.summary *.txt  \
+                       temp-quartus
 quartus_CLEAN_ALL    = $(quartus_CLEAN) quartus.qpf quartus.qsf
 
 # Libero-SoC - Microsemi (Actel)
@@ -171,5 +172,5 @@ gui:
 ###############################################################################
 
 prog:
-	$(TCL_PRG) -dev $(DEV) $(TCL_END)
+	$(TCL_PRG) -dev $(DEV) -bit $(BIT_FILE) $(TCL_END)
 
