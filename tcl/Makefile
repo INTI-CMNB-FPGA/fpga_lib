@@ -19,16 +19,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-TOOL=ise
-ifeq      ($(TOOL),ise)
-else ifeq ($(TOOL),vivado)
-else ifeq ($(TOOL),quartus2)
-else ifeq ($(TOOL),libero-soc)
-else
-   $(error Unsupported TOOL [ise, vivado, quartus2, libero-soc])
+ifndef TOOL
+   TOOL=ise
 endif
 
-TASK=bit
+ifeq      ($(TOOL),ise)
+else ifeq ($(TOOL),vivado)
+else ifeq ($(TOOL),quartus)
+else ifeq ($(TOOL),libero)
+else
+   $(error Unsupported TOOL [ise, vivado, quartus, libero])
+endif
+
+ifndef TASK
+   TASK=bit
+endif
+
 ifeq      ($(TASK),syn)
 else ifeq ($(TASK),imp)
 else ifeq ($(TASK),bit)
@@ -37,7 +43,10 @@ else
    $(error Unsupported TASK [syn, imp, bit, prog])
 endif
 
-OPT=user
+ifndef OPT
+   OPT=user
+endif
+
 ifeq      ($(OPT),user)
 else ifeq ($(OPT),area)
 else ifeq ($(OPT),power)
@@ -46,11 +55,16 @@ else
    $(error Unsupported OPT [user, area, power, speed])
 endif
 
-DEV=fpga
+ifndef DEV
+   DEV=fpga
+endif
+
 ifeq      ($(DEV),fpga)
 else ifeq ($(DEV),spi)
 else ifeq ($(DEV),bpi)
 else ifeq ($(DEV),xcf)
+else ifeq ($(DEV),detect)
+else ifeq ($(DEV),unlock)
 else
    $(error Unsupported DEV [fpga, spi, bpi, xcf])
 endif
@@ -87,25 +101,25 @@ vivado_CLEAN         = .Xil *.cache *.hw *.ip_user_files *.jou *.log *.rpt    \
                        *.runs *.sim *.srcs vivado_*.zip
 vivado_CLEAN_ALL     = $(vivado_CLEAN) vivado.xpr
 
-# Quartus2 - Intel (Altera)
+# Quartus 2/Prime - Intel (Altera)
 
-quartus2_TCL_SYN     = quartus_sh --script $(SYN_FILE)
-quartus2_TCL_PRG     = quartus_sh --script $(PRG_FILE)
-quartus2_TCL_CON     = quartus_sh -s
-quartus2_GUI         = quartus quartus2.qpf
-quartus2_CLEAN       = db incremental_db output_files *.done *.jdi *.log *.pin\
-                       *.qws *.rpt *.sld *.sof *.sop *.summary *.txt
-quartus2_CLEAN_ALL   = $(quartus2_CLEAN) quartus2.qpf quartus2.qsf
+quartus_TCL_SYN      = quartus_sh --script $(SYN_FILE)
+quartus_TCL_PRG      = quartus_sh --script $(PRG_FILE)
+quartus_TCL_CON      = quartus_sh -s
+quartus_GUI          = quartus quartus.qpf
+quartus_CLEAN        = db incremental_db output_files *.done *.jdi *.log *.pin\
+                        *.qws *.rpt *.sld *.sof *.sop *.summary *.txt
+quartus_CLEAN_ALL    = $(quartus_CLEAN) quartus.qpf quartus.qsf
 
 # Libero-SoC - Microsemi (Actel)
 
-libero-soc_TCL_SYN   = libero SCRIPT:$(SYN_FILE) SCRIPT_ARGS:"
-libero-soc_TCL_PRG   = libero SCRIPT:$(PRG_FILE) SCRIPT_ARGS:"
-libero-soc_END       = "
-libero-soc_TCL_CON   = @echo console target not supported on Libero-SoC
-libero-soc_GUI       = libero libero-soc/libero-soc.prjx
-libero-soc_CLEAN     = libero-soc
-libero-soc_CLEAN_ALL = $(libero-soc_CLEAN)
+libero_TCL_SYN       = libero SCRIPT:$(SYN_FILE) SCRIPT_ARGS:"
+libero_TCL_PRG       = libero SCRIPT:$(PRG_FILE) SCRIPT_ARGS:"
+libero_END           = "
+libero_TCL_CON       = @echo console target not supported on Libero-SoC
+libero_GUI           = libero temp-libero/libero.prjx
+libero_CLEAN         = temp-libero
+libero_CLEAN_ALL     = $(libero_CLEAN)
 
 # Assignations according to the selected tool
 
@@ -117,15 +131,16 @@ GUI_CMD              = $($(TOOL)_GUI)
 CLEAN                = $($(TOOL)_CLEAN)
 CLEAN_ALL            = $($(TOOL)_CLEAN_ALL) $(BIT_FILE)
 CLEAN_MULTI          = $(ise_CLEAN_ALL) $(vivado_CLEAN_ALL) \
-                       $(quartus2_CLEAN_ALL) $(libero-soc_CLEAN_ALL)
+                       $(quartus_CLEAN_ALL) $(libero_CLEAN_ALL)
 
 ###############################################################################
 
 all help:
 	@echo "Options:"
-	@echo "* TOOL: ise , vivado, quartus2, libero-soc [default=ise]."
-	@echo "* TASK: syn, imp, bit, prog [default=bit]."
-	@echo "* OPT:  user ,area, power, speed [default=user]."
+	@echo "* TOOL: ise , vivado, quartus, libero [default=ise]"
+	@echo "* TASK: syn, imp, bit, prog           [default=bit]"
+	@echo "* OPT:  user ,area, power, speed      [default=user]"
+	@echo "* DEV:  fpga, spi, bpi, xcf           [default=fpga]"
 	@echo "Targets:"
 	@echo "* run:         run TASK with the OPTimization using the selected TOOL."
 	@echo "* clean:       to delete generated files (excluding project and bitstream files)."

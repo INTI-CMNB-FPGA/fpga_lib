@@ -38,8 +38,8 @@ set FPGA_TOOL "Unknown"
 # vendor tool.
 catch {globals get display_type;                set FPGA_TOOL "ise"}
 catch {list_features;                           set FPGA_TOOL "vivado"}
-catch {get_environment_info -operating_system;  set FPGA_TOOL "quartus2"}
-catch {defvar_set -name "FORMAT" -value "VHDL"; set FPGA_TOOL "libero-soc"}
+catch {get_environment_info -operating_system;  set FPGA_TOOL "quartus"}
+catch {defvar_set -name "FORMAT" -value "VHDL"; set FPGA_TOOL "libero"}
 
 if { $FPGA_TOOL=="Unknown" } {
    puts "ERROR: undetected vendor tool.\n"
@@ -50,7 +50,7 @@ if { $FPGA_TOOL=="Unknown" } {
 # Parsing the command line
 ###############################################################################
 
-if { $FPGA_TOOL=="libero-soc" } {
+if { $FPGA_TOOL=="libero" } {
    # The package cmdline is not in the library directory of Libero-SoC's Tcl
    # interpreter (<LIBERO_ROOT_PATH>/Model/modeltech/tcl/tcllib1.12/cmdline)
    # info library: returns the name of the library directory in which standard
@@ -155,10 +155,10 @@ proc fpga_device {FPGA {KEY ""} {VALUE ""}} {
          "vivado" { # Vivado Vivado Vivado Vivado Vivado Vivado Vivado Vivado
             set_property "part" $FPGA [current_project]
          }
-         "quartus2" { # Quartus2 Quartus2 Quartus2 Quartus2 Quartus2 Quartus2
+         "quartus" { # Quartus Quartus Quartus Quartus Quartus Quartus Quartus
             set_global_assignment -name DEVICE $FPGA
          }
-         "libero-soc" { # Libero-SoC Libero-SoC Libero-SoC Libero-SoC
+         "libero" { # Libero Libero Libero Libero Libero Libero Libero Libero
             regexp -nocase {(.*)(-.*)-(.*)} $FPGA -> device speed package
             set family "Unknown"
             if {[regexp -nocase {m2s} $device]} {
@@ -224,7 +224,7 @@ proc fpga_file {FILE {KEY ""} {VALUE ""}} {
             set_property top $VALUE [current_fileset]
          }
       }
-      "quartus2" { # Quartus2 Quartus2 Quartus2 Quartus2 Quartus2 Quartus2
+      "quartus" { # Quartus Quartus Quartus Quartus Quartus Quartus Quartus
          regexp -nocase {\.(\w*)$} $FILE -> ext
          if {$ext == "v"} {
             set TYPE VERILOG_FILE
@@ -242,7 +242,7 @@ proc fpga_file {FILE {KEY ""} {VALUE ""}} {
             set_global_assignment -name TOP_LEVEL_ENTITY $VALUE
          }
       }
-      "libero-soc" { # Libero-SoC Libero-SoC Libero-SoC Libero-SoC Libero-Soc
+      "libero" { # Libero Libero Libero Libero Libero Libero Libero Libero
          regexp -nocase {\.(\w*)$} $FILE -> ext
          if {$ext == "pdc"} {
             create_links -io_pdc $FILE
@@ -346,16 +346,16 @@ if {[catch {
             close_project
          }
       }
-      "quartus2" { # Quartus2 Quartus2 Quartus2 Quartus2 Quartus2 Quartus2
+      "quartus" { # Quartus Quartus Quartus Quartus Quartus Quartus Quartus
          package require ::quartus::project
-         if { [ file exists quartus2.qpf ] } {file delete quartus2.qpf}
-         if { [ file exists quartus2.qsf ] } {file delete quartus2.qsf}
+         if { [ file exists quartus.qpf ] } {file delete quartus.qpf}
+         if { [ file exists quartus.qsf ] } {file delete quartus.qsf}
          set project_file [glob -nocomplain *.qpf]
          if { $project_file != "" } {
-            puts "There is a Quartus2 project ($project_file)"
+            puts "There is a Quartus project ($project_file)"
          } else {
-            puts "Creating a new Quartus2 project (quartus2.qpf)"
-            project_new quartus2 -overwrite
+            puts "Creating a new Quartus project (quartus.qpf)"
+            project_new quartus -overwrite
             switch $OPT {
                "area"  {
                   set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE AREA"
@@ -375,14 +375,14 @@ if {[catch {
             project_close
          }
       }
-      "libero-soc" { # Libero-SoC Libero-SoC Libero-SoC Libero-SoC Libero-SoC
-         if { [ file exists libero-soc ] } { file delete -force -- libero-soc }
+      "libero" { # Libero Libero Libero Libero Libero Libero Libero Libero
+         if { [ file exists temp-libero ] } { file delete -force -- temp-libero }
          set project_file [glob -nocomplain *.prjx]
          if { $project_file != "" } {
-            puts "There is a Libero-SoC project ($project_file)"
+            puts "There is a Libero project ($project_file)"
          } else {
-            puts "Creating a new Libero-SoC project (libero-soc.prjx)"
-            new_project -name "libero-soc" -location {libero-soc} -hdl {VHDL} -family {SmartFusion2}
+            puts "Creating a new Libero project (libero.prjx)"
+            new_project -name "libero" -location {temp-libero} -hdl {VHDL} -family {SmartFusion2}
             switch $OPT {
                "area"  {
                    configure_tool -name {SYNTHESIZE} -params {RAM_OPTIMIZED_FOR_POWER:true}
@@ -448,7 +448,7 @@ if {[catch {
          }
          close_project
       }
-      "quartus2" { # Quartus2 Quartus2 Quartus2 Quartus2 Quartus2 Quartus2
+      "quartus" { # Quartus Quartus Quartus Quartus Quartus Quartus Quartus
          package require ::quartus::flow
          project_open -force [glob -nocomplain *.qpf]
          if { $TASK=="syn" || $TASK=="imp" || $TASK=="bit" } {
@@ -463,9 +463,9 @@ if {[catch {
          }
          project_close
       }
-      "libero-soc" { # Libero-SoC Libero-SoC Libero-SoC Libero-SoC Libero-SoC
+      "libero" { # Libero Libero Libero Libero Libero Libero Libero Libero
          set project_file [glob -nocomplain *.prjx]
-         if { $project_file=="" } { set project_file [glob -nocomplain libero-soc/*.prjx] }
+         if { $project_file=="" } { set project_file [glob -nocomplain temp-libero/*.prjx] }
          open_project $project_file
          if { $TASK=="syn" || $TASK=="imp" || $TASK=="bit" } {
             run_tool -name {COMPILE}
