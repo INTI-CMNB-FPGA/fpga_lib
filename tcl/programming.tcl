@@ -129,47 +129,47 @@ if {[catch { source options.tcl } ERRMSG]} {
 set impact_fpga "setMode -bs
 setCable -port auto
 Identify -inferir
-assignFile -p $fpga_pos -file \"$bitstream\"
+assignFile -p $fpga_pos -file $bitstream
 Program -p $fpga_pos"
 
 set impact_spi "setMode -bs
 setCable -port auto
 Identify
-attachflash -position $spi_pos -spi \"$spi_name\"
-assignfiletoattachedflash -position $spi_pos -file \"$TEMPDIR/$name.mcs\"
+attachflash -position $spi_pos -spi $spi_name
+assignfiletoattachedflash -position $spi_pos -file $TEMPDIR/$name.mcs
 Program -p $spi_pos -dataWidth $spi_width -spionly -e -v -loadfpga"
 
 set impact_spi_mcs "setMode -pff
-addConfigDevice -name \"$name\" -path \"$TEMPDIR\"
+addConfigDevice -name $name -path $TEMPDIR
 setSubmode -pffspi
-addDesign -version 0 -name \"0\"
+addDesign -version 0 -name 0
 addDeviceChain -index 0
-addDevice -p 1 -file \"$bitstream\"
+addDevice -p 1 -file $bitstream
 generate -generic"
 
 set impact_bpi "setMode -bs
 setCable -port auto
 Identify
-attachflash -position $bpi_pos -bpi \"$bpi_name\"
-assignfiletoattachedflash -position $bpi_pos -file \"$TEMPDIR/$name.mcs\"
-Program -p $bpi_pos -dataWidth $bpi_width -rs1 NONE -rs0 NONE -bpionly -e -v-loadfpga"
+attachflash -position $bpi_pos -bpi $bpi_name
+assignfiletoattachedflash -position $bpi_pos -file $TEMPDIR/$name.mcs
+Program -p $bpi_pos -dataWidth $bpi_width -rs1 NONE -rs0 NONE -bpionly -e -v -loadfpga"
 
 set impact_bpi_mcs "setMode -pff
-addConfigDevice -name \"$name\" -path \"$TEMPDIR\"
+addConfigDevice -name $name -path $TEMPDIR
 setSubmode -pffbpi
-addDesign -version 0 -name \"0\"
+addDesign -version 0 -name 0
 addDeviceChain -index 0
-setAttribute -configdevice -attr flashDataWidth -value \"$bpi_width\"
-addDevice -p 1 -file \"$bitstream\"
+setAttribute -configdevice -attr flashDataWidth -value $bpi_width
+addDevice -p 1 -file $bitstream
 generate -generic"
 
 set impact_xcf_mcs "setMode -pff
-addConfigDevice -name \"$name\" -path \"$TEMPDIR\"
+addConfigDevice -name $name -path $TEMPDIR
 setSubmode -pffversion
-addDesign -version 0 -name \"0\"
+addDesign -version 0 -name 0
 addDeviceChain -index 0
 addPromDevice -p 1 -name $xcf_name
-addDevice -p 1 -file \"$bitstream\"
+addDevice -p 1 -file $bitstream
 generate"
 
 set impact_detect "setMode -bs
