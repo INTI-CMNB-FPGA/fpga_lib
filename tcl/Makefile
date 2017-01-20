@@ -149,7 +149,7 @@ all help:
 	@echo "* clean-multi: to delete generated files for all the vendors."
 	@echo "* console:     to lunch the Tcl Console of the vendor Tool."
 	@echo "* gui:         to lunch the Gui of the vendor Tool."
-	@echo "* prog-fpga and others (according to the specified board) for programming."
+	@echo "* prog         programming DEVice of the board using the selected TOOL."
 
 run:
 	$(TCL_SYN) -task $(TASK) -opt $(OPT) $(TCL_END)

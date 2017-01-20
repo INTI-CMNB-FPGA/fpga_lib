@@ -1,1 +1,73 @@
-To be done.
+# Tcl scripts to use vendors tools in a vendor independent way
+
+All the vendors tools support Tcl (*Tool Command Language*) scripting, with additional own commands.
+Here we try to provide scripts for synthesis, implementation, bitstream generation and programming
+in a vendor independent way.
+
+Additionally, we provides a Makefile to invoke the Tcl interpreter in the manner and with the
+arguments needed.
+
+## Supported tools:
+
+| Tool                   | Newest version where tested |
+|------------------------|-----------------------------|
+| ISE (Xilinx)           | 14.7 <sup>*</sup>           |
+| Vivado (Xilinx)        | 2015.4                      |
+| Quartus (Intel/Altera) | 15.0                        |
+| Libero-SoC (Microsemi) | 11.7                        |
+
+<sup>*</sup> The last version of the tool. It was discontinued.
+
+## Files
+
+### synthesis.tcl
+
+* It automatically detect the vendor Tcl interpreter.
+* The task to be executed can be specified with the `-task` argument. Possible values are:
+  * `syn`: for logical synthesis.
+  * `imp`: for implementation (technology mapping, place & route, timing verification).
+  * `bit`: [default] for bitstream generation.
+* If a vendor tool project file exists, it is used.
+  * You can make the project with the graphical interface of the vendor tool and use this script for synthesis.
+* If a vendor tool project file does not exists:
+  * File options.tcl is used to create a new project.
+  * Functions *fpga_device* and *fpga_file* are provided to be used on options.tcl.
+  * Predefined optimizations can be specified with the `-opt` argument.
+    Possible values are: user (default, no optimization is used), area, power and speed.
+
+### programming.tcl
+
+* Most tool has not Tcl support for programming. We prepare text files and command to execute with Tcl and finnaly use `exec`.
+* It automatically detect the vendor Tcl interpreter.
+* The device to be programmed can be specified with the `-dev` argument. Possible values are:
+  * `fpga`, `spi` and `bpi` for ISE Impact. It autodetect the cable used.
+  * Not supported yet for Vivado.
+  * `fpga` for Quartus. Only support for usb-blaster cable.
+  * `fpga` for Libero FlashPro. Only support for FlashPro5 cable in spi_slave mode.
+* The default device is `fpga`.
+* Device options can be specified in options.tcl.
+* The bistream *path/name* is specified with the `-bit` argument. **NOTE:** Libero uses the project file to find it.
+
+### Makefile
+
+* Each interpreter:
+  * Has its own name and location.
+  * Is called with different arguments.
+  * Pass arguments to the Tcl script in a different form.
+* The Makefile provides:
+  * Calls to synthesis.tcl and programming.tcl, independently of the interpreter.
+  * Targets to clean generated files.
+  * Targets to run the interpreter console or open the GUI.
+* The tool to use can be specified in the variable TOOL.
+  Possible values are: ise, vivado, quartus and libero.
+* The task to run can be specified in the variable TASK.
+  For possible values see `-task` argument of synthesis.tcl.
+* The optimization to use can be specified in the variable OPT.
+  For possible values see `-opt` argument of synthesis.tcl.
+* The device to be programmed can be specified in the variable DEV.
+  For possible values see `-dev` argument of programming.tcl.
+* The bitstream file is auto detected (when was generated).
+* **NOTE:** the Makefile suppose that the vendor tool is well configured and ready to run
+  (tool and dependencies installed, license enabled and tool added to the system path).
+
+## How to use
