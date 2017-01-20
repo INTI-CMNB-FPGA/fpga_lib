@@ -1,6 +1,6 @@
-# Tcl scripts to use vendors tools in a vendor independent way
+# Tcl scripts to use in a vendor independent way
 
-All the vendors tools support Tcl (*Tool Command Language*) scripting, with additional own commands.
+All the vendors tools supports Tcl (*Tool Command Language*) scripting, with additional own commands.
 Here we try to provide scripts for synthesis, implementation, bitstream generation and programming
 in a vendor independent way.
 
@@ -71,3 +71,64 @@ arguments needed.
   (tool and dependencies installed, license enabled and tool added to the system path).
 
 ## How to use
+
+* If you do not want a lot of copies of synthesis.tcl, programming.tcl and Makefile, you can create
+  a simple Makefile to point where files are.
+  Add *fpga_lib* as git submodule and point to *fpga_lib/tcl* to use the original and updated
+  version, or make a local copy in your project. Example *Makefile*:
+```Makefile
+#!/usr/bin/make
+
+# You can set here variables such as TOOL, TASK, OPT and DEV if you
+# want to change the predefined values. Do it before the include.
+TCLPATH=../../fpga_lib/tcl
+include $(TCLPATH)/Makefile
+
+# You can add here extra targets if you need.
+```
+* If you have plans to customize the Tcl scripts, make a local copy where you want to run it.
+  Use the provided Makefile to add extra targets at the end.
+* In both cases, if you want to create a new project instead of an existing, you need a file
+  called options.tcl.
+
+### Example of options.tcl
+
+Simple version:
+```
+fpga_device "xc7a100t-3-csg324"
+
+fpga_file "core_file.vhdl"      -lib "LIB_NAME"
+fpga_file "package_file.vhdl"   -lib "LIB_NAME"
+fpga_file "top_file.vhdl"       -top "TOP_NAME"
+```
+
+[Here](test/options.tcl) you have a full documented version to use as boilerplate.
+
+### Examples
+
+* Obtain help with:
+```
+make help
+```
+* Run synthesis with predefined values on variables:
+```
+make run
+```
+* Run synthesis changing values on variables:
+```
+make TOOL=vivado TASK=imp OPT=speed run
+```
+* Run programming with predefined values on variables:
+```
+make prog
+```
+* Run programming changing values on variables:
+```
+make TOOL=vivado DEV=spi prog
+```
+* To clean (```make help``` to see differences):
+```
+make clean
+make clean-all
+make clean-multi
+```
