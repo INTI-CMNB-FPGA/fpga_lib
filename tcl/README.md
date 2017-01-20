@@ -9,12 +9,12 @@ arguments needed.
 
 ## Supported tools:
 
-| Tool                   | Newest version where tested |
-|------------------------|-----------------------------|
-| ISE (Xilinx)           | 14.7 <sup>*</sup>           |
-| Vivado (Xilinx)        | 2015.4                      |
-| Quartus (Intel/Altera) | 15.0                        |
-| Libero-SoC (Microsemi) | 11.7                        |
+| Tool                   | Newest version where tested | Supported target devices | Supported cables            |
+|------------------------|-----------------------------|--------------------------|-----------------------------|
+| ISE (Xilinx)           | 14.7 <sup>*</sup>           | fpga, spi, bpi           | auto detected by Impact     |
+| Vivado (Xilinx)        | 2015.4                      | Not supported yet        | Not supported yet           |
+| Quartus (Intel/Altera) | 15.0                        | fpga                     | Usb-Blaster                 |
+| Libero-SoC (Microsemi) | 11.7                        | fpga                     | FlashPro5 in spi_slave mode |
 
 <sup>*</sup> The last version of the tool. It was discontinued.
 
@@ -37,15 +37,12 @@ arguments needed.
 
 ### programming.tcl
 
-* Most tool has not Tcl support for programming. We prepare text files and command to execute with Tcl and finnaly use `exec`.
+* Most tool has not Tcl support for programming. We prepare text files and command to execute
+  with Tcl and finnaly use `exec`.
 * It automatically detect the vendor Tcl interpreter.
 * The device to be programmed can be specified with the `-dev` argument. Possible values are:
-  * `fpga`, `spi` and `bpi` for ISE Impact. It autodetect the cable used.
-  * Not supported yet for Vivado.
-  * `fpga` for Quartus. Only support for usb-blaster cable.
-  * `fpga` for Libero FlashPro. Only support for FlashPro5 cable in spi_slave mode.
-* The default device is `fpga`.
-* Device options can be specified in options.tcl.
+  `fpga` (default), `spi` and `bpi`.
+* Additional device options can be specified in options.tcl.
 * The bistream *path/name* is specified with the `-bit` argument. **NOTE:** Libero uses the project file to find it.
 
 ### Makefile
@@ -100,6 +97,11 @@ fpga_device "xc7a100t-3-csg324"
 fpga_file "core_file.vhdl"      -lib "LIB_NAME"
 fpga_file "package_file.vhdl"   -lib "LIB_NAME"
 fpga_file "top_file.vhdl"       -top "TOP_NAME"
+
+set fpga_pos  1
+set spi_pos   1
+set spi_width 4
+set spi_name  SPI_NAME
 ```
 
 [Here](test/options.tcl) you have a full documented version to use as boilerplate.

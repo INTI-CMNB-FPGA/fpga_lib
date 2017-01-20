@@ -1,3 +1,5 @@
+# For Synthesis ###############################################################
+
 # Function: fpga_device   <FPGA> [-tool <TOOL>]     Return: none
 #   Use -tool <TOOL> to specify FPGAs from different vendors.
 #   Useful when comparing synthesis results between vendors.
@@ -17,6 +19,8 @@ fpga_file "core_file.vhdl"      -lib "LIB_NAME"
 fpga_file "package_file.vhdl"   -lib "LIB_NAME"
 fpga_file "top_file.vhdl"       -top "TOP_NAME"
 
+# This part could be useful when comparing synthesis results between vendors.
+
 #if {$FPGA_TOOL == "ise"} {
 #   # Customize with commands supported by ISE. Example:
 #   project set "FSM Encoding Algorithm" "Sequential" -process "Synthesize - XST"
@@ -29,3 +33,17 @@ fpga_file "top_file.vhdl"       -top "TOP_NAME"
 #} elseif {$FPGA_TOOL == "libero"} {
 #   # Customize with commands supported by Libero-SoC.
 #}
+
+# For Programming #############################################################
+
+# _pos:   position in jtag chain
+# _width: data bits
+# _name:  name of the memory
+
+set fpga_pos  1
+set spi_pos   1
+set spi_width 1
+set spi_name  W25Q64BV
+set bpi_pos   1
+set bpi_width 8
+set bpi_name  28F128J3D
