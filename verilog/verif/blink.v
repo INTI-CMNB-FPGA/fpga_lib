@@ -41,15 +41,15 @@ parameter [31:0] SECONDS=1;
 
 
 
-parameter DIV = FREQUENCY * SECONDS - 1;
+parameter DIV = FREQUENCY * SECONDS;
 reg blink;
-reg [$clog2(DIV):0] cnt = 0;
+reg [$clog2(DIV)-1:0] cnt = 0;
 
   always @(posedge clk_i) begin : P1
 
-    if(rst_i == 1'b 1) begin
+    if(rst_i == 1'b1) begin
       cnt = 0;
-      blink <= 1'b 0;
+      blink <= 1'b0;
     end
     else begin
       if(cnt == DIV) begin
