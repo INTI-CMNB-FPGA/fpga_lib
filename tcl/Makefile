@@ -38,9 +38,8 @@ endif
 ifeq      ($(TASK),syn)
 else ifeq ($(TASK),imp)
 else ifeq ($(TASK),bit)
-else ifeq ($(TASK),prog)
 else
-   $(error Unsupported TASK [syn, imp, bit, prog])
+   $(error Unsupported TASK [syn, imp, bit])
 endif
 
 ifndef OPT

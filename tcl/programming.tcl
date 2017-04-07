@@ -215,7 +215,12 @@ if {[catch {
          exec impact -batch $TEMPDIR/$DEV &
       }
       "vivado" { # Vivado Vivado Vivado Vivado Vivado Vivado Vivado Vivado
-         puts "Coming soon."
+         open_hw
+         connect_hw_server
+         open_hw_target
+         set obj [lindex [get_hw_devices [current_hw_device]] 0]
+         set_property PROGRAM.FILE $bitstream $obj
+         program_hw_devices $obj
       }
       "quartus" { # Quartus Quartus Quartus Quartus Quartus Quartus Quartus
          exec jtagconfig
