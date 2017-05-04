@@ -4,14 +4,14 @@
 -- Author(s):
 -- * Rodrigo A. Melo
 --
--- Copyright (c) 2015 Authors and INTI
+-- Copyright (c) 2015-2017 Authors and INTI
 -- Distributed under the BSD 3-Clause License
 --
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 library FPGALIB;
-use FPGALIB.Cores.all;
+use FPGALIB.Sync.all;
 use FPGALIB.Simul.all;
 
 entity Delay_tb is
