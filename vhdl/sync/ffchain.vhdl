@@ -1,17 +1,17 @@
 --
--- Delay
+-- FF Chain
 --
 -- Author(s):
 -- * Rodrigo A. Melo
 --
--- Copyright (c) 2015 Authors and INTI
+-- Copyright (c) 2015-2017 Authors and INTI
 -- Distributed under the BSD 3-Clause License
 --
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity Delay is
+entity FFchain is
    generic(
       WIDTH  : positive:=8;
       STAGES : positive:=1
@@ -23,13 +23,13 @@ entity Delay is
       d_i   : in  std_logic_vector(WIDTH-1 downto 0);
       d_o   : out std_logic_vector(WIDTH-1 downto 0)
    );
-end entity Delay;
+end entity FFchain;
 
-architecture RTL of Delay is
-   type delay_array is array (0 to STAGES-1) of std_logic_vector(WIDTH-1 downto 0);
-   signal d_r : delay_array :=(others => (others => '0'));
+architecture RTL of FFchain is
+   type ff_array is array (0 to STAGES-1) of std_logic_vector(WIDTH-1 downto 0);
+   signal d_r : ff_array :=(others => (others => '0'));
 begin
-   do_delay:
+   do_chain:
    process (clk_i)
    begin
       if rising_edge(clk_i) then
@@ -45,6 +45,6 @@ begin
             end loop;
          end if;
       end if;
-   end process do_delay;
+   end process do_chain;
    d_o <= d_r(STAGES-1);
 end architecture RTL;

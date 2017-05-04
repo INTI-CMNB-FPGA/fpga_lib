@@ -3,9 +3,8 @@
 --
 -- Author(s):
 -- * Rodrigo A. Melo
--- * Francisco Salomón
 --
--- Copyright (c) 2015-2016 Authors and INTI
+-- Copyright (c) 2015-2017 Authors and INTI
 -- Distributed under the BSD 3-Clause License
 --
 
@@ -14,7 +13,7 @@ use IEEE.std_logic_1164.all;
 
 package Sync is
 
-   component Delay is
+   component FFchain is
       generic(
          WIDTH  : positive:=8;
          STAGES : positive:=1
@@ -26,7 +25,7 @@ package Sync is
          d_i   : in  std_logic_vector(WIDTH-1 downto 0);
          d_o   : out std_logic_vector(WIDTH-1 downto 0)
       );
-   end component Delay;
+   end component FFchain;
 
    component Divider is
       generic(
