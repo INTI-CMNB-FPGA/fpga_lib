@@ -3,7 +3,6 @@
 ODIR=../temp
 
 bin:
-	make -C cores    bin
 	make -C mems     bin
 	make -C numeric  bin
 	make -C simul    bin
@@ -11,7 +10,6 @@ bin:
 	make -C verif    bin
 
 test:
-	make -C cores    test
 	make -C mems     test
 	make -C numeric  test
 	make -C simul    test
