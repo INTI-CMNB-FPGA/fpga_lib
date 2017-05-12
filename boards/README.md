@@ -17,7 +17,13 @@ Features:
 * Enclose inverted signal names that contain a tilde (for example, ~OUTSIG1) in double quotes (mandatory).
 * You can enter multiple constraints for a given instance.
 
-Examples:
+Example of clock constraint:
+```
+NET "clk" TNM_NET = "clk";
+TIMESPEC "TS_clk" = PERIOD "clk" 6.67;
+```
+
+Examples of net constraint:
 ```
 NET signal_name    LOC=P53;
 NET signal_name    LOC=P53 | IOSTANDARD=LVPECL33 | SLEW=FAST | DRIVE=12 | PULLUP ;

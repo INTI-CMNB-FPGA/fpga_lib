@@ -21,10 +21,10 @@ pads:
       - Can be programmed via I2C interface, for any clock frequency up to 230 MHz.
       - Optional user installable Maxim DS1088LU-66+, low-cost, fixed-frequency oscillator (clk4).
       - clk1_i = 40 MHz, clk2_i = 66.7 MHz, clk3_i = 100 MHz, clk4_i = 66 MHz.
-    clk1_i       : v10
-    clk2_i       : k15
-    clk3_i       : c10
-    clk4_i       : r8
+    clk1_i       : v10,40
+    clk2_i       : k15,66.7
+    clk3_i       : c10,100
+    clk4_i       : r8,66
     i2c_scl_o    : p12,PULLUP
     i2c_sda_io   : u13,PULLUP
   leds:

@@ -51,7 +51,7 @@ else:
 
 filename = os.path.basename(options.file)
 basename = os.path.splitext(filename)[0]
-outdir   = basename
+outdir   = "constraints"
 outfile  = outdir + "/" + basename + ".ucf"
 
 pads     = board['pads']
@@ -73,10 +73,26 @@ def put_comment(comment, data):
     return text
 
 def put_pad(comment, pad):
-    return "%s%-20s : %s\n" % (comment, 'PAD_' + pad.upper(), str(pads[group][pad]))
+    value = pads[group][pad].upper().split(",")
+    text  = "%sNET %-25s LOC=%s" % (comment, '\"PAD_'+pad.upper()+"\"", str("\""+value[0]+"\""))
+    clock = ""
+    if len(value) > 1:
+       if pad.startswith('clk'):
+          period = 1/(float(value[1])*1000000)
+          clock += "#NET %s TNM_NET = %s;\n" % ("\"" + pad +"\"", "\"" + pad +"\"");
+          clock += "#TIMESPEC %s = PERIOD %s %s;\n\n" % ("\"TS_" + pad +"\"", "\"" + pad +"\"", period);
+          #NET "clk" TNM_NET = "clk";
+          #TIMESPEC "TS_clk" = PERIOD "clk" 6.67;
+       else:
+          text += " | " + value[1];
+    text += ";\n"
+    if len(clock)>0:
+       text += clock;
+    return text
 
 ## Main #######################################################################
 
+# Header
 text  = comment + "\n"
 text += comment + " " + board['name'] + "\n"
 text += comment + "\n"
@@ -85,10 +101,11 @@ text += comment + "\n"
 text += put_comment(comment, "Note: uncomment what you want to use.")
 text += comment + "\n"
 
+# Groups and pads
 for group in sorted(pads):
     if group != 'doc':
        text += comment + "\n"
-       text += "%s %s:\n" % (comment, group)
+       text += "%s %s:\n" % (comment, group.upper())
        if 'doc' in pads[group]:
           text += put_comment(comment,pads[group]['doc'])
        text += comment + "\n"
@@ -96,8 +113,10 @@ for group in sorted(pads):
            if pad != 'doc':
               text += put_pad(comment, pad)
 
+# Save in file
 if not os.path.exists(outdir):
    os.makedirs(outdir)
 open(outfile, 'w').write(text)
 
+# Finish
 print ('BoardFiles (INFO): <' + outfile + '> was generated.')
