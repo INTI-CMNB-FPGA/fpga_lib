@@ -12,7 +12,7 @@ arguments needed.
 | Tool                   | Newest version where tested | Supported target devices | Supported cables            |
 |------------------------|-----------------------------|--------------------------|-----------------------------|
 | ISE (Xilinx)           | 14.7 <sup>*</sup>           | fpga, spi, bpi           | auto detected by Impact     |
-| Vivado (Xilinx)        | 2015.4                      | Not supported yet        | Not supported yet           |
+| Vivado (Xilinx)        | 2016.4                      | fpga                     | auto detected by HW manager |
 | Quartus (Intel/Altera) | 15.0                        | fpga                     | Usb-Blaster                 |
 | Libero-SoC (Microsemi) | 11.7                        | fpga                     | FlashPro5 in spi_slave mode |
 
