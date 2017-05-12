@@ -89,7 +89,8 @@ for group in sorted(pads):
     if group != 'doc':
        text += comment + "\n"
        text += "%s %s:\n" % (comment, group)
-       text += put_comment(comment,pads[group]['doc'])
+       if 'doc' in pads[group]:
+          text += put_comment(comment,pads[group]['doc'])
        text += comment + "\n"
        for pad in sorted(pads[group]):
            if pad != 'doc':
