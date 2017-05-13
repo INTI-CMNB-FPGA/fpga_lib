@@ -19,6 +19,7 @@
 #
 
 import argparse, yaml, os, sys
+# To support yaml in Debian: aptitude install python-yaml python3-yaml
 
 ## Parsing the command line ###################################################
 
@@ -72,33 +73,37 @@ def put_comment(comment, data):
               text += comment + "\n"
     return text
 
+def add_quotes(text):
+    return str("\"" + text + "\"")
+
 def put_pad(comment, pad):
     value = pads[group][pad].upper().split(",")
-    text  = "%sNET %-25s LOC=%s" % (comment, '\"PAD_'+pad.upper()+"\"", str("\""+value[0]+"\""))
+    text  = "%sNET %-25s LOC = %s" % (comment, add_quotes('PAD_'+pad.upper()), add_quotes(value[0]))
     clock = ""
     if len(value) > 1:
        if pad.startswith('clk'):
-          period = 1/(float(value[1])*1000000)
-          clock += "#NET %s TNM_NET = %s;\n" % ("\"" + pad +"\"", "\"" + pad +"\"");
-          clock += "#TIMESPEC %s = PERIOD %s %s;\n\n" % ("\"TS_" + pad +"\"", "\"" + pad +"\"", period);
           #NET "clk" TNM_NET = "clk";
-          #TIMESPEC "TS_clk" = PERIOD "clk" 6.67;
+          #TIMESPEC "TS_clk" = PERIOD "clk" 6.67 ns HIGH 50%;
+          period = 1000/float(value[1])
+          clock += "#NET %-21s TNM_NET = %s;\n" % (add_quotes(pad), add_quotes(pad))
+          clock += "#TIMESPEC %-24s = PERIOD %s %.2f ns HIGH 50%%;\n" % (add_quotes("TS_" + pad), add_quotes(pad), period)
+          clock += "#\n"
        else:
-          text += " | " + value[1];
+          text += " | " + value[1]
     text += ";\n"
     if len(clock)>0:
-       text += clock;
+       text += clock
     return text
 
 ## Main #######################################################################
 
 # Header
 text  = comment + "\n"
-text += comment + " " + board['name'] + "\n"
-text += comment + "\n"
 text += put_comment(comment, pads['doc'])
 text += comment + "\n"
-text += put_comment(comment, "Note: uncomment what you want to use.")
+text += put_comment(comment, "Description:")
+text += put_comment(comment, "* Constraints definitions for board "+ board['name'] + ".")
+text += put_comment(comment, "* Uncomment what you want to use.")
 text += comment + "\n"
 
 # Groups and pads
@@ -113,7 +118,7 @@ for group in sorted(pads):
            if pad != 'doc':
               text += put_pad(comment, pad)
 
-# Save in file
+# Save to file
 if not os.path.exists(outdir):
    os.makedirs(outdir)
 open(outfile, 'w').write(text)
