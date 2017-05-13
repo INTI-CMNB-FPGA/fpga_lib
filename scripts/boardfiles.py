@@ -61,16 +61,15 @@ comment  = "#"
 
 ## Functions ##################################################################
 
-def put_comment(comment, data):
+def put_comment(comment, data=""):
     text = ""
-    if data:
-       if type(data) is not list:
-          data = [data]
-       for doc in data:
-           if doc:
-              text += comment + " " + doc + "\n"
-           else:
-              text += comment + "\n"
+    if type(data) is not list:
+       data = [data]
+    for doc in data:
+        if doc:
+           text += comment + " " + doc + "\n"
+        else:
+           text += comment + "\n"
     return text
 
 def add_quotes(text):
@@ -87,7 +86,7 @@ def put_pad(comment, pad):
           period = 1000/float(value[1])
           clock += "#NET %-21s TNM_NET = %s;\n" % (add_quotes(pad), add_quotes(pad))
           clock += "#TIMESPEC %-24s = PERIOD %s %.2f ns HIGH 50%%;\n" % (add_quotes("TS_" + pad), add_quotes(pad), period)
-          clock += "#\n"
+          clock += put_comment(comment)
        else:
           text += " | " + value[1]
     text += ";\n"
@@ -98,25 +97,27 @@ def put_pad(comment, pad):
 ## Main #######################################################################
 
 # Header
-text  = comment + "\n"
-text += put_comment(comment, pads['doc'])
-text += comment + "\n"
+
+if 'doc' in pads:
+   text  = put_comment(comment)
+   text += put_comment(comment, pads['doc'])
+   pads.pop('doc')
+text += put_comment(comment)
 text += put_comment(comment, "Description:")
-text += put_comment(comment, "* Constraints definitions for board "+ board['name'] + ".")
+text += put_comment(comment, "* Constraints definitions for the "+ board['name'] + ".")
 text += put_comment(comment, "* Uncomment what you want to use.")
-text += comment + "\n"
+text += put_comment(comment)
 
 # Groups and pads
 for group in sorted(pads):
-    if group != 'doc':
-       text += comment + "\n"
-       text += "%s %s:\n" % (comment, group.upper())
-       if 'doc' in pads[group]:
-          text += put_comment(comment,pads[group]['doc'])
-       text += comment + "\n"
-       for pad in sorted(pads[group]):
-           if pad != 'doc':
-              text += put_pad(comment, pad)
+    text += put_comment(comment)
+    text += "%s %s:\n" % (comment, group.upper())
+    if 'doc' in pads[group]:
+       text += put_comment(comment,pads[group]['doc'])
+       pads[group].pop('doc')
+    text += put_comment(comment)
+    for pad in sorted(pads[group]):
+        text += put_pad(comment, pad)
 
 # Save to file
 if not os.path.exists(outdir):
