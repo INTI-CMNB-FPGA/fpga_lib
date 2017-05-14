@@ -1,0 +1,156 @@
+#
+# Author: Rodrigo A. Melo <rmelo@inti.gob.ar>
+#
+# Copyright (c) 2015-2017 Author and INTI
+# Distributed under the BSD 3-Clause License
+#
+# Description:
+# * Constraints definitions for the Avnet Spartan-6 FPGA LX9 MicroBoard.
+# * Uncomment what you want to use.
+#
+#
+# CLOCKS:
+# Triple output, user programmable, Texas Instruments CDCE913 clock (clk1, clk2 and clk3).
+# Can be programmed via I2C interface, for any clock frequency up to 230 MHz.
+# Optional user installable Maxim DS1088LU-66+, low-cost, fixed-frequency oscillator (clk4).
+# clk1_i = 40 MHz, clk2_i = 66.7 MHz, clk3_i = 100 MHz, clk4_i = 66 MHz.
+#
+#NET "clk1_i"                  LOC = "V10";
+#NET "clk1_i"              TNM_NET = "clk1_i";
+#TIMESPEC "TS_clk1_i"              = PERIOD "clk1_i" 25.00 ns HIGH 50%;
+#
+#NET "clk2_i"                  LOC = "K15";
+#NET "clk2_i"              TNM_NET = "clk2_i";
+#TIMESPEC "TS_clk2_i"              = PERIOD "clk2_i" 14.99 ns HIGH 50%;
+#
+#NET "clk3_i"                  LOC = "C10";
+#NET "clk3_i"              TNM_NET = "clk3_i";
+#TIMESPEC "TS_clk3_i"              = PERIOD "clk3_i" 10.00 ns HIGH 50%;
+#
+#NET "clk4_i"                  LOC = "R8";
+#NET "clk4_i"              TNM_NET = "clk4_i";
+#TIMESPEC "TS_clk4_i"              = PERIOD "clk4_i" 15.15 ns HIGH 50%;
+#
+#NET "i2c_scl_o"               LOC = "P12" | PULLUP;
+#NET "i2c_sda_io"              LOC = "U13" | PULLUP;
+#
+# DIP-SWITCHES:
+# DIPS 1 to 4 are DIP1 to DIP4 (SW1) in the board.
+#
+#NET "dip1_i"                  LOC = "B3" | PULLDOWN;
+#NET "dip2_i"                  LOC = "A3" | PULLDOWN;
+#NET "dip3_i"                  LOC = "B4" | PULLDOWN;
+#NET "dip4_i"                  LOC = "A4" | PULLDOWN;
+#
+# ETHERNET:
+# The PHY Ethernet is a National Semiconductor DP83848J.
+#
+#NET "mii_col_i"               LOC = "M18";
+#NET "mii_crs_i"               LOC = "N17";
+#NET "mii_mdc_o"               LOC = "M16";
+#NET "mii_mdio_io"             LOC = "L18";
+#NET "mii_rst_n_o"             LOC = "T18";
+#NET "mii_rxclk_i"             LOC = "L15";
+#NET "mii_rxd0_i"              LOC = "T17";
+#NET "mii_rxd1_i"              LOC = "N16";
+#NET "mii_rxd2_i"              LOC = "N15";
+#NET "mii_rxd3_i"              LOC = "P18";
+#NET "mii_rxdv_i"              LOC = "P17";
+#NET "mii_rxerr_i"             LOC = "N18";
+#NET "mii_txclk_i"             LOC = "H17";
+#NET "mii_txd0_o"              LOC = "K18";
+#NET "mii_txd1_o"              LOC = "K17";
+#NET "mii_txd2_o"              LOC = "J18";
+#NET "mii_txd3_o"              LOC = "J16";
+#NET "mii_txen_o"              LOC = "L17";
+#
+# GPIO1:
+# PMOD in J5.
+#
+#NET "gpio1_1"                 LOC = "F15";
+#NET "gpio1_10"                LOC = "D18";
+#NET "gpio1_11"                LOC = "GND";
+#NET "gpio1_12"                LOC = "+3.3V";
+#NET "gpio1_2"                 LOC = "F16";
+#NET "gpio1_3"                 LOC = "C17";
+#NET "gpio1_4"                 LOC = "C18";
+#NET "gpio1_5"                 LOC = "GND";
+#NET "gpio1_6"                 LOC = "+3.3V";
+#NET "gpio1_7"                 LOC = "F14";
+#NET "gpio1_8"                 LOC = "G14";
+#NET "gpio1_9"                 LOC = "D17";
+#
+# GPIO2:
+# PMOD in J4.
+#
+#NET "gpio2_1"                 LOC = "H12";
+#NET "gpio2_10"                LOC = "F18";
+#NET "gpio2_11"                LOC = "GND";
+#NET "gpio2_12"                LOC = "+3.3V";
+#NET "gpio2_2"                 LOC = "G13";
+#NET "gpio2_3"                 LOC = "E16";
+#NET "gpio2_4"                 LOC = "E18";
+#NET "gpio2_5"                 LOC = "GND";
+#NET "gpio2_6"                 LOC = "+3.3V";
+#NET "gpio2_7"                 LOC = "K12";
+#NET "gpio2_8"                 LOC = "K13";
+#NET "gpio2_9"                 LOC = "F17";
+#
+# LEDS:
+# LEDS 1 to 4 are D2, D3, D9 and D10 in the board.
+#
+#NET "led1_o"                  LOC = "P4";
+#NET "led2_o"                  LOC = "L6";
+#NET "led3_o"                  LOC = "F5";
+#NET "led4_o"                  LOC = "C2";
+#
+# LPDDR:
+# LPDDR 32 Mb x 16 (512 Mb) Micron MT46H32M16LFBF-5.
+#
+#NET "ddr_cas_n_o"             LOC = "K5";
+#NET "ddr_cke_o"               LOC = "H7";
+#NET "ddr_ckn_o"               LOC = "G1";
+#NET "ddr_ckp_o"               LOC = "G3";
+#NET "ddr_dq0_io"              LOC = "L2";
+#NET "ddr_dq10_io"             LOC = "N2";
+#NET "ddr_dq11_io"             LOC = "N1";
+#NET "ddr_dq12_io"             LOC = "T2";
+#NET "ddr_dq13_io"             LOC = "T1";
+#NET "ddr_dq14_io"             LOC = "U2";
+#NET "ddr_dq15_io"             LOC = "U1";
+#NET "ddr_dq1_io"              LOC = "L1";
+#NET "ddr_dq2_io"              LOC = "K2";
+#NET "ddr_dq3_io"              LOC = "K1";
+#NET "ddr_dq4_io"              LOC = "H2";
+#NET "ddr_dq5_io"              LOC = "H1";
+#NET "ddr_dq6_io"              LOC = "J3";
+#NET "ddr_dq7_io"              LOC = "J1";
+#NET "ddr_dq8_io"              LOC = "M3";
+#NET "ddr_dq9_io"              LOC = "M1";
+#NET "ddr_ldm_o"               LOC = "K3";
+#NET "ddr_ldqs_io"             LOC = "L4";
+#NET "ddr_ras_n_o"             LOC = "L5";
+#NET "ddr_udm_o"               LOC = "K4";
+#NET "ddr_udqs_io"             LOC = "P2";
+#NET "ddr_we_n_o"              LOC = "E3";
+#
+# PUSH-BUTTONS:
+# USER RESET is SW5 in the board.
+#
+#NET "pbr_i"                   LOC = "V4" | PULLDOWN;
+#
+# SPI:
+# The SPI Flash (N25Q128) is connected to support Quad, Dual or Single I/O.
+#
+#NET "spi_cs_n_o"              LOC = "V3";
+#NET "spi_dq0_io"              LOC = "T13";
+#NET "spi_dq1_io"              LOC = "R13";
+#NET "spi_dq2_io"              LOC = "T14";
+#NET "spi_dq3_io"              LOC = "V14";
+#NET "spi_sck_o"               LOC = "R15";
+#
+# UART:
+# USB-to-UART bridge on J3
+#
+#NET "uart1_rx_i"              LOC = "R7";
+#NET "uart1_tx_o"              LOC = "T7";

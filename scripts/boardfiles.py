@@ -23,7 +23,7 @@ import argparse, yaml, os, sys
 
 ## Parsing the command line ###################################################
 
-version = 'BoardFiles v1.0'
+version = 'BoardFiles v0.1'
 
 parser = argparse.ArgumentParser(
    description='Creates Constraints and Top Level HDL files based on a YAML file.'
@@ -52,11 +52,9 @@ else:
 
 filename = os.path.basename(options.file)
 basename = os.path.splitext(filename)[0]
-outdir   = "constraints"
+outdir   = "."
 outfile  = outdir + "/" + basename + ".ucf"
-
 pads     = board['pads']
-
 comment  = "#"
 
 ## Functions ##################################################################
@@ -77,7 +75,7 @@ def add_quotes(text):
 
 def put_pad(comment, pad):
     value = pads[group][pad].upper().split(",")
-    text  = "%sNET %-25s LOC = %s" % (comment, add_quotes('PAD_'+pad.upper()), add_quotes(value[0]))
+    text  = "%sNET %-25s LOC = %s" % (comment, add_quotes(pad), add_quotes(value[0]))
     clock = ""
     if len(value) > 1:
        if pad.startswith('clk'):
