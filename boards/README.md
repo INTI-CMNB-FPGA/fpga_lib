@@ -19,13 +19,44 @@ Features:
 
 Example of clock constraint:
 ```
-NET "clk" TNM_NET = "clk";
-TIMESPEC "TS_clk" = PERIOD "clk" 6.67;
+NET "port" TNM_NET = "port";
+TIMESPEC "TS_port" = PERIOD "port" period;
 ```
 
-Examples of net constraint:
+Examples of location constraint:
 ```
-NET signal_name    LOC=P53;
-NET signal_name    LOC=P53 | IOSTANDARD=LVPECL33 | SLEW=FAST | DRIVE=12 | PULLUP ;
-NET signal_name[0] LOC=P53 | IOSTANDARD=LVPECL33 | SLEW=FAST | DRIVE=12;
+NET "port" LOC="pin" | IOSTANDARD=standard | SLEW=slew | DRIVE=drive | pull ;
 ```
+
+Where:
+* port: port name in the source code. It could be also "port[x]" for a particular bit in a vector.
+* period: value expresed in nano seconds with up to three decimals.
+* pin: pin name.
+* standard: standard name.
+* slew: FAST|SLOW
+* drive: 2, 4, 6, 8, 12 (default), 16, 24
+* pull: PULLUP | PULLDOWN
+
+## Vivado - Xilinx Design Constraints (XDC)
+
+Features:
+* Tcl commands that the Vivado Tcl interpreter sequentially reads and parses.
+* Begin each comment line with a pound (#) sign.
+* Are based on the standard Synopsys Design Constraints (SDC) format.
+* The clocks must be created before they can be used by any subsequent constraints.
+
+Example of clock constraint:
+```
+create_clock -period period [get_ports port]
+```
+
+Examples of location constraint:
+```
+set_property PACKAGE_PIN pin [get_ports port]
+set_property PULLTYPE pull [get_ports port]
+set_property IOSTANDARD standard [get_ports port]
+set_property SLEW slew [get_ports port]
+set_property DRIVE drive [get_ports port]
+```
+
+See **where** in UCF.
