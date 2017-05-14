@@ -60,3 +60,21 @@ set_property DRIVE drive [get_ports port]
 ```
 
 See **where** in UCF.
+
+## Quartus
+
+* Timing constraints used in analysis by the Quartus II TimeQuest Timing Analyzer are stored in .sdc files.
+* Locate pins in .qsf file.
+
+Example of clock constraint:
+```
+create_clock -period period port
+```
+
+Examples of location constraint:
+```
+set_location_assignment PIN_G21 -to eth_tx_q[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to eth_rx_c
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to e[0]
+set_instance_assignment -name SLEW_RATE 2 -to e[0]
+```
