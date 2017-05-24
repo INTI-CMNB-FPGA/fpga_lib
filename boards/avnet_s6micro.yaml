@@ -47,25 +47,27 @@ pads:
     uart1_rx_i   : r7
     uart1_tx_o   : t7
   ethernet:
-    doc: The PHY Ethernet is a National Semiconductor DP83848J.
-    mii_rst_n_o  : t18
-    mii_mdc_o    : m16
-    mii_mdio_io  : l18
-    mii_txd0_o   : k18
-    mii_txd1_o   : k17
-    mii_txd2_o   : j18
-    mii_txd3_o   : j16
-    mii_txen_o   : l17
-    mii_txclk_i  : h17
-    mii_crs_i    : n17
-    mii_col_i    : m18
-    mii_rxd0_i   : t17
-    mii_rxd1_i   : n16
-    mii_rxd2_i   : n15
-    mii_rxd3_i   : p18
-    mii_rxdv_i   : p17
-    mii_rxerr_i  : n18
-    mii_rxclk_i  : l15
+    doc:
+      - The PHY Ethernet is a National Semiconductor DP83848J.
+      - Supports MII and RMII interface.
+    eth_rst_n_o  : t18
+    eth_mdc_o    : m16
+    eth_mdio_io  : l18
+    eth_txd0_o   : k18
+    eth_txd1_o   : k17
+    eth_txd2_o   : j18
+    eth_txd3_o   : j16
+    eth_txen_o   : l17
+    eth_txclk_i  : h17
+    eth_crs_i    : n17
+    eth_col_i    : m18
+    eth_rxd0_i   : t17
+    eth_rxd1_i   : n16
+    eth_rxd2_i   : n15
+    eth_rxd3_i   : p18
+    eth_rxdv_i   : p17
+    eth_rxerr_i  : n18
+    eth_rxclk_i  : l15
   gpio1:
     doc: PMOD in J5.
     gpio1_1      : f15

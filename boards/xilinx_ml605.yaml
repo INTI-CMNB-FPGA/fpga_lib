@@ -1,0 +1,427 @@
+---
+name: Xilinx Virtex 6 ML605
+fpga:
+  - name:     xc6vlx240t-1-ff1156
+    position: 2
+    vendor:   xilinx
+bpi:
+  - name:     28F256P30
+    position: 2
+    width:    16
+    size:     32M
+pads:
+  doc:
+    - "Author: Rodrigo A. Melo <rmelo@inti.gob.ar>"
+    -
+    - Copyright (c) 2017 Author and INTI
+    - Distributed under the BSD 3-Clause License
+  clock-single:
+    doc: 
+      - clk1: USER_CLOCK socket (X5) populated with a 66 MHz 2.5V single-ended MMD MBH2100H.
+    clk1_i        : u23
+  clock-diff:
+    doc:
+      - clk1: 2.5V LVDS differential 200 MHz oscillator (U11).
+      - clk2: USER_SMA_CLOCK J58(P) and J59(N)
+      - clk3: GTX SMA Clock
+    clk1p_i       : j9
+    clk1n_i       : h9
+    clk2p_i       : l23
+    clk2n_i       : m22
+    clk3p_i       : f5
+    clk3n_i       : f6
+  leds:
+    doc:
+      - LEDS 1 to 8 are DS12, 11, 9, 10, 15, 14, 22 and 21 on J62
+      - LEDS C, E, N, S, W are DS16, 19, 20, 18 and 17
+    led1_o        : ac22
+    led2_o        : ac24
+    led3_o        : ae22
+    led4_o        : ae23
+    led5_o        : ab23
+    led6_o        : ag23
+    led7_o        : ae24
+    led8_o        : ad24
+    ledc_o        : ap24
+    lede_o        : ae21
+    ledn_o        : ah27
+    leds_o        : ah28
+    ledw_o        : ad21
+  push-buttons:
+    doc:
+      - PBR (CPU_RESET) is SW10
+      - PB C, E, N, S, W are SW9, 7, 5, 6 and 8
+    pbr_i         : h10
+    pbc_i         : g26
+    pbe_i         : g17
+    pbn_i         : a19
+    pbs_i         : a18
+    pbw_i         : h17
+  dip-switches:
+    doc: DIPS 1 to 8 are 1 to 8 on SW1
+    dip1_i        : d22
+    dip2_i        : c22
+    dip3_i        : l21
+    dip4_i        : l20
+    dip5_i        : c18
+    dip6_i        : b18
+    dip7_i        : k22
+    dip8_i        : k21
+  user-sma:
+    doc: USER_SMA_GPIO P (J57) and N (J56)
+    sma1p_i       : v34
+    sma1n_i       : w34
+  uart:
+    doc: USB-to-UART bridge on U34
+    uart1_rx_i   : j24
+    uart1_tx_o   : j25
+    uart1_cts_i  : t23
+    uart1_rts_o  : t24
+  ddr3:
+    doc: to be done
+  flash:
+    doc: to be done
+  bpi:
+    doc: to be done
+  cf:
+    doc: to be done
+  pcie:
+    doc: to be done
+  sfp:
+    doc: SFP on P4
+    sfp_los_i     : v23
+    sfp_rx_p_i    : e3
+    sfp_rx_n_i    : e4
+    sfp_tx_p_o    : c3
+    sfp_tx_n_o    : c4
+    sfp_disable_o : ap12
+  ethernet:
+    doc:
+      - The PHY Ethernet is a Marvell Alaska PHY device (88E1111)
+      - Supports MII, GMII, RGMII and SGMII.
+    eth_rst_n_o  : ah13
+    eth_int_n_i  : ah14
+    eth_mdc_o    : ap14
+    eth_mdio_io  : an14
+    eth_txd0_o   : am11
+    eth_txd1_o   : al11
+    eth_txd2_o   : ag10
+    eth_txd3_o   : ag11
+    eth_txd4_o   : al10
+    eth_txd5_o   : am10
+    eth_txd6_o   : ae11
+    eth_txd7_o   : af11
+    eth_sin_p_o  : a3
+    eth_sin_n_o  : a4
+    eth_sout_p_i : b5
+    eth_sout_n_i : b6
+    eth_txen_o   : aj10
+    eth_txer_o   : ah10
+    eth_txclk_i  : ad12
+    eth_gtxclk_i : ah12
+    eth_crs_i    : al13
+    eth_col_i    : ak13
+    eth_rxd0_i   : an13
+    eth_rxd1_i   : af14
+    eth_rxd2_i   : ae14
+    eth_rxd3_i   : an12
+    eth_rxd4_i   : am12
+    eth_rxd5_i   : ad11
+    eth_rxd6_i   : ac12
+    eth_rxd7_i   : ac13
+    eth_rxdv_i   : am13
+    eth_rxerr_i  : ag12
+    eth_rxclk_i  : ap11
+  usb-cypress:
+    doc: to be done
+  dvi:
+    doc: to be done
+  iic:
+    doc: 8 Kb ST Microelectronics M24C08-WDW6TP IIC (U6)
+    i2c_scl_o     : ak9
+    i2c_sda_io    : ae9
+  lcd:
+    doc: to be done
+  fmc-hpc:
+    doc: FMC HPC on J64
+    fmc-hpc-a2    : ae3
+    fmc-hpc-a3    : ae4
+    fmc-hpc-a6    : af5
+    fmc-hpc-a7    : af6
+    fmc-hpc-a10   : ag3
+    fmc-hpc-a11   : ag4
+    fmc-hpc-a14   : aj3
+    fmc-hpc-a15   : aj4
+    fmc-hpc-a18   : al3
+    fmc-hpc-a19   : al4
+    fmc-hpc-a22   : ad1
+    fmc-hpc-a23   : ad2
+    fmc-hpc-a26   : af1
+    fmc-hpc-a27   : af2
+    fmc-hpc-a30   : ah1
+    fmc-hpc-a31   : ah2
+    fmc-hpc-a34   : ak1
+    fmc-hpc-a35   : ak2
+    fmc-hpc-a38   : am1
+    fmc-hpc-a39   : am2
+    fmc-hpc-b12   : ap5
+    fmc-hpc-b13   : ap6
+    fmc-hpc-b16   : am5
+    fmc-hpc-b17   : am6
+    fmc-hpc-b20   : ak6
+    fmc-hpc-b21   : ak5
+    fmc-hpc-b32   : ap1
+    fmc-hpc-b33   : ap2
+    fmc-hpc-b36   : an3
+    fmc-hpc-b37   : an4
+    fmc-hpc-c2    : ab1
+    fmc-hpc-c3    : ab2
+    fmc-hpc-c6    : ac3
+    fmc-hpc-c7    : ac4
+    fmc-hpc-c10   : ag20
+    fmc-hpc-c11   : ag21
+    fmc-hpc-c14   : am20
+    fmc-hpc-c15   : al20
+    fmc-hpc-c18   : an19
+    fmc-hpc-c19   : an20
+    fmc-hpc-c22   : ah25
+    fmc-hpc-c23   : aj25
+    fmc-hpc-c26   : ap30
+    fmc-hpc-c27   : ap31
+    fmc-hpc-c30   : ak9
+    fmc-hpc-c31   : ae9
+    fmc-hpc-d4    : ad6
+    fmc-hpc-d5    : ad5
+    fmc-hpc-d8    : ak19
+    fmc-hpc-d9    : al19
+    fmc-hpc-d11   : ag22
+    fmc-hpc-d12   : ah22
+    fmc-hpc-d14   : am18
+    fmc-hpc-d15   : al18
+    fmc-hpc-d17   : ap19
+    fmc-hpc-d18   : an18
+    fmc-hpc-d20   : an27
+    fmc-hpc-d21   : am27
+    fmc-hpc-d23   : al26
+    fmc-hpc-d24   : am26
+    fmc-hpc-d26   : am25
+    fmc-hpc-d27   : al25
+    fmc-hpc-e2    : ad29
+    fmc-hpc-e3    : ac29
+    fmc-hpc-e6    : ab27
+    fmc-hpc-e7    : ac27
+    fmc-hpc-e9    : ab30
+    fmc-hpc-e10   : ab31
+    fmc-hpc-e12   : ae31
+    fmc-hpc-e13   : ad31
+    fmc-hpc-e15   : ac33
+    fmc-hpc-e16   : ab33
+    fmc-hpc-e18   : v32
+    fmc-hpc-e19   : v33
+    fmc-hpc-e21   : al30
+    fmc-hpc-e22   : am31
+    fmc-hpc-e24   : an33
+    fmc-hpc-e25   : an34
+    fmc-hpc-e27   : al34
+    fmc-hpc-e28   : ak34
+    fmc-hpc-e30   : ah33
+    fmc-hpc-e31   : ah32
+    fmc-hpc-e33   : al31
+    fmc-hpc-e34   : ak31
+    fmc-hpc-f1    : j27
+    fmc-hpc-f4    : ae33
+    fmc-hpc-f5    : af33
+    fmc-hpc-f7    : ab28
+    fmc-hpc-f8    : ac28
+    fmc-hpc-f10   : ag31
+    fmc-hpc-f11   : af31
+    fmc-hpc-f13   : ad32
+    fmc-hpc-f14   : ae32
+    fmc-hpc-f16   : ab32
+    fmc-hpc-f17   : ac32
+    fmc-hpc-f19   : u33
+    fmc-hpc-f20   : u32
+    fmc-hpc-f22   : ap32
+    fmc-hpc-f23   : ap33
+    fmc-hpc-f25   : am33
+    fmc-hpc-f26   : al33
+    fmc-hpc-f28   : ak33
+    fmc-hpc-f29   : ak32
+    fmc-hpc-f31   : aj31
+    fmc-hpc-f32   : aj32
+    fmc-hpc-f34   : ah29
+    fmc-hpc-f35   : ah30
+    fmc-hpc-g2    : ap20
+    fmc-hpc-g3    : ap21
+    fmc-hpc-g6    : af20
+    fmc-hpc-g7    : af21
+    fmc-hpc-g9    : ac19
+    fmc-hpc-g10   : ad19
+    fmc-hpc-g12   : ak22
+    fmc-hpc-g13   : aj22
+    fmc-hpc-g15   : am21
+    fmc-hpc-g16   : al21
+    fmc-hpc-g18   : ap22
+    fmc-hpc-g19   : an23
+    fmc-hpc-g21   : ak23
+    fmc-hpc-g22   : al24
+    fmc-hpc-g24   : ap27
+    fmc-hpc-g25   : ap26
+    fmc-hpc-g27   : an28
+    fmc-hpc-g28   : am28
+    fmc-hpc-g30   : al28
+    fmc-hpc-g31   : ak28
+    fmc-hpc-g33   : al29
+    fmc-hpc-g34   : ak29
+    fmc-hpc-g36   : ah23
+    fmc-hpc-g37   : ah24
+    fmc-hpc-h2    : ap25
+    fmc-hpc-h4    : k24
+    fmc-hpc-h5    : k23
+    fmc-hpc-h7    : ac20
+    fmc-hpc-h8    : ad20
+    fmc-hpc-h10   : af19
+    fmc-hpc-h11   : ae19
+    fmc-hpc-h13   : ak21
+    fmc-hpc-h14   : aj21
+    fmc-hpc-h16   : am22
+    fmc-hpc-h17   : an22
+    fmc-hpc-h19   : am23
+    fmc-hpc-h20   : al23
+    fmc-hpc-h22   : an25
+    fmc-hpc-h23   : an24
+    fmc-hpc-h25   : an29
+    fmc-hpc-h26   : ap29
+    fmc-hpc-h28   : an30
+    fmc-hpc-h29   : am30
+    fmc-hpc-h31   : ak27
+    fmc-hpc-h32   : aj27
+    fmc-hpc-h34   : aj24
+    fmc-hpc-h35   : ak24
+    fmc-hpc-h37   : ag25
+    fmc-hpc-h38   : ag26
+    fmc-hpc-j6    : aa25
+    fmc-hpc-j7    : y26
+    fmc-hpc-j9    : aa26
+    fmc-hpc-j10   : ab26
+    fmc-hpc-j12   : ag33
+    fmc-hpc-j13   : ag32
+    fmc-hpc-j15   : aa30
+    fmc-hpc-j16   : aa31
+    fmc-hpc-j18   : t33
+    fmc-hpc-j19   : t34
+    fmc-hpc-j21   : u28
+    fmc-hpc-j22   : v29
+    fmc-hpc-j24   : an32
+    fmc-hpc-j25   : am32
+    fmc-hpc-j27   : aj34
+    fmc-hpc-j28   : ah34
+    fmc-hpc-j30   : aj29
+    fmc-hpc-j31   : aj30
+    fmc-hpc-j33   : ae28
+    fmc-hpc-j34   : ae29
+    fmc-hpc-j36   : ad25
+    fmc-hpc-j37   : ad26
+    fmc-hpc-k7    : ab25
+    fmc-hpc-k8    : ac25
+    fmc-hpc-k10   : aa28
+    fmc-hpc-k11   : aa29
+    fmc-hpc-k13   : ad34
+    fmc-hpc-k14   : ac34
+    fmc-hpc-k16   : v30
+    fmc-hpc-k17   : w30
+    fmc-hpc-k19   : u31
+    fmc-hpc-k20   : u30
+    fmc-hpc-k22   : u26
+    fmc-hpc-k23   : u27
+    fmc-hpc-k25   : af30
+    fmc-hpc-k26   : ag30
+    fmc-hpc-k28   : af26
+    fmc-hpc-k29   : ae26
+    fmc-hpc-k31   : af28
+    fmc-hpc-k32   : af29
+    fmc-hpc-k34   : ae27
+    fmc-hpc-k35   : ad27
+    fmc-hpc-k37   : ag27
+    fmc-hpc-k38   : ag28
+  fmc-lpc:
+    doc: FMC LPC on J63
+    fmc-hpc-c2    : d1
+    fmc-hpc-c3    : d2
+    fmc-hpc-c6    : g3
+    fmc-hpc-c7    : g4
+    fmc-hpc-c10   : k33
+    fmc-hpc-c11   : j34
+    fmc-hpc-c14   : f30
+    fmc-hpc-c15   : g30
+    fmc-hpc-c18   : c33
+    fmc-hpc-c19   : b34
+    fmc-hpc-c22   : l29
+    fmc-hpc-c23   : l30
+    fmc-hpc-c26   : r31
+    fmc-hpc-c27   : r32
+    fmc-hpc-d4    : m6
+    fmc-hpc-d5    : m5
+    fmc-hpc-d8    : f31
+    fmc-hpc-d9    : e31
+    fmc-hpc-d11   : h34
+    fmc-hpc-d12   : h33
+    fmc-hpc-d14   : l25
+    fmc-hpc-d15   : l26
+    fmc-hpc-d17   : d34
+    fmc-hpc-d18   : c34
+    fmc-hpc-d20   : n28
+    fmc-hpc-d21   : n29
+    fmc-hpc-d23   : r28
+    fmc-hpc-d24   : r27
+    fmc-hpc-d26   : l33
+    fmc-hpc-d27   : m32
+    fmc-hpc-g2    : f33
+    fmc-hpc-g3    : g33
+    fmc-hpc-g6    : k26
+    fmc-hpc-g7    : k27
+    fmc-hpc-g9    : j31
+    fmc-hpc-g10   : j32
+    fmc-hpc-g12   : j30
+    fmc-hpc-g13   : k29
+    fmc-hpc-g15   : e32
+    fmc-hpc-g16   : e33
+    fmc-hpc-g18   : a33
+    fmc-hpc-g19   : b33
+    fmc-hpc-g21   : p29
+    fmc-hpc-g22   : r29
+    fmc-hpc-g24   : n27
+    fmc-hpc-g25   : p27
+    fmc-hpc-g27   : p31
+    fmc-hpc-g28   : p30
+    fmc-hpc-g30   : n34
+    fmc-hpc-g31   : p34
+    fmc-hpc-g33   : m31
+    fmc-hpc-g34   : l31
+    fmc-hpc-g36   : k32
+    fmc-hpc-g37   : k31
+    fmc-hpc-h2    : ad9
+    fmc-hpc-h4    : a10
+    fmc-hpc-h5    : b10
+    fmc-hpc-h7    : g31
+    fmc-hpc-h8    : h30
+    fmc-hpc-h10   : k28
+    fmc-hpc-h11   : j29
+    fmc-hpc-h13   : g32
+    fmc-hpc-h14   : h32
+    fmc-hpc-h16   : d31
+    fmc-hpc-h17   : d32
+    fmc-hpc-h19   : c32
+    fmc-hpc-h20   : b32
+    fmc-hpc-h22   : m30
+    fmc-hpc-h23   : n30
+    fmc-hpc-h25   : r26
+    fmc-hpc-h26   : t26
+    fmc-hpc-h28   : n32
+    fmc-hpc-h29   : p32
+    fmc-hpc-h31   : n33
+    fmc-hpc-h32   : m33
+    fmc-hpc-h34   : m26
+    fmc-hpc-h35   : m27
+    fmc-hpc-h37   : n25
+    fmc-hpc-h38   : m25

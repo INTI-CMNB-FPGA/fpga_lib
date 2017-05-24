@@ -20,13 +20,13 @@ pads:
     -
     - Copyright (c) 2017 Author and INTI
     - Distributed under the BSD 3-Clause License
-  single-clocks:
+  clock-single:
     doc:
       - clk1_i is ...
       - clk2_i is ...
     clk1_i       : c1
     clk2_i       : c2
-  diff-clocks:
+  clock-diff:
     doc: clk1p_i and clk1n_i are ...
     clk1p_i      : cd1
     clk1n_i      : cd2
