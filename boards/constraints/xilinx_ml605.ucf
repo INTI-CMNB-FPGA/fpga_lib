@@ -1,0 +1,455 @@
+#
+# Author: Rodrigo A. Melo <rmelo@inti.gob.ar>
+#
+# Copyright (c) 2017 Author and INTI
+# Distributed under the BSD 3-Clause License
+#
+# Description:
+# * Constraints definitions for the Xilinx Virtex 6 ML605.
+# * Uncomment what you want to use.
+#
+#
+# BPI:
+# to be done
+#
+#
+# CF:
+# to be done
+#
+#
+# CLOCK-DIFF:
+# clk1 is 2.5V LVDS differential 200 MHz oscillator (U11).
+# clk2 is USER_SMA_CLOCK J58(P) and J59(N)
+# clk3 is GTX SMA Clock
+#
+#NET "clk1n_i"                 LOC = "H9";
+#NET "clk1p_i"                 LOC = "J9";
+#NET "clk2n_i"                 LOC = "M22";
+#NET "clk2p_i"                 LOC = "L23";
+#NET "clk3n_i"                 LOC = "F6";
+#NET "clk3p_i"                 LOC = "F5";
+#
+# CLOCK-SINGLE:
+# clk1 is USER_CLOCK socket (X5) populated with a 66 MHz 2.5V single-ended MMD MBH2100H.
+#
+#NET "clk1_i"                  LOC = "U23";
+#
+# DDR3:
+# to be done
+#
+#
+# DIP-SWITCHES:
+# DIPS 1 to 8 are 1 to 8 on SW1
+#
+#NET "dip1_i"                  LOC = "D22";
+#NET "dip2_i"                  LOC = "C22";
+#NET "dip3_i"                  LOC = "L21";
+#NET "dip4_i"                  LOC = "L20";
+#NET "dip5_i"                  LOC = "C18";
+#NET "dip6_i"                  LOC = "B18";
+#NET "dip7_i"                  LOC = "K22";
+#NET "dip8_i"                  LOC = "K21";
+#
+# DVI:
+# to be done
+#
+#
+# ETHERNET:
+# The PHY Ethernet is a Marvell Alaska PHY device (88E1111)
+# Supports MII, GMII, RGMII and SGMII.
+#
+#NET "eth_col_i"               LOC = "AK13";
+#NET "eth_crs_i"               LOC = "AL13";
+#NET "eth_gtxclk_i"            LOC = "AH12";
+#NET "eth_int_n_i"             LOC = "AH14";
+#NET "eth_mdc_o"               LOC = "AP14";
+#NET "eth_mdio_io"             LOC = "AN14";
+#NET "eth_rst_n_o"             LOC = "AH13";
+#NET "eth_rxclk_i"             LOC = "AP11";
+#NET "eth_rxd0_i"              LOC = "AN13";
+#NET "eth_rxd1_i"              LOC = "AF14";
+#NET "eth_rxd2_i"              LOC = "AE14";
+#NET "eth_rxd3_i"              LOC = "AN12";
+#NET "eth_rxd4_i"              LOC = "AM12";
+#NET "eth_rxd5_i"              LOC = "AD11";
+#NET "eth_rxd6_i"              LOC = "AC12";
+#NET "eth_rxd7_i"              LOC = "AC13";
+#NET "eth_rxdv_i"              LOC = "AM13";
+#NET "eth_rxerr_i"             LOC = "AG12";
+#NET "eth_sin_n_o"             LOC = "A4";
+#NET "eth_sin_p_o"             LOC = "A3";
+#NET "eth_sout_n_i"            LOC = "B6";
+#NET "eth_sout_p_i"            LOC = "B5";
+#NET "eth_txclk_i"             LOC = "AD12";
+#NET "eth_txd0_o"              LOC = "AM11";
+#NET "eth_txd1_o"              LOC = "AL11";
+#NET "eth_txd2_o"              LOC = "AG10";
+#NET "eth_txd3_o"              LOC = "AG11";
+#NET "eth_txd4_o"              LOC = "AL10";
+#NET "eth_txd5_o"              LOC = "AM10";
+#NET "eth_txd6_o"              LOC = "AE11";
+#NET "eth_txd7_o"              LOC = "AF11";
+#NET "eth_txen_o"              LOC = "AJ10";
+#NET "eth_txer_o"              LOC = "AH10";
+#
+# FLASH:
+# to be done
+#
+#
+# FMC-HPC:
+# FMC HPC on J64
+#
+#NET "fmc-hpc-a10"             LOC = "AG3";
+#NET "fmc-hpc-a11"             LOC = "AG4";
+#NET "fmc-hpc-a14"             LOC = "AJ3";
+#NET "fmc-hpc-a15"             LOC = "AJ4";
+#NET "fmc-hpc-a18"             LOC = "AL3";
+#NET "fmc-hpc-a19"             LOC = "AL4";
+#NET "fmc-hpc-a2"              LOC = "AE3";
+#NET "fmc-hpc-a22"             LOC = "AD1";
+#NET "fmc-hpc-a23"             LOC = "AD2";
+#NET "fmc-hpc-a26"             LOC = "AF1";
+#NET "fmc-hpc-a27"             LOC = "AF2";
+#NET "fmc-hpc-a3"              LOC = "AE4";
+#NET "fmc-hpc-a30"             LOC = "AH1";
+#NET "fmc-hpc-a31"             LOC = "AH2";
+#NET "fmc-hpc-a34"             LOC = "AK1";
+#NET "fmc-hpc-a35"             LOC = "AK2";
+#NET "fmc-hpc-a38"             LOC = "AM1";
+#NET "fmc-hpc-a39"             LOC = "AM2";
+#NET "fmc-hpc-a6"              LOC = "AF5";
+#NET "fmc-hpc-a7"              LOC = "AF6";
+#NET "fmc-hpc-b12"             LOC = "AP5";
+#NET "fmc-hpc-b13"             LOC = "AP6";
+#NET "fmc-hpc-b16"             LOC = "AM5";
+#NET "fmc-hpc-b17"             LOC = "AM6";
+#NET "fmc-hpc-b20"             LOC = "AK6";
+#NET "fmc-hpc-b21"             LOC = "AK5";
+#NET "fmc-hpc-b32"             LOC = "AP1";
+#NET "fmc-hpc-b33"             LOC = "AP2";
+#NET "fmc-hpc-b36"             LOC = "AN3";
+#NET "fmc-hpc-b37"             LOC = "AN4";
+#NET "fmc-hpc-c10"             LOC = "AG20";
+#NET "fmc-hpc-c11"             LOC = "AG21";
+#NET "fmc-hpc-c14"             LOC = "AM20";
+#NET "fmc-hpc-c15"             LOC = "AL20";
+#NET "fmc-hpc-c18"             LOC = "AN19";
+#NET "fmc-hpc-c19"             LOC = "AN20";
+#NET "fmc-hpc-c2"              LOC = "AB1";
+#NET "fmc-hpc-c22"             LOC = "AH25";
+#NET "fmc-hpc-c23"             LOC = "AJ25";
+#NET "fmc-hpc-c26"             LOC = "AP30";
+#NET "fmc-hpc-c27"             LOC = "AP31";
+#NET "fmc-hpc-c3"              LOC = "AB2";
+#NET "fmc-hpc-c30"             LOC = "AK9";
+#NET "fmc-hpc-c31"             LOC = "AE9";
+#NET "fmc-hpc-c6"              LOC = "AC3";
+#NET "fmc-hpc-c7"              LOC = "AC4";
+#NET "fmc-hpc-d11"             LOC = "AG22";
+#NET "fmc-hpc-d12"             LOC = "AH22";
+#NET "fmc-hpc-d14"             LOC = "AM18";
+#NET "fmc-hpc-d15"             LOC = "AL18";
+#NET "fmc-hpc-d17"             LOC = "AP19";
+#NET "fmc-hpc-d18"             LOC = "AN18";
+#NET "fmc-hpc-d20"             LOC = "AN27";
+#NET "fmc-hpc-d21"             LOC = "AM27";
+#NET "fmc-hpc-d23"             LOC = "AL26";
+#NET "fmc-hpc-d24"             LOC = "AM26";
+#NET "fmc-hpc-d26"             LOC = "AM25";
+#NET "fmc-hpc-d27"             LOC = "AL25";
+#NET "fmc-hpc-d4"              LOC = "AD6";
+#NET "fmc-hpc-d5"              LOC = "AD5";
+#NET "fmc-hpc-d8"              LOC = "AK19";
+#NET "fmc-hpc-d9"              LOC = "AL19";
+#NET "fmc-hpc-e10"             LOC = "AB31";
+#NET "fmc-hpc-e12"             LOC = "AE31";
+#NET "fmc-hpc-e13"             LOC = "AD31";
+#NET "fmc-hpc-e15"             LOC = "AC33";
+#NET "fmc-hpc-e16"             LOC = "AB33";
+#NET "fmc-hpc-e18"             LOC = "V32";
+#NET "fmc-hpc-e19"             LOC = "V33";
+#NET "fmc-hpc-e2"              LOC = "AD29";
+#NET "fmc-hpc-e21"             LOC = "AL30";
+#NET "fmc-hpc-e22"             LOC = "AM31";
+#NET "fmc-hpc-e24"             LOC = "AN33";
+#NET "fmc-hpc-e25"             LOC = "AN34";
+#NET "fmc-hpc-e27"             LOC = "AL34";
+#NET "fmc-hpc-e28"             LOC = "AK34";
+#NET "fmc-hpc-e3"              LOC = "AC29";
+#NET "fmc-hpc-e30"             LOC = "AH33";
+#NET "fmc-hpc-e31"             LOC = "AH32";
+#NET "fmc-hpc-e33"             LOC = "AL31";
+#NET "fmc-hpc-e34"             LOC = "AK31";
+#NET "fmc-hpc-e6"              LOC = "AB27";
+#NET "fmc-hpc-e7"              LOC = "AC27";
+#NET "fmc-hpc-e9"              LOC = "AB30";
+#NET "fmc-hpc-f1"              LOC = "J27";
+#NET "fmc-hpc-f10"             LOC = "AG31";
+#NET "fmc-hpc-f11"             LOC = "AF31";
+#NET "fmc-hpc-f13"             LOC = "AD32";
+#NET "fmc-hpc-f14"             LOC = "AE32";
+#NET "fmc-hpc-f16"             LOC = "AB32";
+#NET "fmc-hpc-f17"             LOC = "AC32";
+#NET "fmc-hpc-f19"             LOC = "U33";
+#NET "fmc-hpc-f20"             LOC = "U32";
+#NET "fmc-hpc-f22"             LOC = "AP32";
+#NET "fmc-hpc-f23"             LOC = "AP33";
+#NET "fmc-hpc-f25"             LOC = "AM33";
+#NET "fmc-hpc-f26"             LOC = "AL33";
+#NET "fmc-hpc-f28"             LOC = "AK33";
+#NET "fmc-hpc-f29"             LOC = "AK32";
+#NET "fmc-hpc-f31"             LOC = "AJ31";
+#NET "fmc-hpc-f32"             LOC = "AJ32";
+#NET "fmc-hpc-f34"             LOC = "AH29";
+#NET "fmc-hpc-f35"             LOC = "AH30";
+#NET "fmc-hpc-f4"              LOC = "AE33";
+#NET "fmc-hpc-f5"              LOC = "AF33";
+#NET "fmc-hpc-f7"              LOC = "AB28";
+#NET "fmc-hpc-f8"              LOC = "AC28";
+#NET "fmc-hpc-g10"             LOC = "AD19";
+#NET "fmc-hpc-g12"             LOC = "AK22";
+#NET "fmc-hpc-g13"             LOC = "AJ22";
+#NET "fmc-hpc-g15"             LOC = "AM21";
+#NET "fmc-hpc-g16"             LOC = "AL21";
+#NET "fmc-hpc-g18"             LOC = "AP22";
+#NET "fmc-hpc-g19"             LOC = "AN23";
+#NET "fmc-hpc-g2"              LOC = "AP20";
+#NET "fmc-hpc-g21"             LOC = "AK23";
+#NET "fmc-hpc-g22"             LOC = "AL24";
+#NET "fmc-hpc-g24"             LOC = "AP27";
+#NET "fmc-hpc-g25"             LOC = "AP26";
+#NET "fmc-hpc-g27"             LOC = "AN28";
+#NET "fmc-hpc-g28"             LOC = "AM28";
+#NET "fmc-hpc-g3"              LOC = "AP21";
+#NET "fmc-hpc-g30"             LOC = "AL28";
+#NET "fmc-hpc-g31"             LOC = "AK28";
+#NET "fmc-hpc-g33"             LOC = "AL29";
+#NET "fmc-hpc-g34"             LOC = "AK29";
+#NET "fmc-hpc-g36"             LOC = "AH23";
+#NET "fmc-hpc-g37"             LOC = "AH24";
+#NET "fmc-hpc-g6"              LOC = "AF20";
+#NET "fmc-hpc-g7"              LOC = "AF21";
+#NET "fmc-hpc-g9"              LOC = "AC19";
+#NET "fmc-hpc-h10"             LOC = "AF19";
+#NET "fmc-hpc-h11"             LOC = "AE19";
+#NET "fmc-hpc-h13"             LOC = "AK21";
+#NET "fmc-hpc-h14"             LOC = "AJ21";
+#NET "fmc-hpc-h16"             LOC = "AM22";
+#NET "fmc-hpc-h17"             LOC = "AN22";
+#NET "fmc-hpc-h19"             LOC = "AM23";
+#NET "fmc-hpc-h2"              LOC = "AP25";
+#NET "fmc-hpc-h20"             LOC = "AL23";
+#NET "fmc-hpc-h22"             LOC = "AN25";
+#NET "fmc-hpc-h23"             LOC = "AN24";
+#NET "fmc-hpc-h25"             LOC = "AN29";
+#NET "fmc-hpc-h26"             LOC = "AP29";
+#NET "fmc-hpc-h28"             LOC = "AN30";
+#NET "fmc-hpc-h29"             LOC = "AM30";
+#NET "fmc-hpc-h31"             LOC = "AK27";
+#NET "fmc-hpc-h32"             LOC = "AJ27";
+#NET "fmc-hpc-h34"             LOC = "AJ24";
+#NET "fmc-hpc-h35"             LOC = "AK24";
+#NET "fmc-hpc-h37"             LOC = "AG25";
+#NET "fmc-hpc-h38"             LOC = "AG26";
+#NET "fmc-hpc-h4"              LOC = "K24";
+#NET "fmc-hpc-h5"              LOC = "K23";
+#NET "fmc-hpc-h7"              LOC = "AC20";
+#NET "fmc-hpc-h8"              LOC = "AD20";
+#NET "fmc-hpc-j10"             LOC = "AB26";
+#NET "fmc-hpc-j12"             LOC = "AG33";
+#NET "fmc-hpc-j13"             LOC = "AG32";
+#NET "fmc-hpc-j15"             LOC = "AA30";
+#NET "fmc-hpc-j16"             LOC = "AA31";
+#NET "fmc-hpc-j18"             LOC = "T33";
+#NET "fmc-hpc-j19"             LOC = "T34";
+#NET "fmc-hpc-j21"             LOC = "U28";
+#NET "fmc-hpc-j22"             LOC = "V29";
+#NET "fmc-hpc-j24"             LOC = "AN32";
+#NET "fmc-hpc-j25"             LOC = "AM32";
+#NET "fmc-hpc-j27"             LOC = "AJ34";
+#NET "fmc-hpc-j28"             LOC = "AH34";
+#NET "fmc-hpc-j30"             LOC = "AJ29";
+#NET "fmc-hpc-j31"             LOC = "AJ30";
+#NET "fmc-hpc-j33"             LOC = "AE28";
+#NET "fmc-hpc-j34"             LOC = "AE29";
+#NET "fmc-hpc-j36"             LOC = "AD25";
+#NET "fmc-hpc-j37"             LOC = "AD26";
+#NET "fmc-hpc-j6"              LOC = "AA25";
+#NET "fmc-hpc-j7"              LOC = "Y26";
+#NET "fmc-hpc-j9"              LOC = "AA26";
+#NET "fmc-hpc-k10"             LOC = "AA28";
+#NET "fmc-hpc-k11"             LOC = "AA29";
+#NET "fmc-hpc-k13"             LOC = "AD34";
+#NET "fmc-hpc-k14"             LOC = "AC34";
+#NET "fmc-hpc-k16"             LOC = "V30";
+#NET "fmc-hpc-k17"             LOC = "W30";
+#NET "fmc-hpc-k19"             LOC = "U31";
+#NET "fmc-hpc-k20"             LOC = "U30";
+#NET "fmc-hpc-k22"             LOC = "U26";
+#NET "fmc-hpc-k23"             LOC = "U27";
+#NET "fmc-hpc-k25"             LOC = "AF30";
+#NET "fmc-hpc-k26"             LOC = "AG30";
+#NET "fmc-hpc-k28"             LOC = "AF26";
+#NET "fmc-hpc-k29"             LOC = "AE26";
+#NET "fmc-hpc-k31"             LOC = "AF28";
+#NET "fmc-hpc-k32"             LOC = "AF29";
+#NET "fmc-hpc-k34"             LOC = "AE27";
+#NET "fmc-hpc-k35"             LOC = "AD27";
+#NET "fmc-hpc-k37"             LOC = "AG27";
+#NET "fmc-hpc-k38"             LOC = "AG28";
+#NET "fmc-hpc-k7"              LOC = "AB25";
+#NET "fmc-hpc-k8"              LOC = "AC25";
+#
+# FMC-LPC:
+# FMC LPC on J63
+#
+#NET "fmc-hpc-c10"             LOC = "K33";
+#NET "fmc-hpc-c11"             LOC = "J34";
+#NET "fmc-hpc-c14"             LOC = "F30";
+#NET "fmc-hpc-c15"             LOC = "G30";
+#NET "fmc-hpc-c18"             LOC = "C33";
+#NET "fmc-hpc-c19"             LOC = "B34";
+#NET "fmc-hpc-c2"              LOC = "D1";
+#NET "fmc-hpc-c22"             LOC = "L29";
+#NET "fmc-hpc-c23"             LOC = "L30";
+#NET "fmc-hpc-c26"             LOC = "R31";
+#NET "fmc-hpc-c27"             LOC = "R32";
+#NET "fmc-hpc-c3"              LOC = "D2";
+#NET "fmc-hpc-c6"              LOC = "G3";
+#NET "fmc-hpc-c7"              LOC = "G4";
+#NET "fmc-hpc-d11"             LOC = "H34";
+#NET "fmc-hpc-d12"             LOC = "H33";
+#NET "fmc-hpc-d14"             LOC = "L25";
+#NET "fmc-hpc-d15"             LOC = "L26";
+#NET "fmc-hpc-d17"             LOC = "D34";
+#NET "fmc-hpc-d18"             LOC = "C34";
+#NET "fmc-hpc-d20"             LOC = "N28";
+#NET "fmc-hpc-d21"             LOC = "N29";
+#NET "fmc-hpc-d23"             LOC = "R28";
+#NET "fmc-hpc-d24"             LOC = "R27";
+#NET "fmc-hpc-d26"             LOC = "L33";
+#NET "fmc-hpc-d27"             LOC = "M32";
+#NET "fmc-hpc-d4"              LOC = "M6";
+#NET "fmc-hpc-d5"              LOC = "M5";
+#NET "fmc-hpc-d8"              LOC = "F31";
+#NET "fmc-hpc-d9"              LOC = "E31";
+#NET "fmc-hpc-g10"             LOC = "J32";
+#NET "fmc-hpc-g12"             LOC = "J30";
+#NET "fmc-hpc-g13"             LOC = "K29";
+#NET "fmc-hpc-g15"             LOC = "E32";
+#NET "fmc-hpc-g16"             LOC = "E33";
+#NET "fmc-hpc-g18"             LOC = "A33";
+#NET "fmc-hpc-g19"             LOC = "B33";
+#NET "fmc-hpc-g2"              LOC = "F33";
+#NET "fmc-hpc-g21"             LOC = "P29";
+#NET "fmc-hpc-g22"             LOC = "R29";
+#NET "fmc-hpc-g24"             LOC = "N27";
+#NET "fmc-hpc-g25"             LOC = "P27";
+#NET "fmc-hpc-g27"             LOC = "P31";
+#NET "fmc-hpc-g28"             LOC = "P30";
+#NET "fmc-hpc-g3"              LOC = "G33";
+#NET "fmc-hpc-g30"             LOC = "N34";
+#NET "fmc-hpc-g31"             LOC = "P34";
+#NET "fmc-hpc-g33"             LOC = "M31";
+#NET "fmc-hpc-g34"             LOC = "L31";
+#NET "fmc-hpc-g36"             LOC = "K32";
+#NET "fmc-hpc-g37"             LOC = "K31";
+#NET "fmc-hpc-g6"              LOC = "K26";
+#NET "fmc-hpc-g7"              LOC = "K27";
+#NET "fmc-hpc-g9"              LOC = "J31";
+#NET "fmc-hpc-h10"             LOC = "K28";
+#NET "fmc-hpc-h11"             LOC = "J29";
+#NET "fmc-hpc-h13"             LOC = "G32";
+#NET "fmc-hpc-h14"             LOC = "H32";
+#NET "fmc-hpc-h16"             LOC = "D31";
+#NET "fmc-hpc-h17"             LOC = "D32";
+#NET "fmc-hpc-h19"             LOC = "C32";
+#NET "fmc-hpc-h2"              LOC = "AD9";
+#NET "fmc-hpc-h20"             LOC = "B32";
+#NET "fmc-hpc-h22"             LOC = "M30";
+#NET "fmc-hpc-h23"             LOC = "N30";
+#NET "fmc-hpc-h25"             LOC = "R26";
+#NET "fmc-hpc-h26"             LOC = "T26";
+#NET "fmc-hpc-h28"             LOC = "N32";
+#NET "fmc-hpc-h29"             LOC = "P32";
+#NET "fmc-hpc-h31"             LOC = "N33";
+#NET "fmc-hpc-h32"             LOC = "M33";
+#NET "fmc-hpc-h34"             LOC = "M26";
+#NET "fmc-hpc-h35"             LOC = "M27";
+#NET "fmc-hpc-h37"             LOC = "N25";
+#NET "fmc-hpc-h38"             LOC = "M25";
+#NET "fmc-hpc-h4"              LOC = "A10";
+#NET "fmc-hpc-h5"              LOC = "B10";
+#NET "fmc-hpc-h7"              LOC = "G31";
+#NET "fmc-hpc-h8"              LOC = "H30";
+#
+# IIC:
+# 8 Kb ST Microelectronics M24C08-WDW6TP IIC (U6)
+#
+#NET "i2c_scl_o"               LOC = "AK9";
+#NET "i2c_sda_io"              LOC = "AE9";
+#
+# LCD:
+# to be done
+#
+#
+# LEDS:
+# LEDS 1 to 8 are DS12, 11, 9, 10, 15, 14, 22 and 21 on J62
+# LEDS C, E, N, S, W are DS16, 19, 20, 18 and 17
+#
+#NET "led1_o"                  LOC = "AC22";
+#NET "led2_o"                  LOC = "AC24";
+#NET "led3_o"                  LOC = "AE22";
+#NET "led4_o"                  LOC = "AE23";
+#NET "led5_o"                  LOC = "AB23";
+#NET "led6_o"                  LOC = "AG23";
+#NET "led7_o"                  LOC = "AE24";
+#NET "led8_o"                  LOC = "AD24";
+#NET "ledc_o"                  LOC = "AP24";
+#NET "lede_o"                  LOC = "AE21";
+#NET "ledn_o"                  LOC = "AH27";
+#NET "leds_o"                  LOC = "AH28";
+#NET "ledw_o"                  LOC = "AD21";
+#
+# PCIE:
+# to be done
+#
+#
+# PUSH-BUTTONS:
+# PBR (CPU_RESET) is SW10
+# PB C, E, N, S, W are SW9, 7, 5, 6 and 8
+#
+#NET "pbc_i"                   LOC = "G26";
+#NET "pbe_i"                   LOC = "G17";
+#NET "pbn_i"                   LOC = "A19";
+#NET "pbr_i"                   LOC = "H10";
+#NET "pbs_i"                   LOC = "A18";
+#NET "pbw_i"                   LOC = "H17";
+#
+# SFP:
+# SFP on P4
+#
+#NET "sfp_disable_o"           LOC = "AP12";
+#NET "sfp_los_i"               LOC = "V23";
+#NET "sfp_rx_n_i"              LOC = "E4";
+#NET "sfp_rx_p_i"              LOC = "E3";
+#NET "sfp_tx_n_o"              LOC = "C4";
+#NET "sfp_tx_p_o"              LOC = "C3";
+#
+# UART:
+# USB-to-UART bridge on U34
+#
+#NET "uart1_cts_i"             LOC = "T23";
+#NET "uart1_rts_o"             LOC = "T24";
+#NET "uart1_rx_i"              LOC = "J24";
+#NET "uart1_tx_o"              LOC = "J25";
+#
+# USB-CYPRESS:
+# to be done
+#
+#
+# USER-SMA:
+# USER_SMA_GPIO P (J57) and N (J56)
+#
+#NET "sma1n_i"                 LOC = "W34";
+#NET "sma1p_i"                 LOC = "V34";

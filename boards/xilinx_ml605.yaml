@@ -17,13 +17,13 @@ pads:
     - Distributed under the BSD 3-Clause License
   clock-single:
     doc: 
-      - clk1: USER_CLOCK socket (X5) populated with a 66 MHz 2.5V single-ended MMD MBH2100H.
+      - clk1 is USER_CLOCK socket (X5) populated with a 66 MHz 2.5V single-ended MMD MBH2100H.
     clk1_i        : u23
   clock-diff:
     doc:
-      - clk1: 2.5V LVDS differential 200 MHz oscillator (U11).
-      - clk2: USER_SMA_CLOCK J58(P) and J59(N)
-      - clk3: GTX SMA Clock
+      - clk1 is 2.5V LVDS differential 200 MHz oscillator (U11).
+      - clk2 is USER_SMA_CLOCK J58(P) and J59(N)
+      - clk3 is GTX SMA Clock
     clk1p_i       : j9
     clk1n_i       : h9
     clk2p_i       : l23

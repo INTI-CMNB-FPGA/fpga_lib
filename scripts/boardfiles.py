@@ -54,7 +54,11 @@ filename = os.path.basename(options.file)
 basename = os.path.splitext(filename)[0]
 outdir   = "."
 outfile  = outdir + "/" + basename + ".ucf"
-pads     = board['pads']
+if 'pads' in board:
+   pads     = board['pads']
+else:
+   print('BoardFiles (INFO): there are not pads defined in file <' + options.file + '>.')
+   exit()
 comment  = "#"
 
 ## Functions ##################################################################

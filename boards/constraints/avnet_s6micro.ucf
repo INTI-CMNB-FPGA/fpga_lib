@@ -44,25 +44,26 @@
 #
 # ETHERNET:
 # The PHY Ethernet is a National Semiconductor DP83848J.
+# Supports MII and RMII interface.
 #
-#NET "mii_col_i"               LOC = "M18";
-#NET "mii_crs_i"               LOC = "N17";
-#NET "mii_mdc_o"               LOC = "M16";
-#NET "mii_mdio_io"             LOC = "L18";
-#NET "mii_rst_n_o"             LOC = "T18";
-#NET "mii_rxclk_i"             LOC = "L15";
-#NET "mii_rxd0_i"              LOC = "T17";
-#NET "mii_rxd1_i"              LOC = "N16";
-#NET "mii_rxd2_i"              LOC = "N15";
-#NET "mii_rxd3_i"              LOC = "P18";
-#NET "mii_rxdv_i"              LOC = "P17";
-#NET "mii_rxerr_i"             LOC = "N18";
-#NET "mii_txclk_i"             LOC = "H17";
-#NET "mii_txd0_o"              LOC = "K18";
-#NET "mii_txd1_o"              LOC = "K17";
-#NET "mii_txd2_o"              LOC = "J18";
-#NET "mii_txd3_o"              LOC = "J16";
-#NET "mii_txen_o"              LOC = "L17";
+#NET "eth_col_i"               LOC = "M18";
+#NET "eth_crs_i"               LOC = "N17";
+#NET "eth_mdc_o"               LOC = "M16";
+#NET "eth_mdio_io"             LOC = "L18";
+#NET "eth_rst_n_o"             LOC = "T18";
+#NET "eth_rxclk_i"             LOC = "L15";
+#NET "eth_rxd0_i"              LOC = "T17";
+#NET "eth_rxd1_i"              LOC = "N16";
+#NET "eth_rxd2_i"              LOC = "N15";
+#NET "eth_rxd3_i"              LOC = "P18";
+#NET "eth_rxdv_i"              LOC = "P17";
+#NET "eth_rxerr_i"             LOC = "N18";
+#NET "eth_txclk_i"             LOC = "H17";
+#NET "eth_txd0_o"              LOC = "K18";
+#NET "eth_txd1_o"              LOC = "K17";
+#NET "eth_txd2_o"              LOC = "J18";
+#NET "eth_txd3_o"              LOC = "J16";
+#NET "eth_txen_o"              LOC = "L17";
 #
 # GPIO1:
 # PMOD in J5.
