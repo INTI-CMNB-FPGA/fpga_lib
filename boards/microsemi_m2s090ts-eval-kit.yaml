@@ -1,0 +1,11 @@
+---
+name: Microsemi M2S090TS-EVAL-KIT
+fpga:
+  - name:     m2s090ts-1-fg484
+    position: 1
+    vendor:   microsemi
+spi:
+  - name:     W25Q64FVSSIG
+    position: 1
+    width:    1
+    size:     64M
