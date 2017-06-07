@@ -19,6 +19,7 @@
 #
 
 import sys, os, readline, re, glob
+from fpga_db import *
 
 readline.set_completer_delims(' \t\n;')
 readline.parse_and_bind("tab: complete")
@@ -57,9 +58,9 @@ def get_part(text):
 
 options = {}
 
-alternatives = ['ise','vivado','quartus','libero']
+alternatives = fpga_db.tools # available tools
 readline.set_completer(complete)
-default = 'vivado'
+default = alternatives[0]
 print("Select TOOL to use [%s]" % default)
 options['tool'] = get_input() or default
 
@@ -77,7 +78,7 @@ print("")
 
 alternatives = glob.glob('*.v*') # vhdl, vhd, v (probably only one file)
 readline.set_completer(complete)
-default = alternatives[0]
+default = alternatives[0] if len(alternatives) else 'top.vhdl'
 print("Top Level file? [%s]" % default)
 options['top_file'] = get_input() or default
 
@@ -97,11 +98,8 @@ options['files'] = files
 
 print("")
 
-boards = glob.glob("../boards/*.yaml")
-alternatives = []
-for board in boards:
-    alternatives.append(os.path.splitext(os.path.basename(board))[0])
-readline.set_completer(complete) # available boards
+alternatives = fpga_db.boards # available boards
+readline.set_completer(complete)
 print("Board to be used? [None]")
 options['board'] = get_input()
 
