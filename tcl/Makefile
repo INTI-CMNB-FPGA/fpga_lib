@@ -20,7 +20,7 @@
 #
 
 ifndef TOOL
-   TOOL=ise
+   TOOL=vivado
 endif
 
 ifeq      ($(TOOL),ise)
@@ -137,7 +137,7 @@ CLEAN_MULTI          = $(ise_CLEAN_ALL) $(vivado_CLEAN_ALL) \
 
 all help:
 	@echo "Options:"
-	@echo "* TOOL: ise , vivado, quartus, libero [default=ise]"
+	@echo "* TOOL: ise , vivado, quartus, libero [default=vivado]"
 	@echo "* TASK: syn, imp, bit, prog           [default=bit]"
 	@echo "* OPT:  user ,area, power, speed      [default=user]"
 	@echo "* DEV:  fpga, spi, bpi, xcf           [default=fpga]"
