@@ -106,10 +106,8 @@ proc writeFile {PATH DATA} {set fp [open $PATH w];puts $fp $DATA;close $fp}
 ###############################################################################
 
 set fpga_pos  1
-set spi_pos   1
 set spi_width 1
 set spi_name  "SPINAME"
-set bpi_pos   1
 set bpi_width 16
 set bpi_name  "BPINAME"
 set xcf_name  "XCFNAME"
@@ -135,9 +133,9 @@ Program -p $fpga_pos"
 set impact_spi "setMode -bs
 setCable -port auto
 Identify
-attachflash -position $spi_pos -spi $spi_name
-assignfiletoattachedflash -position $spi_pos -file $TEMPDIR/$name.mcs
-Program -p $spi_pos -dataWidth $spi_width -spionly -e -v -loadfpga"
+attachflash -position $fpga_pos -spi $spi_name
+assignfiletoattachedflash -position $fpga_pos -file $TEMPDIR/$name.mcs
+Program -p $fpga_pos -dataWidth $spi_width -spionly -e -v -loadfpga"
 
 set impact_spi_mcs "setMode -pff
 addConfigDevice -name $name -path $TEMPDIR
@@ -150,9 +148,9 @@ generate -generic"
 set impact_bpi "setMode -bs
 setCable -port auto
 Identify
-attachflash -position $bpi_pos -bpi $bpi_name
-assignfiletoattachedflash -position $bpi_pos -file $TEMPDIR/$name.mcs
-Program -p $bpi_pos -dataWidth $bpi_width -rs1 NONE -rs0 NONE -bpionly -e -v -loadfpga"
+attachflash -position $fpga_pos -bpi $bpi_name
+assignfiletoattachedflash -position $fpga_pos -file $TEMPDIR/$name.mcs
+Program -p $fpga_pos -dataWidth $bpi_width -rs1 NONE -rs0 NONE -bpionly -e -v -loadfpga"
 
 set impact_bpi_mcs "setMode -pff
 addConfigDevice -name $name -path $TEMPDIR

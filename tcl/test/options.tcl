@@ -41,9 +41,7 @@ fpga_file "top_file.vhdl"       -top "TOP_NAME"
 # _name:  name of the memory
 
 set fpga_pos  1
-set spi_pos   1
 set spi_width 1
 set spi_name  W25Q64BV
-set bpi_pos   1
 set bpi_width 8
 set bpi_name  28F128J3D

@@ -99,7 +99,6 @@ fpga_file "package_file.vhdl"   -lib "LIB_NAME"
 fpga_file "top_file.vhdl"       -top "TOP_NAME"
 
 set fpga_pos  1
-set spi_pos   1
 set spi_width 4
 set spi_name  SPI_NAME
 ```
