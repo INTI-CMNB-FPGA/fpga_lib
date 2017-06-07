@@ -1,62 +1,48 @@
 ---
-name: Name of the kit
-fpga:
-  name:     STRING   # FPGA code as known by the vendor's tool
-  position: NATURAL  # 0, 1, 2, ... Position in the JTAG chain
-  vendor:   STRING   # xilinx | altera | intel | actel | microsemi | lattice (optional)
-spi:
-  name:     STRING   # SPI code as known by the vendor's tool
-  position: NATURA L # 0, 1, 2, ... Position of the associated FPGA in the JTAG chain
-  width:    POSITIVE # Bits
-  size:     POSITIVE # Size in bits. K and M can be used (ex 32M) (optional)
-bpi:
-  name:     STRING   # BPI code as known by the vendor's tool
-  position: NATURAL  # 0, 1, 2, ... Position of the associated FPGA in the JTAG chain
-  width:    POSITIVE # Bits
-  size:     POSITIVE # Size in bits. K and M can be used (ex 32M) (optional)
-pads:
+doc:
+  - "Board: Name of the kit"
+  -
+  - "Author: NAME <email>"
+  -
+  - Copyright (c) 2017 Author and INTI
+  - Distributed under the BSD 3-Clause License
+clock-single:
   doc:
-    - "Author: NAME <email>"
-    -
-    - Copyright (c) 2017 Author and INTI
-    - Distributed under the BSD 3-Clause License
-  clock-single:
-    doc:
-      - clk1_i is ...
-      - clk2_i is ...
-    clk1_i       : c1
-    clk2_i       : c2
-  clock-diff:
-    doc: clk1p_i and clk1n_i are ...
-    clk1p_i      : cd1
-    clk1n_i      : cd2
-  leds:
-    doc: led1_i to led4_i represent ... in the board
-    led1_i       : l0
-    led2_i       : l1
-    led3_i       : l2
-    led4_i       : l3
-  dip-switches:
-    doc: dip switches in component ...
-    dip1_i       : d0
-    dip2_i       : d1
-    dip3_i       : d2
-    dip4_i       : d3
-  push-buttons:
-    doc: pb_i to pb4_i represent ... in the board
-    pb1_i        : p0
-    pb2_i        : p1
-    pb3_i        : p2
-    pb4_i        : p3
-  gpio1:
-    doc: in connector ...
-    gpio1_1      : gp01
-    gpio1_2      : gp02
-    gpio1_3      : gp03
-    gpio1_4      : gp04
-  gpio2:
-    doc: in connector ...
-    gpio2_1      : gp09
-    gpio2_2      : gp10
-    gpio2_3      : gp11
-    gpio2_4      : gp12
+    - clk1_i is ...
+    - clk2_i is ...
+  clk1_i       : c1
+  clk2_i       : c2
+clock-diff:
+  doc: clk1p_i and clk1n_i are ...
+  clk1p_i      : cd1
+  clk1n_i      : cd2
+leds:
+  doc: led1_i to led4_i represent ... in the board
+  led1_i       : l0
+  led2_i       : l1
+  led3_i       : l2
+  led4_i       : l3
+dip-switches:
+  doc: dip switches in component ...
+  dip1_i       : d0
+  dip2_i       : d1
+  dip3_i       : d2
+  dip4_i       : d3
+push-buttons:
+  doc: pb_i to pb4_i represent ... in the board
+  pb1_i        : p0
+  pb2_i        : p1
+  pb3_i        : p2
+  pb4_i        : p3
+gpio1:
+  doc: in connector ...
+  gpio1_1      : gp01
+  gpio1_2      : gp02
+  gpio1_3      : gp03
+  gpio1_4      : gp04
+gpio2:
+  doc: in connector ...
+  gpio2_1      : gp09
+  gpio2_2      : gp10
+  gpio2_3      : gp11
+  gpio2_4      : gp12

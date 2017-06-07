@@ -1,12 +1,12 @@
 #
+# Board: Avnet Spartan-6 FPGA LX9 MicroBoard
+#
 # Author: Rodrigo A. Melo <rmelo@inti.gob.ar>
 #
 # Copyright (c) 2015-2017 Author and INTI
 # Distributed under the BSD 3-Clause License
 #
-# Description:
-# * Constraints definitions for the Avnet Spartan-6 FPGA LX9 MicroBoard.
-# * Uncomment what you want to use.
+# Uncomment what you want to use.
 #
 #
 # CLOCKS:

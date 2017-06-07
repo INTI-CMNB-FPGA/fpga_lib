@@ -1,12 +1,12 @@
 #
+# Board: Xilinx Virtex 6 ML605
+#
 # Author: Rodrigo A. Melo <rmelo@inti.gob.ar>
 #
 # Copyright (c) 2017 Author and INTI
 # Distributed under the BSD 3-Clause License
 #
-# Description:
-# * Constraints definitions for the Xilinx Virtex 6 ML605.
-# * Uncomment what you want to use.
+# Uncomment what you want to use.
 #
 #
 # BPI:

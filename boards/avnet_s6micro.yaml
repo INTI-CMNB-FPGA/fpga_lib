@@ -1,134 +1,125 @@
 ---
-name: Avnet Spartan-6 FPGA LX9 MicroBoard
-fpga:
-  - name:     xc6slx9-csg324
-    position: 1
-    vendor:   xilinx
-spi:
-  - name:     N25Q128
-    position: 1
-    width:    4
-    size:     32M
-pads:
+doc:
+  - "Board: Avnet Spartan-6 FPGA LX9 MicroBoard"
+  -
+  - "Author: Rodrigo A. Melo <rmelo@inti.gob.ar>"
+  -
+  - Copyright (c) 2015-2017 Author and INTI
+  - Distributed under the BSD 3-Clause License
+clocks:
   doc:
-    - "Author: Rodrigo A. Melo <rmelo@inti.gob.ar>"
-    -
-    - Copyright (c) 2015-2017 Author and INTI
-    - Distributed under the BSD 3-Clause License
-  clocks:
-    doc:
-      - Triple output, user programmable, Texas Instruments CDCE913 clock (clk1, clk2 and clk3).
-      - Can be programmed via I2C interface, for any clock frequency up to 230 MHz.
-      - Optional user installable Maxim DS1088LU-66+, low-cost, fixed-frequency oscillator (clk4).
-      - clk1_i = 40 MHz, clk2_i = 66.7 MHz, clk3_i = 100 MHz, clk4_i = 66 MHz.
-    clk1_i       : v10,40
-    clk2_i       : k15,66.7
-    clk3_i       : c10,100
-    clk4_i       : r8,66
-    i2c_scl_o    : p12,PULLUP
-    i2c_sda_io   : u13,PULLUP
-  leds:
-    doc: LEDS 1 to 4 are D2, D3, D9 and D10 in the board.
-    led1_o       : p4
-    led2_o       : l6
-    led3_o       : f5
-    led4_o       : c2
-  dip-switches:
-    doc: DIPS 1 to 4 are DIP1 to DIP4 (SW1) in the board.
-    dip1_i       : b3,PULLDOWN
-    dip2_i       : a3,PULLDOWN
-    dip3_i       : b4,PULLDOWN
-    dip4_i       : a4,PULLDOWN
-  push-buttons:
-    doc: USER RESET is SW5 in the board.
-    pbr_i        : v4,PULLDOWN
-  uart:
-    doc: USB-to-UART bridge on J3
-    uart1_rx_i   : r7
-    uart1_tx_o   : t7
-  ethernet:
-    doc:
-      - The PHY Ethernet is a National Semiconductor DP83848J.
-      - Supports MII and RMII interface.
-    eth_rst_n_o  : t18
-    eth_mdc_o    : m16
-    eth_mdio_io  : l18
-    eth_txd0_o   : k18
-    eth_txd1_o   : k17
-    eth_txd2_o   : j18
-    eth_txd3_o   : j16
-    eth_txen_o   : l17
-    eth_txclk_i  : h17
-    eth_crs_i    : n17
-    eth_col_i    : m18
-    eth_rxd0_i   : t17
-    eth_rxd1_i   : n16
-    eth_rxd2_i   : n15
-    eth_rxd3_i   : p18
-    eth_rxdv_i   : p17
-    eth_rxerr_i  : n18
-    eth_rxclk_i  : l15
-  gpio1:
-    doc: PMOD in J5.
-    gpio1_1      : f15
-    gpio1_2      : f16
-    gpio1_3      : c17
-    gpio1_4      : c18
-    gpio1_5      : gnd
-    gpio1_6      : +3.3v
-    gpio1_7      : f14
-    gpio1_8      : g14
-    gpio1_9      : d17
-    gpio1_10     : d18
-    gpio1_11     : gnd
-    gpio1_12     : +3.3v
-  gpio2:
-    doc: PMOD in J4.
-    gpio2_1      : h12
-    gpio2_2      : g13
-    gpio2_3      : e16
-    gpio2_4      : e18
-    gpio2_5      : gnd
-    gpio2_6      : +3.3v
-    gpio2_7      : k12
-    gpio2_8      : k13
-    gpio2_9      : f17
-    gpio2_10     : f18
-    gpio2_11     : gnd
-    gpio2_12     : +3.3v
-  spi:
-    doc: The SPI Flash (N25Q128) is connected to support Quad, Dual or Single I/O.
-    spi_dq0_io   : t13
-    spi_dq1_io   : r13
-    spi_dq2_io   : t14
-    spi_dq3_io   : v14
-    spi_sck_o    : r15
-    spi_cs_n_o   : v3
-  lpddr:
-    doc: LPDDR 32 Mb x 16 (512 Mb) Micron MT46H32M16LFBF-5.
-    ddr_dq0_io   : l2
-    ddr_dq1_io   : l1
-    ddr_dq2_io   : k2
-    ddr_dq3_io   : k1
-    ddr_dq4_io   : h2
-    ddr_dq5_io   : h1
-    ddr_dq6_io   : j3
-    ddr_dq7_io   : j1
-    ddr_dq8_io   : m3
-    ddr_dq9_io   : m1
-    ddr_dq10_io  : n2
-    ddr_dq11_io  : n1
-    ddr_dq12_io  : t2
-    ddr_dq13_io  : t1
-    ddr_dq14_io  : u2
-    ddr_dq15_io  : u1
-    ddr_ldqs_io  : l4
-    ddr_udqs_io  : p2
-    ddr_ldm_o    : k3
-    ddr_udm_o    : k4
-    ddr_cas_n_o  : k5
-    ddr_ras_n_o  : l5
-    ddr_we_n_o   : e3
-    ddr_cke_o    : h7
-    ddr_ckp_o    : g3
-    ddr_ckn_o    : g1
+    - Triple output, user programmable, Texas Instruments CDCE913 clock (clk1, clk2 and clk3).
+    - Can be programmed via I2C interface, for any clock frequency up to 230 MHz.
+    - Optional user installable Maxim DS1088LU-66+, low-cost, fixed-frequency oscillator (clk4).
+    - clk1_i = 40 MHz, clk2_i = 66.7 MHz, clk3_i = 100 MHz, clk4_i = 66 MHz.
+  clk1_i       : v10,40
+  clk2_i       : k15,66.7
+  clk3_i       : c10,100
+  clk4_i       : r8,66
+  i2c_scl_o    : p12,PULLUP
+  i2c_sda_io   : u13,PULLUP
+leds:
+  doc: LEDS 1 to 4 are D2, D3, D9 and D10 in the board.
+  led1_o       : p4
+  led2_o       : l6
+  led3_o       : f5
+  led4_o       : c2
+dip-switches:
+  doc: DIPS 1 to 4 are DIP1 to DIP4 (SW1) in the board.
+  dip1_i       : b3,PULLDOWN
+  dip2_i       : a3,PULLDOWN
+  dip3_i       : b4,PULLDOWN
+  dip4_i       : a4,PULLDOWN
+push-buttons:
+  doc: USER RESET is SW5 in the board.
+  pbr_i        : v4,PULLDOWN
+uart:
+  doc: USB-to-UART bridge on J3
+  uart1_rx_i   : r7
+  uart1_tx_o   : t7
+ethernet:
+  doc:
+    - The PHY Ethernet is a National Semiconductor DP83848J.
+    - Supports MII and RMII interface.
+  eth_rst_n_o  : t18
+  eth_mdc_o    : m16
+  eth_mdio_io  : l18
+  eth_txd0_o   : k18
+  eth_txd1_o   : k17
+  eth_txd2_o   : j18
+  eth_txd3_o   : j16
+  eth_txen_o   : l17
+  eth_txclk_i  : h17
+  eth_crs_i    : n17
+  eth_col_i    : m18
+  eth_rxd0_i   : t17
+  eth_rxd1_i   : n16
+  eth_rxd2_i   : n15
+  eth_rxd3_i   : p18
+  eth_rxdv_i   : p17
+  eth_rxerr_i  : n18
+  eth_rxclk_i  : l15
+gpio1:
+  doc: PMOD in J5.
+  gpio1_1      : f15
+  gpio1_2      : f16
+  gpio1_3      : c17
+  gpio1_4      : c18
+  gpio1_5      : gnd
+  gpio1_6      : +3.3v
+  gpio1_7      : f14
+  gpio1_8      : g14
+  gpio1_9      : d17
+  gpio1_10     : d18
+  gpio1_11     : gnd
+  gpio1_12     : +3.3v
+gpio2:
+  doc: PMOD in J4.
+  gpio2_1      : h12
+  gpio2_2      : g13
+  gpio2_3      : e16
+  gpio2_4      : e18
+  gpio2_5      : gnd
+  gpio2_6      : +3.3v
+  gpio2_7      : k12
+  gpio2_8      : k13
+  gpio2_9      : f17
+  gpio2_10     : f18
+  gpio2_11     : gnd
+  gpio2_12     : +3.3v
+spi:
+  doc: The SPI Flash (N25Q128) is connected to support Quad, Dual or Single I/O.
+  spi_dq0_io   : t13
+  spi_dq1_io   : r13
+  spi_dq2_io   : t14
+  spi_dq3_io   : v14
+  spi_sck_o    : r15
+  spi_cs_n_o   : v3
+lpddr:
+  doc: LPDDR 32 Mb x 16 (512 Mb) Micron MT46H32M16LFBF-5.
+  ddr_dq0_io   : l2
+  ddr_dq1_io   : l1
+  ddr_dq2_io   : k2
+  ddr_dq3_io   : k1
+  ddr_dq4_io   : h2
+  ddr_dq5_io   : h1
+  ddr_dq6_io   : j3
+  ddr_dq7_io   : j1
+  ddr_dq8_io   : m3
+  ddr_dq9_io   : m1
+  ddr_dq10_io  : n2
+  ddr_dq11_io  : n1
+  ddr_dq12_io  : t2
+  ddr_dq13_io  : t1
+  ddr_dq14_io  : u2
+  ddr_dq15_io  : u1
+  ddr_ldqs_io  : l4
+  ddr_udqs_io  : p2
+  ddr_ldm_o    : k3
+  ddr_udm_o    : k4
+  ddr_cas_n_o  : k5
+  ddr_ras_n_o  : l5
+  ddr_we_n_o   : e3
+  ddr_cke_o    : h7
+  ddr_ckp_o    : g3
+  ddr_ckn_o    : g1

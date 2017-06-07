@@ -54,11 +54,7 @@ filename = os.path.basename(options.file)
 basename = os.path.splitext(filename)[0]
 outdir   = "."
 outfile  = outdir + "/" + basename + ".ucf"
-if 'pads' in board:
-   pads     = board['pads']
-else:
-   print('BoardFiles (INFO): there are not pads defined in file <' + options.file + '>.')
-   exit()
+pads     = board
 comment  = "#"
 
 ## Functions ##################################################################
@@ -105,9 +101,7 @@ if 'doc' in pads:
    text += put_comment(comment, pads['doc'])
    pads.pop('doc')
 text += put_comment(comment)
-text += put_comment(comment, "Description:")
-text += put_comment(comment, "* Constraints definitions for the "+ board['name'] + ".")
-text += put_comment(comment, "* Uncomment what you want to use.")
+text += put_comment(comment, "Uncomment what you want to use.")
 text += put_comment(comment)
 
 # Groups and pads
