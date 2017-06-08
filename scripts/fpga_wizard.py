@@ -29,7 +29,7 @@ readline.parse_and_bind("tab: complete")
 ###################################################################################################
 
 def get_input():
-    prompt = "[ENTER for default, TAB for autocomplete] > "
+    prompt = "EMPTY for default option. TAB for autocomplete. Your selection here > "
     try:    # Python2
        return raw_input(prompt)
     except: # Python3
@@ -88,7 +88,7 @@ if not os.path.exists(options['top_file']):
 print("")
 
 readline.set_completer() # browse filesystem
-print("Add files to the project in the form 'PATH[,library]' (ENTER without data to finish)")
+print("Add files to the project in the form 'PATH[,library]' [None]")
 files = []
 aux = get_input()
 while len(aux):
@@ -103,7 +103,7 @@ readline.set_completer(complete)
 print("Board to be used? [None]")
 options['board'] = get_input()
 
-if options['board'] and not os.path.exists("../boards/" + options['board'] + ".yaml"):
+if options['board'] and options['board'] not in alternatives:
    sys.exit("fpga_wizard (ERROR): unsupported board")
 
 print("")
@@ -133,6 +133,8 @@ if not options['board']:
 
    if options['bpi_width'] and int(options['bpi_width']) not in [8, 16, 32, 64]:
       sys.exit("fpga_wizard (ERROR): BPI data width can be 8, 16, 32 or 64")
+
+print("")
 
 print (options)
 
