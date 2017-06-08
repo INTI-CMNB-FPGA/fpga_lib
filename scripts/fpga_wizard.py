@@ -70,7 +70,7 @@ def get_top(top_file):
 # Collect info
 ###################################################################################################
 
-print("fpga_wizard is part of FPGA_Helpers v%s" % (fpga_db.version))
+print("fpga_wizard is member of FPGA Helpers v%s" % (fpga_db.version))
 
 print("") #----------------------------------------------------------------------------------------
 
@@ -103,11 +103,20 @@ options['top_name'] = get_top(options['top_file'])
 print("") #----------------------------------------------------------------------------------------
 
 readline.set_completer() # browse filesystem
-print("Add files to the project in the form 'PATH[,library]' [None]")
-aux = get_input()
-while len(aux):
-      options['files'].append(aux)
-      aux = get_input()
+print("Add files to the project (EMPTY to FINISH):")
+
+morefiles = 1;
+while (morefiles):
+   print("* Path to the file [FINISH]:")
+   file = get_input()
+   lib  = ""
+   if len(file):
+      print("* In library [None]:")
+      lib = get_input()
+   if len(file):
+      options['files'].append([file,lib])
+   else:
+      morefiles = 0
 
 print("") #----------------------------------------------------------------------------------------
 
@@ -177,6 +186,8 @@ makefile += "include $(TCLPATH)/Makefile"
 
 optfile = ""
 
+# Config devices
+
 if 'fpga_name' in options and len(options['fpga_name']):
    optfile += "set fpga_name %s\n" % options['fpga_name']
    optfile += "set fpga_pos  %s\n" % options['fpga_pos']
@@ -189,14 +200,20 @@ if 'bpi_name'  in options and len(options['bpi_name']):
 
 optfile += "\n"
 
+# Set FPGA
+
 if 'fpga_name' in options and options['fpga_name'] is not None:
    optfile += "fpga_device   $fpga_name\n"
 
 optfile += "\n"
 
-for files in options['files']:
-    file,lib = files.split(",")
-    optfile += "fpga_file     %-30s -lib %s\n"%(file,lib)
+# Add files and specify the top level
+
+for file,lib in options['files']:
+    if len(lib):
+       optfile += "fpga_file     %-30s -lib %s\n" % (file,lib)
+    else:
+       optfile += "fpga_file     %-30s\n"         % (file)
 if 'top_file' in options:
    optfile += "fpga_file     %-30s -top %s\n"%(options['top_file'],options['top_name'])
 
