@@ -25,6 +25,20 @@ readline.set_completer_delims(' \t\n;')
 readline.parse_and_bind("tab: complete")
 
 ###################################################################################################
+# Default Values
+###################################################################################################
+
+options              = {}
+options['tool']      = 'vivado'
+options['tcl_path']  = '../tcl'
+options['top_file']  = 'top.vhdl'
+options['files']     = []
+options['fpga_name'] = 'UNKNOWN'
+options['fpga_pos']  = '1'
+options['spi_width'] = '1'
+options['bpi_width'] = '8'
+
+###################################################################################################
 # Functions
 ###################################################################################################
 
@@ -43,15 +57,6 @@ def complete(text, state):
            else:
               state -= 1
 
-def get_part(text):
-    text = re.sub(" *", "" , text)
-    if not len(text):
-       return None,None
-    text = text.split(",")
-    if len(text) != 2:
-       sys.exit("fpga_wizard (ERROR): two parameters separated by ',' must be given")
-    return text[0],text[1]
-
 def get_top(top_file):
     text = open(top_file).read()
     try:
@@ -67,31 +72,26 @@ def get_top(top_file):
 
 print("fpga_wizard is part of FPGA_Helpers v%s" % (fpga_db.version))
 
-options = {}
-
 print("") #----------------------------------------------------------------------------------------
 
 alternatives = fpga_db.tools # available tools
 readline.set_completer(complete)
-default = alternatives[0]
-print("Select TOOL to use [%s]" % default)
-options['tool'] = get_input() or default
-
+print("Select TOOL to use [%s]" % options['tool'])
+options['tool'] = get_input() or options['tool']
 if options['tool'] not in alternatives:
    sys.exit("fpga_wizard (ERROR): unsupported tool")
 
 print("") #----------------------------------------------------------------------------------------
 
 readline.set_completer() # browse filesystem
-default = '../tcl'
-print("Where to get (if exists) or put Tcl files? [%s]" % default)
-options['tcl_path'] = get_input() or default
+print("Where to get (if exists) or put Tcl files? [%s]" % options['tcl_path'])
+options['tcl_path'] = get_input() or options['tcl_path']
 
 print("") #----------------------------------------------------------------------------------------
 
 alternatives = glob.glob('*.v*') # vhdl, vhd, v (probably only one file)
 readline.set_completer(complete)
-default = alternatives[0] if len(alternatives) else 'top.vhdl'
+default = alternatives[0] if len(alternatives) else options['top_file']
 print("Top Level file? [%s]" % default)
 options['top_file'] = get_input() or default
 
@@ -104,12 +104,10 @@ print("") #---------------------------------------------------------------------
 
 readline.set_completer() # browse filesystem
 print("Add files to the project in the form 'PATH[,library]' [None]")
-files = []
 aux = get_input()
 while len(aux):
-      files.append(aux)
+      options['files'].append(aux)
       aux = get_input()
-options['files'] = files
 
 print("") #----------------------------------------------------------------------------------------
 
@@ -126,30 +124,39 @@ print("") #---------------------------------------------------------------------
 if options['board']:
    options.update(fpga_db.boards[options['board']])
 else:
-   alternatives = [] # no more options
+   alternatives = [] # no options yet
    readline.set_completer(complete)
 
-   print("Specify a FPGA in the form 'PARTNAME,POSITION' [None]")
-   options['fpga_name'],options['fpga_pos'] = get_part(get_input())
-
-   if options['fpga_pos'] and int(options['fpga_pos']) not in [1, 2, 3, 4]:
-      sys.exit("fpga_wizard (ERROR): FPGA position can be 1 to 4")
-
-   print("")
-
-   print("Specify a SPI in the form 'PARTNAME,DATAWIDTH' [None]")
-   options['spi_name'],options['spi_width'] = get_part(get_input())
-
-   if options['spi_width'] and int(options['spi_width']) not in [1, 2, 3, 4]:
-      sys.exit("fpga_wizard (ERROR): SPI data width can be 1 to 4")
+   print("Specify the used FPGA [%s]" % options['fpga_name'])
+   options['fpga_name'] = get_input() or options['fpga_name']
+   if len(options['fpga_name']):
+      print("")
+      print("Specify the FPGA position [%s]" % options['fpga_pos'])
+      options['fpga_pos'] = get_input() or options['fpga_pos']
+      if int(options['fpga_pos']) not in [1, 2, 3, 4]:
+         sys.exit("fpga_wizard (ERROR): FPGA position can be 1 to 4")
 
    print("")
 
-   print("Specify a BPI in the form 'PARTNAME,DATAWIDTH' [None]")
-   options['bpi_name'],options['bpi_width'] = get_part(get_input())
+   print("Specify an attached SPI [None]")
+   options['spi_name'] = get_input()
+   if len(options['spi_name']):
+      print("")
+      print("Specify the SPI bits width [%s]" % options['spi_width'])
+      options['spi_width'] = get_input() or options['spi_width']
+      if int(options['spi_width']) not in [1, 2, 3, 4]:
+         sys.exit("fpga_wizard (ERROR): SPI data width can be 1 to 4")
 
-   if options['bpi_width'] and int(options['bpi_width']) not in [8, 16, 32, 64]:
-      sys.exit("fpga_wizard (ERROR): BPI data width can be 8, 16, 32 or 64")
+   print("")
+
+   print("Specify an attached BPI [None]")
+   options['bpi_name'] = get_input()
+   if len(options['bpi_name']):
+      print("")
+      print("Specify the BPI bits width [%s]" % options['bpi_width'])
+      options['bpi_width'] = get_input() or options['bpi_width']
+      if int(options['bpi_width']) not in [8, 16, 32, 64]:
+         sys.exit("fpga_wizard (ERROR): BPI data width can be 8, 16, 32 or 64")
 
 print("") #----------------------------------------------------------------------------------------
 
@@ -159,44 +166,41 @@ print("") #---------------------------------------------------------------------
 # Generate the project
 ###################################################################################################
 
-# The Makefile
+# The Makefile ------------------------------------------------------------------------------------
 
 makefile  = "#!/usr/bin/make\n\n"
 makefile += "TOOL    = %s\n" % (options['tool'])
 makefile += "TCLPATH = %s\n" % (options['tcl_path'])
 makefile += "include $(TCLPATH)/Makefile"
 
-# options.tcl
+# options.tcl -------------------------------------------------------------------------------------
 
 optfile = ""
 
-if 'fpga_name' in options and options['fpga_name'] is not None:
-   optfile += "fpga_name   %s\n" % (options['fpga_name'])
-if 'fpga_pos' in options and options['fpga_pos'] is not None:
-   optfile += "fpga_pos    %s\n" % (options['fpga_pos'])
-if 'spi_name' in options and options['spi_name'] is not None:
-   optfile += "spi_name    %s\n" % (options['spi_name'])
-if 'spi_width' in options and options['spi_width'] is not None:
-   optfile += "spi_width   %s\n" % (options['spi_width'])
-if 'bpi_name' in options and options['bpi_name'] is not None:
-   optfile += "bpi_name    %s\n" % (options['bpi_name'])
-if 'bpi_width' in options and options['bpi_width'] is not None:
-   optfile += "bpi_width   %s\n" % (options['bpi_width'])
-   
+if 'fpga_name' in options and len(options['fpga_name']):
+   optfile += "set fpga_name %s\n" % options['fpga_name']
+   optfile += "set fpga_pos  %s\n" % options['fpga_pos']
+if 'spi_name'  in options and len(options['spi_name']):
+   optfile += "set spi_name  %s\n" % options['spi_name']
+   optfile += "set spi_width %s\n" % options['spi_width']
+if 'bpi_name'  in options and len(options['bpi_name']):
+   optfile += "set bpi_name  %s\n" % options['bpi_name']
+   optfile += "set bpi_width %s\n" % options['bpi_width']
+
 optfile += "\n"
 
 if 'fpga_name' in options and options['fpga_name'] is not None:
-   optfile += "fpga_device $fpga_name\n"
+   optfile += "fpga_device   $fpga_name\n"
 
 optfile += "\n"
 
 for files in options['files']:
     file,lib = files.split(",")
-    optfile += "fpga_file   %-30s -lib %s\n"%(file,lib)
+    optfile += "fpga_file     %-30s -lib %s\n"%(file,lib)
 if 'top_file' in options:
-   optfile += "fpga_file   %-30s -top %s\n"%(options['top_file'],options['top_name'])
+   optfile += "fpga_file     %-30s -top %s\n"%(options['top_file'],options['top_name'])
 
-# Gen files
+# Gen files ---------------------------------------------------------------------------------------
 
 open("Makefile", 'w').write(makefile)
 open("options.tcl", 'w').write(optfile)
