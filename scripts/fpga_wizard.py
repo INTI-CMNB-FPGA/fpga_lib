@@ -21,6 +21,7 @@
 import sys, os, readline, re, glob, shutil
 from fpga_db import *
 
+# config autocomplete
 readline.set_completer_delims(' \t\n;')
 readline.parse_and_bind("tab: complete")
 
@@ -31,7 +32,7 @@ readline.parse_and_bind("tab: complete")
 options              = {}
 options['tool']      = 'vivado'
 options['tcl_path']  = '../tcl'
-options['top_file']  = 'top.vhdl'
+options['top_file']  = None
 options['files']     = []
 options['fpga_name'] = 'UNKNOWN'
 options['fpga_pos']  = '1'
@@ -49,6 +50,14 @@ def get_input():
     except: # Python3
        return input(prompt)
 
+def get_top(top_file):
+    text = open(top_file).read()
+    result = re.findall(r"entity (.*) is",text,re.I) or re.findall(r"module (.*)\(",text,re.I)
+    if result:
+       return result[0]
+    else:
+       sys.exit("fpga_wizard (ERROR): I had not found an entity/module declaration")
+
 def complete(text, state):
     for opt in alternatives:
         if opt.startswith(text):
@@ -57,22 +66,13 @@ def complete(text, state):
            else:
               state -= 1
 
-def get_top(top_file):
-    text = open(top_file).read()
-    try:
-       result = re.match(r"entity (.*) is",text) or re.match(r"module (.*)\(",text)
-       if result.group(1):
-          return result.group(1)
-    except:
-       sys.exit("fpga_wizard (ERROR): I had not found an entity/module declaration")
-
 ###################################################################################################
 # Collect info
 ###################################################################################################
 
 print("fpga_wizard is a member of FPGA Helpers v%s" % (fpga_db.version))
 
-print("") #----------------------------------------------------------------------------------------
+print("") # TOOL ----------------------------------------------------------------------------------
 
 alternatives = fpga_db.tools # available tools
 readline.set_completer(complete)
@@ -81,26 +81,28 @@ options['tool'] = get_input() or options['tool']
 if options['tool'] not in alternatives:
    sys.exit("fpga_wizard (ERROR): unsupported tool")
 
-print("") #----------------------------------------------------------------------------------------
+print("") # TCL PATH ------------------------------------------------------------------------------
 
 readline.set_completer() # browse filesystem
 print("Where to get (if exists) or put Tcl files? [%s]" % options['tcl_path'])
 options['tcl_path'] = get_input() or options['tcl_path']
 
-print("") #----------------------------------------------------------------------------------------
+print("") # TOP FILE ------------------------------------------------------------------------------
 
-alternatives = glob.glob('*.v*') # vhdl, vhd, v (probably only one file)
-readline.set_completer(complete)
-default = alternatives[0] if len(alternatives) else options['top_file']
+readline.set_completer() # browse filesystem
+try:
+   default = glob.glob('*.v*')[0] # vhdl, vhd, v (probably only one file)
+except:
+   default = options['top_file']
 print("Top Level file? [%s]" % default)
 options['top_file'] = get_input() or default
 
-if not os.path.exists(options['top_file']):
+if options['top_file'] is None or not os.path.exists(options['top_file']):
    sys.exit("fpga_wizard (ERROR): the specified top level does not exists")
 
 options['top_name'] = get_top(options['top_file'])
 
-print("") #----------------------------------------------------------------------------------------
+print("") # FILES ---------------------------------------------------------------------------------
 
 readline.set_completer() # browse filesystem
 print("Add files to the project (EMPTY to FINISH):")
@@ -118,7 +120,7 @@ while (morefiles):
    else:
       morefiles = 0
 
-print("") #----------------------------------------------------------------------------------------
+print("") # BOARD ---------------------------------------------------------------------------------
 
 alternatives = fpga_db.boards # available boards
 readline.set_completer(complete)
@@ -128,7 +130,7 @@ options['board'] = get_input()
 if options['board'] and options['board'] not in alternatives:
    sys.exit("fpga_wizard (ERROR): unsupported board")
 
-print("") #----------------------------------------------------------------------------------------
+print("") # DEVICES -------------------------------------------------------------------------------
 
 if options['board']:
    options.update(fpga_db.boards[options['board']])
@@ -195,7 +197,8 @@ if not os.path.exists(options['tcl_path'] + "/programming.tcl"):
 
 # The Makefile ------------------------------------------------------------------------------------
 
-makefile  = "#!/usr/bin/make\n\n"
+makefile  = "#!/usr/bin/make\n"
+makefile += "#Generated with fpga_wizard v%s\n\n" % fpga_db.version
 makefile += "TOOL    = %s\n" % (options['tool'])
 makefile += "TCLPATH = %s\n" % (options['tcl_path'])
 makefile += "include $(TCLPATH)/Makefile"
