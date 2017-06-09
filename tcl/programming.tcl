@@ -108,7 +108,7 @@ proc writeFile {PATH DATA} {set fp [open $PATH w];puts $fp $DATA;close $fp}
 set fpga_pos  1
 set spi_width 1
 set spi_name  "SPINAME"
-set bpi_width 16
+set bpi_width 8
 set bpi_name  "BPINAME"
 set xcf_name  "XCFNAME"
 
