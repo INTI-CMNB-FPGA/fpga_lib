@@ -27,8 +27,8 @@ class fpga_db:
          'spi_width' : '4'
       },
       'microsemi_m2s090ts' : {
-         'full_name' : 'Gaisler Research GR-XC6S',
-         'fpga_name' : 'Microsemi M2S090TS-EVAL-KIT',
+         'full_name' : 'Microsemi M2S090TS-EVAL-KIT',
+         'fpga_name' : 'm2s090ts-1-fg484',
          'fpga_pos'  : '1',
          'spi_name'  : 'W25Q64FVSSIG',
          'spi_width' : '1'
@@ -59,7 +59,26 @@ class fpga_db:
    }
 
 if __name__ == "__main__":
+   print("")
+   print("## Supported tools ############################################################")
+   print("")
+   for tool in sorted(fpga_db.tools):
+       print("* %s" % tool)
+   print("")
+   print("## Supported boards ###########################################################")
+   print("")
    for board in sorted(fpga_db.boards):
-       print("%s:" % (board))
-       for key,value in sorted(fpga_db.boards[board].items()):
-           print ("* %-10s-> %s" % (key,value))
+       print("%s (%s)" % (board,fpga_db.boards[board]['full_name']))
+       if 'fpga_name' in fpga_db.boards[board] and 'fpga_pos' in fpga_db.boards[board]:
+          print ("* FPGA %s in position %s" %
+             (fpga_db.boards[board]['fpga_name'],fpga_db.boards[board]['fpga_pos'])
+          )
+       if 'spi_name' in fpga_db.boards[board] and 'spi_width' in fpga_db.boards[board]:
+          print ("* SPI %s with width %s" %
+             (fpga_db.boards[board]['spi_name'],fpga_db.boards[board]['spi_width'])
+          )
+       if 'bpi_name' in fpga_db.boards[board] and 'bpi_width' in fpga_db.boards[board]:
+          print ("* BPI %s with width %s" %
+             (fpga_db.boards[board]['bpi_name'],fpga_db.boards[board]['bpi_width'])
+          )
+       print("")
