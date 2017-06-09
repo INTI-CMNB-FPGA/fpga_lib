@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import sys, os, readline, re, glob
+import sys, os, readline, re, glob, shutil
 from fpga_db import *
 
 readline.set_completer_delims(' \t\n;')
@@ -70,7 +70,7 @@ def get_top(top_file):
 # Collect info
 ###################################################################################################
 
-print("fpga_wizard is member of FPGA Helpers v%s" % (fpga_db.version))
+print("fpga_wizard is a member of FPGA Helpers v%s" % (fpga_db.version))
 
 print("") #----------------------------------------------------------------------------------------
 
@@ -174,6 +174,24 @@ print("") #---------------------------------------------------------------------
 ###################################################################################################
 # Generate the project
 ###################################################################################################
+
+# Tcl files ---------------------------------------------------------------------------------------
+
+if not os.path.exists(options['tcl_path']):
+   os.mkdir(options['tcl_path'])
+   print("fpga_wizard (INFO): directory %s was created" % options['tcl_path'])
+
+tcl_orig = os.path.dirname(os.path.abspath(__file__)) + "/../tcl"
+
+if not os.path.exists(options['tcl_path'] + "/Makefile"):
+   shutil.copy(tcl_orig + '/Makefile', options['tcl_path'])
+   print("fpga_wizard (INFO): Makefile was copy to %s" % options['tcl_path'])
+if not os.path.exists(options['tcl_path'] + "/synthesis.tcl"):
+   shutil.copy(tcl_orig + '/synthesis.tcl', options['tcl_path'])
+   print("fpga_wizard (INFO): synthesis.tcl was copy to %s" % options['tcl_path'])
+if not os.path.exists(options['tcl_path'] + "/programming.tcl"):
+   shutil.copy(tcl_orig + '/programming.tcl', options['tcl_path'])
+   print("fpga_wizard (INFO): programming.tcl was copy to %s" % options['tcl_path'])
 
 # The Makefile ------------------------------------------------------------------------------------
 
