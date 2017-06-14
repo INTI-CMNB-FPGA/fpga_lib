@@ -1,0 +1,213 @@
+---
+doc:
+  - "Board: SmartFusion2 Security Evaluation Kit"
+  -
+  - "Author: Bruno Valinoti <valinoti@inti.gob.ar>"
+  -
+  - Copyright (c) 2015-2017 Author and INTI
+  - Distributed under the BSD 3-Clause License
+clocks:
+  doc:
+    - A 50 MHz clock oscillator with a +/- 50 ppm accuracy as system reference.
+    - Two 32.768 KHz crystal oscillators for the main and auxiliary oscillators, XTALOSC_AUX as clk2 and XTALOSC_MAIN as clk3 .
+  clk1_i       : k1,50
+  clk2_i       : ab20,0.032768
+  clk3_i       : ab21,0.032768
+clock-diff:
+  doc: Clock source is selected with J23, from external SMA clock when SEL0 or 125 MHz clock oscillator when SEL1. 
+  clk1p_i       : u3
+  clk1n_i       : u4
+leds:
+  doc: LEDS 1 to 8 are LED0 to LED0 in the board. BBRRGGYY color assignment.
+  led1_o       : e1
+  led2_o       : f4
+  led3_o       : f3
+  led4_o       : g7
+  led5_o       : h7
+  led6_o       : j6
+  led7_o       : h6
+  led8_o       : h5
+dip-switches:
+  doc: DIPS 1 to 4 are DIP1 to DIP4 (SW5) in the board.
+  dip1_i       : l19,PULLUP
+  dip2_i       : l18,PULLUP
+  dip3_i       : k21,PULLUP
+  dip4_i       : k20,PULLUP
+push-buttons:
+  doc: 
+    - USER RESET is SW6 in the board.
+    - SWITCH1 to SWITCH4 are pb1 to pb4 
+  pbr_i        : r15,PULLUP
+  pb1_i        : l20,PULLUP
+  pb2_i        : k16,PULLUP
+  pb3_i        : k18,PULLUP
+  pb4_i        : j18,PULLUP
+slide_switches:
+  doc: The SW7 slide switch powers the device ON or OFF from +12 V external DC jack.
+uart:
+  doc: USB-to-UART, FTDI interface. 
+  uart1_rx_i   : g18
+  uart1_tx_o   : h19
+i2c:
+  doc: I2C ports are routed to header H1.
+  i2c1_scl_o    : g16
+  i2c1_sda_io   : g17
+  i2c2_scl_o    : r22
+  i2c2_sda_io   : p22
+usb:
+  doc: USB3320 transceiver interface, OTG protocol supported.
+  usb_data0_io  : v22
+  usb_data1_io  : v21
+  usb_data2_io  : u22
+  usb_data3_io  : u21
+  usb_data4_io  : t20
+  usb_data5_io  : t21
+  usb_data6_io  : p17
+  usb_data7_io  : v19
+  usb_dir_i     : r18
+  usb_clkout_i  : r17
+  usb_nxt_i     : t19
+  usb_stp_i     : t18
+serdes:
+  doc: The SERDES0 interface has four lanes.
+        - Lane 0 directly routed to PCIe connector
+        - Lane 1 used for loopback testing.
+        - Lane 2 routed to SMA connectors.
+        - Lane 3 routed to an Ethernet Gigabit transceiver PHY.
+  pcie_rxd0_p_i: w1
+  pcie_rxd0_n_i: y1
+  pcie_txd0_p_o: ab2
+  pcie_txd0_n_o: aa2
+  loopback_rxd1_p_i: w3
+  loopback_rxd1_n_i: y3
+  loopback_txd1_p_o: aa4
+  loopback_txd1_n_o: ab4
+  sma_rxd_p_i: w5
+  sma_rxd_n_i: y5
+  sma_txd_p_o: ab6
+  sma_txd_n_o: aa6
+  phy_rxd_p_i: w7
+  phy_rxd_n_i: y7
+  phy_txd_p_o: ab8
+  phy_txd_n_o: aa8
+ethernet:
+  doc:
+    - The PHY Ethernet is a Marvell 88E1340S.
+    - Supports SGMII interface.  //cambiar nombres de señales segun standard
+  phy_rcvrd_clk1_i: h1 
+  phy_rcvrd_clk2_i: j4
+  phy_mdio_i      : j3
+  phy_mdc_i       : j2
+  phy_int_n_i     : j1
+  phy_sclk_i      : k7
+  phy_rst_i       : k6
+gpio1:
+  doc: GPIO header J1.
+  gpio1_1      : ab15
+  gpio1_2      : +3.3v
+  gpio1_3      : aa15
+  gpio1_4      : gnd
+  gpio1_5      : gnd
+  gpio1_6      : aa16
+  gpio1_7      : ab18
+  gpio1_8      : aa17
+  gpio1_9      : ab19
+  gpio1_10     : gnd
+  gpio1_11     : gnd
+  gpio1_12     : +3.3v
+  gpio1_13     : Y18
+  gpio1_14     : AA18
+  gpio1_15     : Y19
+  gpio1_16     : gnd
+  gpio1_17     : gnd
+  gpio1_18     : Y17
+  gpio1_19     : W16
+  gpio1_20     : W17
+  gpio1_21     : V16
+  gpio1_22     : gnd
+  gpio1_23     : gnd
+  gpio1_24     : U14
+  gpio1_25     : C22
+  gpio1_26     : U15
+  gpio1_27     : B22
+  gpio1_28     : gnd
+  gpio1_29     : gnd
+  gpio1_30     : V13
+  gpio1_31     : Y15
+  gpio1_32     : V14
+  gpio1_33     : W15
+  gpio1_34     : gnd
+  gpio1_35     : gnd
+  gpio1_36     : G5
+  gpio1_37     : F5
+  gpio1_38     : G6
+  gpio1_39     : F6
+  gpio1_40     : gnd
+  gpio1_41     : gnd
+  gpio1_42     : E4
+  gpio1_43     : C4
+  gpio1_44     : E5
+  gpio1_45     : D5
+  gpio1_46     : gnd
+  gpio1_47     : gnd
+  gpio1_48     : C3
+  gpio1_49     : B2
+  gpio1_50     : B3
+  gpio1_51     : A2
+  gpio1_52     : gnd
+  gpio1_53     : gnd
+  gpio1_54     : C1
+  gpio1_55     : D1
+  gpio1_56     : B1
+  gpio1_57     : D2
+  gpio1_58     : gnd
+  gpio1_59     : gnd
+  gpio1_60     : D3
+  gpio1_61     : +3.3v
+  gpio1_62     : D4
+  gpio1_63     : +3.3v
+  gpio1_64     : gnd
+lpddr:
+  doc: LPDDR 32 Mb x 16 (512 Mb) Micron MT46H32M16LF.
+  ddr_dq0_io   : B9
+  ddr_dq1_io   : A9
+  ddr_dq2_io   : F10
+  ddr_dq3_io   : E10
+  ddr_dq4_io   : A11
+  ddr_dq5_io   : D10
+  ddr_dq6_io   : D11
+  ddr_dq7_io   : E12
+  ddr_dq8_io   : A12
+  ddr_dq9_io   : A13
+  ddr_dq10_io  : D12
+  ddr_dq11_io  : D13
+  ddr_dq12_io  : A14
+  ddr_dq13_io  : A15
+  ddr_dq14_io  : D14
+  ddr_dq15_io  : E13
+  ddr_ldqs_io  : B11
+  ddr_udqs_io  : B13
+  ddr_ldm_o    : A10
+  ddr_udm_o    : G13
+  ddr_cas_n_o  : F15
+  ddr_ras_n_o  : F14 
+  ddr_we_n_o   : G14
+  ddr_cke_o    : B15
+  ddr_ckp_o    : A16
+  ddr_ckn_o    : A17
+  ddr_cs_n_o   : C15
+  ddr_ba0_o    : A18
+  ddr_ba1_o    : A19
+spi:
+  doc: SPI Flash (W25Q64FVSSIG).
+  spi_sclk_i   : N19
+  spi_miso_o   : N20
+  spi_mosi_i   : N21
+  spi_ss0_i    : N22
+  spi_wp_i     : L16
+  spi_rst_i    : K15
+  spi_1_sclk_i : M21
+  spi_1_mosi_o : L21
+  spi_1_miso_i : M22
+  spi_1_ss0_o  : L20
+  

@@ -1,0 +1,197 @@
+---
+doc:
+  - "Board: Terasic DE0-Nano development and education board"
+  -
+  - "Author: Bruno Valinoti <valinoti@inti.gob.ar>"
+  -
+  - Copyright (c) 2015-2017 Author and INTI
+  - Distributed under the BSD 3-Clause License
+clock:
+  doc: The DE0-Nano board includes a 50 MHz oscillator connected directly to a dedicated clock input pin of the Cyclone IV.
+  clk1_i       : r8
+leds:
+  doc:  LED1 is LED0 on board and so.
+  led1_o       : a15
+  led2_o       : a13
+  led3_o       : b13
+  led4_o       : a11
+  led5_o       : d1
+  led6_o       : f3
+  led7_o       : b1
+  led8_o       : l3
+dip-switches: 
+  doc: SW1 is DIP Switch[0] on board and so.
+  sw1_i        : m1
+  sw2_i        : t8
+  sw3_i        : b9
+  sw4_i        : m15
+push-buttons:
+  doc: PB1 is KEY0 and PB2 is KEY1 (both active low).
+  pb1_i        : j15
+  pb2_i        : e1
+sdram:
+  doc: 32MBx16-bit SDRAM
+  sdram_a0_o   : p2
+  sdram_a1_o   : n5
+  sdram_a2_o   : n6
+  sdram_a3_o   : m8
+  sdram_a4_o   : p8
+  sdram_a5_o   : t7
+  sdram_a6_o   : n8
+  sdram_a7_o   : t6
+  sdram_a8_o   : r1
+  sdram_a9_o   : p1
+  sdram_a10_o  : n2
+  sdram_a11_o  : n1
+  sdram_a12_o  : l4
+  sdram_d0     : g2
+  sdram_d1     : g1
+  sdram_d2     : l8
+  sdram_d3     : k5
+  sdram_d4     : k2
+  sdram_d5     : j2
+  sdram_d6     : j1
+  sdram_d7     : r7
+  sdram_d8     : t4
+  sdram_d9     : t2
+  sdram_d10    : t3
+  sdram_d11    : r3
+  sdram_d12    : r5
+  sdram_d13    : p3
+  sdram_d14    : n3
+  sdram_d15    : k1
+  sdram_ba0_o  : m7
+  sdram_ba1_o  : m6
+  sdram_dm0_i  : r6
+  sdram_dm1_i  : t5
+  sdram_ras_o  : l2
+  sdram_cas_o  : l1
+  sdram_cke_o  : l7
+  sdram_clk_o  : r4
+  sdram_we_o   : c2
+  sdram_cs_o   : p6
+eeprom:
+  doc: 2Kb I2C EEPROM, The device is organized as one block of 256 x 8-bit memory.
+  eeprom_sda   : f1
+  eeprom_scl   : f2
+gpio1:
+  gpio1_1      : a8
+  gpio1_2      : d3
+  gpio1_3      : b8
+  gpio1_4      : c3
+  gpio1_5      : a2
+  gpio1_6      : a3
+  gpio1_7      : b3
+  gpio1_8      : b4
+  gpio1_9      : a4
+  gpio1_10     : b5
+  gpio1_11     : +5v
+  gpio1_12     : gnd
+  gpio1_13     : a5
+  gpio1_14     : d5
+  gpio1_15     : b6
+  gpio1_16     : a6
+  gpio1_17     : b7
+  gpio1_18     : d6
+  gpio1_19     : a7
+  gpio1_20     : c6
+  gpio1_21     : c8
+  gpio1_22     : e6
+  gpio1_23     : e7
+  gpio1_24     : d8
+  gpio1_25     : e8
+  gpio1_26     : f8
+  gpio1_27     : f9
+  gpio1_28     : e9
+  gpio1_29     : +3.3v
+  gpio1_30     : gnd
+  gpio1_31     : c9
+  gpio1_32     : d9
+  gpio1_33     : e11
+  gpio1_34     : e10
+  gpio1_35     : c11
+  gpio1_36     : b11
+  gpio1_37     : a12
+  gpio1_38     : d11
+  gpio1_39     : d12
+  gpio1_40     : b12
+gpio2:
+  gpio2_1      : t9
+  gpio2_2      : f13
+  gpio2_3      : r9
+  gpio2_4      : t15
+  gpio2_5      : t14
+  gpio2_6      : t13
+  gpio2_7      : r13
+  gpio2_8      : t12
+  gpio2_9      : r12
+  gpio2_10     : t11
+  gpio2_11     : +5v
+  gpio2_12     : gnd
+  gpio2_13     : t10
+  gpio2_14     : r11
+  gpio2_15     : p11
+  gpio2_16     : r10
+  gpio2_17     : n12
+  gpio2_18     : p9
+  gpio2_19     : n9
+  gpio2_20     : n11
+  gpio2_21     : l16
+  gpio2_22     : k16
+  gpio2_23     : r16
+  gpio2_24     : l15
+  gpio2_25     : p15
+  gpio2_26     : p16
+  gpio2_27     : r14
+  gpio2_28     : n16
+  gpio2_29     : +3.3v
+  gpio2_30     : gnd
+  gpio2_31     : n15
+  gpio2_32     : p14
+  gpio2_33     : l14
+  gpio2_34     : en14
+  gpio2_35     : m10
+  gpio2_36     : l13
+  gpio2_37     : j16
+  gpio2_38     : k15
+  gpio2_39     : j13
+  gpio2_40     : j14
+gpio3:
+  gpio3_1      : +3.3v
+  gpio3_2      : e15
+  gpio3_3      : e16
+  gpio3_4      : m16
+  gpio3_5      : a14
+  gpio3_6      : b16
+  gpio3_7      : c14
+  gpio3_8      : c16
+  gpio3_9      : c15
+  gpio3_10     : d16
+  gpio3_11     : d15
+  gpio3_12     : d14
+  gpio3_13     : f15
+  gpio3_14     : f16
+  gpio3_15     : f14
+  gpio3_16     : g16
+  gpio3_17     : g15
+  gpio3_18     : analog_in5
+  gpio3_19     : analog_in6
+  gpio3_20     : analog_in7
+  gpio3_21     : analog_in3
+  gpio3_22     : analog_in2
+  gpio3_23     : analog_in4
+  gpio3_24     : analog_in0
+  gpio3_25     : analog_in1
+  gpio3_26     : gnd
+adc:
+  doc: ADC128S022 low power, eight-channel 12-bit analog-to-digital converter.
+  adc_cs_o     : a10
+  adc_saddr_o  : b10
+  adc_sdat_i   : a9
+  adc_sclk_o   : b14
+sensor_accelerometer:
+  doc: ADXL345 ultralow power, 3-axis accelerometer.
+  sensor_sda   : f1
+  sensor_scl   : f2
+  sensor_cs_o  : g5
+  sensor_int_i : m2
