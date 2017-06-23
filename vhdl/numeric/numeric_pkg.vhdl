@@ -3,7 +3,6 @@
 --
 -- Author(s):
 -- * Rodrigo A. Melo
--- * Francisco Salomón
 --
 -- Copyright (c) 2015-2016 Authors and INTI
 -- Distributed under the BSD 3-Clause License
@@ -26,7 +25,7 @@ package Numeric is
    -- Math Functions
    function minimum(left, right: in integer) return integer;
    function maximum(left, right: in integer) return integer;
-   function log2(a: integer) return integer;
+   function clog2(arg: natural) return natural;
 
 end package Numeric;
 
@@ -86,26 +85,14 @@ package body Numeric is
       end if;
    end function maximum;
 
-   function log2 (a : integer) return integer is
+   function clog2 (arg : natural) return natural is
    begin
-     if    (a <= 1)                   then return 0;
-     elsif (a > 1 and a <= 2)         then return 1;
-     elsif (a > 2 and a <= 4)         then return 2;
-     elsif (a > 4 and a <= 8)         then return 3;
-     elsif (a > 8 and a <= 16)        then return 4;
-     elsif (a > 16 and a <= 32)       then return 5;
-     elsif (a > 32 and a <= 64)       then return 6;
-     elsif (a > 64 and a <= 128)      then return 7;
-     elsif (a > 128 and a <= 256)     then return 8;
-     elsif (a > 256 and a <= 512)     then return 9;
-     elsif (a > 512 and a <= 1024)    then return 10;
-     elsif (a > 1024 and a <= 2048)   then return 11;
-     elsif (a > 2048 and a <= 4096)   then return 12;
-     elsif (a > 4096 and a <= 8192)   then return 13;
-     elsif (a > 8192 and a <= 16384)  then return 14;
-     elsif (a > 16384 and a <= 32768) then return 15;
-     else                                  return 16;
-     end if;
-   end function log2;
+      for i in 0 to 31 loop
+          if arg <= 2**i then
+             return i;
+          end if;
+      end loop;
+      return 32;
+   end function clog2;
    ----------------------------------------------------------------------------
 end package body Numeric;
