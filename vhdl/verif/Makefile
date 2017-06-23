@@ -9,13 +9,13 @@ include ../../makes/ghdl.mk
 bin: blink.o transloop.o
 test: run_loopcheck_tb run_transloop_tb
 
-pre:
+simul_pkg.o:
 	make -C ../simul bin
 
 transloop.o: verif_pkg.o loopcheck.o
 
-loopcheck_tb.o: pre verif_pkg.o loopcheck.o
-transloop_tb.o: pre transloop.o
+loopcheck_tb.o: simul_pkg.o verif_pkg.o loopcheck.o
+transloop_tb.o: simul_pkg.o transloop.o
 
 run_loopcheck_tb: loopcheck_tb
 run_transloop_tb: transloop_tb
