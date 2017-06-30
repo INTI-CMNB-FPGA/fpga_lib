@@ -5,4 +5,4 @@
 * Vendor tools must be ready to use (added to the system path and with a valid license well
 configured).
 * Use: ```bash run.sh```
-* A *<vendor>_report* file is generated for each vendor tool used.
+* A *TOOL_report* file is generated for each vendor tool used.
