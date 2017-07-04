@@ -4,7 +4,7 @@
 -- Author(s):
 -- * Rodrigo A. Melo
 --
--- Copyright (C) 2016 Authors and INTI
+-- Copyright (C) 2016-2017 Authors and INTI
 -- Distributed under the BSD 3-Clause License
 --
 
@@ -74,6 +74,34 @@ package Mems is
          data2_o   : out std_logic_vector(DWIDTH-1 downto 0)
       );
    end component TrueDualPortRAM;
+
+   component FIFO_sync is
+      generic (
+         DWIDTH       : positive:=8;     -- Data width
+         DEPTH        : positive:=8;     -- FIFO depth
+         OUTREG       : boolean :=FALSE; -- Optional Output Register
+         AFULLOFFSET  : positive:=1;     -- Almost FULL OFFSET
+         AEMPTYOFFSET : positive:=1      -- Almost EMPTY OFFSET
+      );
+      port (
+         clk_i        : in  std_logic;
+         rst_i        : in  std_logic;
+         -- write side
+         wr_en_i      : in  std_logic;
+         data_i       : in  std_logic_vector(DWIDTH-1 downto 0);
+         full_o       : out std_logic;
+         afull_o      : out std_logic;
+         overflow_o   : out std_logic;
+         ack_o        : out std_logic;
+         -- read side
+         rd_en_i      : in  std_logic;
+         data_o       : out std_logic_vector(DWIDTH-1 downto 0);
+         empty_o      : out std_logic;
+         aempty_o     : out std_logic;
+         underflow_o  : out std_logic;
+         valid_o      : out std_logic
+      );
+   end component FIFO_sync;
 
 end package Mems;
 

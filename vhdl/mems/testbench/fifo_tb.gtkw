@@ -1,0 +1,54 @@
+[*]
+[*] GTKWave Analyzer v3.3.62 (w)1999-2014 BSI
+[*] Tue Jul  4 16:04:54 2017
+[*]
+[dumpfile] "/home/ram/repos-git/fpga_lib/temp/fifo_tb.ghw"
+[dumpfile_mtime] "Tue Jul  4 16:01:16 2017"
+[dumpfile_size] 1849
+[savefile] "/home/ram/repos-git/fpga_lib/vhdl/mems/testbench/fifo_tb.gtkw"
+[timestart] 0
+[size] 1360 732
+[pos] -1 -1
+*-50.611786 6000000000000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top.
+[treeopen] top.fifo_tb.
+[treeopen] top.fifo_tb.fifo_sync_i.
+[treeopen] top.fifo_tb.fifo_sync_i.memory_i.
+[treeopen] top.fifo_tb.fifo_sync_i.memory_i.ram.
+[sst_width] 236
+[signals_width] 118
+[sst_expanded] 1
+[sst_vpaned_height] 384
+@28
+top.fifo_tb.fifo_sync_i.clk_i
+top.fifo_tb.fifo_sync_i.rst_i
+@200
+-Write
+@28
+top.fifo_tb.fifo_sync_i.wr_en_i
+@22
+#{top.fifo_tb.fifo_sync_i.data_i[7:0]} top.fifo_tb.fifo_sync_i.data_i[7] top.fifo_tb.fifo_sync_i.data_i[6] top.fifo_tb.fifo_sync_i.data_i[5] top.fifo_tb.fifo_sync_i.data_i[4] top.fifo_tb.fifo_sync_i.data_i[3] top.fifo_tb.fifo_sync_i.data_i[2] top.fifo_tb.fifo_sync_i.data_i[1] top.fifo_tb.fifo_sync_i.data_i[0]
+@28
+#{top.fifo_tb.fifo_sync_i.wr_ptr[2:0]} top.fifo_tb.fifo_sync_i.wr_ptr[1] top.fifo_tb.fifo_sync_i.wr_ptr[0]
+top.fifo_tb.fifo_sync_i.full_o
+top.fifo_tb.fifo_sync_i.afull_o
+top.fifo_tb.fifo_sync_i.overflow_o
+top.fifo_tb.fifo_sync_i.ack_o
+@200
+-Read
+@28
+top.fifo_tb.fifo_sync_i.rd_en_i
+@22
+#{top.fifo_tb.fifo_sync_i.data_o[7:0]} top.fifo_tb.fifo_sync_i.data_o[7] top.fifo_tb.fifo_sync_i.data_o[6] top.fifo_tb.fifo_sync_i.data_o[5] top.fifo_tb.fifo_sync_i.data_o[4] top.fifo_tb.fifo_sync_i.data_o[3] top.fifo_tb.fifo_sync_i.data_o[2] top.fifo_tb.fifo_sync_i.data_o[1] top.fifo_tb.fifo_sync_i.data_o[0]
+@28
+#{top.fifo_tb.fifo_sync_i.rd_ptr[2:0]} top.fifo_tb.fifo_sync_i.rd_ptr[1] top.fifo_tb.fifo_sync_i.rd_ptr[0]
+top.fifo_tb.fifo_sync_i.empty_o
+top.fifo_tb.fifo_sync_i.aempty_o
+top.fifo_tb.fifo_sync_i.underflow_o
+top.fifo_tb.fifo_sync_i.valid_o
+@200
+-Others
+@28
+#{top.fifo_tb.fifo_sync_i.diff[2:0]} top.fifo_tb.fifo_sync_i.diff[1] top.fifo_tb.fifo_sync_i.diff[0]
+[pattern_trace] 1
+[pattern_trace] 0
