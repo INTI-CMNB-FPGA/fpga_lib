@@ -20,7 +20,7 @@ end entity FIFO_tb;
 architecture TestBench of FIFO_tb is
 
    constant DWIDTH      : positive:=8;
-   constant DEPTH       : positive:=3;
+   constant DEPTH       : positive:=5;
 
    signal stop          : boolean;
 
@@ -30,20 +30,18 @@ architecture TestBench of FIFO_tb is
    signal full,  empty  : std_logic;
    signal afull, aempty : std_logic;
    signal over,  under  : std_logic;
-   signal ack,   valid  : std_logic;
+   signal valid         : std_logic;
 
    procedure wr_check(
       num:    natural;
       full:   in std_logic; vfull:  in std_logic;
       afull:  in std_logic; vafull: in std_logic;
-      over:   in std_logic; vover:  in std_logic;
-      ack:    in std_logic; vack:   in std_logic
+      over:   in std_logic; vover:  in std_logic
    ) is
    begin
       assert full=vfull   report "Wrong Full Flag in "     & integer'image(num) severity failure;
       assert afull=vafull report "Wrong Almost Flag in "   & integer'image(num) severity failure;
       assert over=vover   report "Wrong Overflow Flag in " & integer'image(num) severity failure;
-      assert ack=vack     report "Wrong ACK in "           & integer'image(num) severity failure;
    end procedure wr_check;
 
    procedure rd_check(
@@ -59,6 +57,37 @@ architecture TestBench of FIFO_tb is
       assert under=vunder   report "Wrong Underflow Flag in " & integer'image(num) severity failure;
       assert valid=vvalid   report "Wrong Valid in "          & integer'image(num) severity failure;
    end procedure rd_check;
+
+   procedure ctrl(
+      signal clk:       in  std_logic;
+      signal wr_en:     out std_logic;
+             wr_en_val: in  std_logic;
+      signal rd_en:     out std_logic;
+             rd_en_val: in  std_logic;
+      signal data:      out std_logic_vector;
+             data_val:  in  std_logic_vector;
+             wr_num:    inout natural;
+             rd_num:    inout natural
+   ) is
+   begin
+      if wr_en_val='1' and rd_en_val='1' then
+         print("Write "&to_str(wr_num)&" - Read "&to_str(rd_num));
+         wr_num := wr_num + 1;
+         rd_num := rd_num + 1;
+      elsif wr_en_val='1' then
+         print("Write "&to_str(wr_num));
+         wr_num := wr_num + 1;
+      elsif rd_en_val='1' then
+         print("Read "&to_str(rd_num));
+         rd_num := rd_num + 1;
+      else
+         print("Nop");
+      end if;
+      wr_en <= wr_en_val;
+      rd_en <= rd_en_val;
+      data  <= data_val;
+      wait until rising_edge(clk);
+   end procedure ctrl;
 
 begin
 
@@ -83,7 +112,6 @@ begin
       full_o       => full,
       afull_o      => afull,
       overflow_o   => over,
-      ack_o        => ack,
       -- read side
       rd_en_i      => rd_en,
       data_o       => datao,
@@ -93,80 +121,47 @@ begin
       valid_o      => valid
    );
 
-   write_p : process
+   test_p : process
+      variable wr_num, rd_num: natural:=0;
    begin
-      wr_en <= '0';
-      datai <= (others => '0');
-      print("* Start of Test");
+      ctrl(clk, wr_en, '0', rd_en, '0', datai, x"00", wr_num, rd_num);
+      print("* Start of Test (DEPTH="&to_str(DEPTH)&")");
       wait until rising_edge(clk) and rst = '0';
-      print("* Writing");
-      wr_check(1,full,'0',afull,'0',over,'0',ack,'0');
-      wr_en <= '1';
-      datai <= x"12";
-      wait until rising_edge(clk);
-      wr_check(2,full,'0',afull,'0',over,'0',ack,'1');
-      datai <= x"34";
-      wait until rising_edge(clk);
-      wr_check(3,full,'0',afull,'0',over,'0',ack,'1');
-      datai <= x"56";
-      wait until rising_edge(clk);
-      wr_check(4,full,'0',afull,'1',over,'0',ack,'1');
-      wr_en <= '0';
-      datai <= x"78";
-      wait until rising_edge(clk);
-      wr_check(5,full,'1',afull,'1',over,'0',ack,'0');
-      wait until rising_edge(clk);
-      wr_check(6,full,'1',afull,'1',over,'0',ack,'0');
-      wr_en <= '1';
-      datai <= x"9A";
-      wait until rising_edge(clk);
-      wr_check(7,full,'1',afull,'1',over,'1',ack,'0');
-      wr_en <= '0';
-      wait until rising_edge(clk);
-      wr_check(7,full,'1',afull,'1',over,'0',ack,'0');
-      wait;
-   end process write_p;
-
-   read_p : process
-   begin
-      rd_en <= '0';
-      wait until rising_edge(clk) and rst = '0';
-      rd_check(1,empty,'1',aempty,'1',under,'0',valid,'0');
-      wait until rising_edge(clk);
-      rd_check(2,empty,'1',aempty,'1',under,'0',valid,'0');
-      wait until rising_edge(clk);
-      rd_check(3,empty,'0',aempty,'1',under,'0',valid,'0');
-      wait until rising_edge(clk);
-      rd_check(4,empty,'0',aempty,'1',under,'0',valid,'0');
-      wait until rising_edge(clk);
-      rd_check(5,empty,'0',aempty,'0',under,'0',valid,'0');
-      wait until rising_edge(clk) and over='1';
-      print("* Reading");
-      rd_en <= '1';
-      wait until rising_edge(clk);
-      rd_check(6,empty,'0',aempty,'0',under,'0',valid,'0');
-      wait until rising_edge(clk);
-      rd_check(7,empty,'0',aempty,'1',under,'0',valid,'1');
-      assert datao=x"12" report "Wrong data 1" severity failure;
-      wait until rising_edge(clk);
-      rd_check(8,empty,'0',aempty,'1',under,'0',valid,'1');
-      assert datao=x"34" report "Wrong data 2" severity failure;
-      rd_en <= '0';
-      wait until rising_edge(clk);
-      rd_check(9,empty,'1',aempty,'1',under,'0',valid,'1');
-      assert datao=x"56" report "Wrong data 3" severity failure;
-      wait until rising_edge(clk);
-      rd_check(10,empty,'1',aempty,'1',under,'0',valid,'0');
-      rd_en <= '1';
-      wait until rising_edge(clk);
-      rd_check(11,empty,'1',aempty,'1',under,'1',valid,'0');
-      rd_en <= '0';
-      wait until rising_edge(clk);
-      rd_check(12,empty,'1',aempty,'1',under,'0',valid,'0');
-      wait until rising_edge(clk);
+      print("* Testing Write");
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"11", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"22", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"33", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"44", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"55", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"66", wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num);
+      print("* Testing Read");
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num);
+      print("* Testing Write+Read");
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"77", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"88", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"99", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"AA", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"BB", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"CC", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"DD", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"EE", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"FF", wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num);
       print("* End of Test");
       stop <= TRUE;
       wait;
-   end process read_p;
+   end process test_p;
 
 end architecture TestBench;
