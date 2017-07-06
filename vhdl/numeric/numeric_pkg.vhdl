@@ -27,6 +27,19 @@ package Numeric is
    function maximum(left, right: in integer) return integer;
    function clog2(arg: natural) return natural;
 
+   component Counter is
+      generic (
+         DEPTH   : positive:=8
+      );
+      port (
+         clk_i   : in  std_logic; -- Clock
+         rst_i   : in  std_logic; -- Reset
+         ena_i   : in  std_logic; -- Input Enable
+         count_o : out std_logic_vector(clog2(DEPTH)-1 downto 0); -- Counter value
+         last_o  : out std_logic  -- Last value
+      );
+   end component Counter;
+
 end package Numeric;
 
 package body Numeric is
