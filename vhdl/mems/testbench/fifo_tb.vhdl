@@ -33,29 +33,25 @@ architecture TestBench of FIFO_tb is
    signal valid         : std_logic;
 
    procedure wr_check(
-      num:    natural;
       full:   in std_logic; vfull:  in std_logic;
       afull:  in std_logic; vafull: in std_logic;
       over:   in std_logic; vover:  in std_logic
    ) is
    begin
-      assert full=vfull   report "Wrong Full Flag in "     & integer'image(num) severity failure;
-      assert afull=vafull report "Wrong Almost Flag in "   & integer'image(num) severity failure;
-      assert over=vover   report "Wrong Overflow Flag in " & integer'image(num) severity failure;
+      assert full=vfull   report "Wrong Full Flag"        severity failure;
+      assert afull=vafull report "Wrong Almost Flag"      severity failure;
+      assert over=vover   report "Wrong Overflow Flag"    severity failure;
    end procedure wr_check;
 
    procedure rd_check(
-      num:    natural;
       empty:  in std_logic; vempty:  in std_logic;
       aempty: in std_logic; vaempty: in std_logic;
-      under:  in std_logic; vunder:  in std_logic;
-      valid:  in std_logic; vvalid:  in std_logic
+      under:  in std_logic; vunder:  in std_logic
    ) is
    begin
-      assert empty=vempty   report "Wrong Empty Flag in "     & integer'image(num) severity failure;
-      assert aempty=vaempty report "Wrong Almost Empty in "   & integer'image(num) severity failure;
-      assert under=vunder   report "Wrong Underflow Flag in " & integer'image(num) severity failure;
-      assert valid=vvalid   report "Wrong Valid in "          & integer'image(num) severity failure;
+      assert empty=vempty   report "Wrong Empty Flag"     severity failure;
+      assert aempty=vaempty report "Wrong Almost Empty"   severity failure;
+      assert under=vunder   report "Wrong Underflow Flag" severity failure;
    end procedure rd_check;
 
    procedure ctrl(
@@ -122,46 +118,80 @@ begin
    );
 
    test_p : process
-      variable wr_num, rd_num: natural:=0;
+      variable wr_num, rd_num: natural:=1;
    begin
       ctrl(clk, wr_en, '0', rd_en, '0', datai, x"00", wr_num, rd_num);
       print("* Start of Test (DEPTH="&to_str(DEPTH)&")");
       wait until rising_edge(clk) and rst = '0';
+      wr_check(full, '0', afull, '0', over, '0');
       print("* Testing Write");
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"11", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"22", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"33", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"44", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"55", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"66", wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"11", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"22", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"33", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"44", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"55", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"66", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '1');
+      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
       print("* Testing Read");
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '1');
+      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
       print("* Testing Write+Read");
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"77", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"88", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"99", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"AA", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"BB", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"77", wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"88", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"99", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"AA", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"BB", wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '1', rd_en, '1', datai, x"CC", wr_num, rd_num);
       ctrl(clk, wr_en, '1', rd_en, '1', datai, x"DD", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"EE", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"FF", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"EE", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"FF", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
-      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
       print("* End of Test");
       stop <= TRUE;
       wait;
    end process test_p;
+
+   read_p : process
+   begin
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"11" report "Received 0x"&to_str(datao,'H')&" but 0x11 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"22" report "Received 0x"&to_str(datao,'H')&" but 0x22 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"33" report "Received 0x"&to_str(datao,'H')&" but 0x33 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"44" report "Received 0x"&to_str(datao,'H')&" but 0x44 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"55" report "Received 0x"&to_str(datao,'H')&" but 0x55 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"77" report "Received 0x"&to_str(datao,'H')&" but 0x77 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"88" report "Received 0x"&to_str(datao,'H')&" but 0x88 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"99" report "Received 0x"&to_str(datao,'H')&" but 0x99 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"AA" report "Received 0x"&to_str(datao,'H')&" but 0xAA awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"BB" report "Received 0x"&to_str(datao,'H')&" but 0xBB awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"CC" report "Received 0x"&to_str(datao,'H')&" but 0xCC awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"DD" report "Received 0x"&to_str(datao,'H')&" but 0xDD awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"EE" report "Received 0x"&to_str(datao,'H')&" but 0xEE awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"FF" report "Received 0x"&to_str(datao,'H')&" but 0xFF awaited" severity failure;
+      wait;
+   end process read_p;
 
 end architecture TestBench;
