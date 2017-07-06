@@ -92,7 +92,6 @@ package Mems is
          full_o       : out std_logic;
          afull_o      : out std_logic;
          overflow_o   : out std_logic;
-         ack_o        : out std_logic;
          -- read side
          rd_en_i      : in  std_logic;
          data_o       : out std_logic_vector(DWIDTH-1 downto 0);
