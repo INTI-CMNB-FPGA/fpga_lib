@@ -4,7 +4,7 @@
 -- Author(s):
 -- * Rodrigo A. Melo
 --
--- Copyright (c) 2015-2016 Authors and INTI
+-- Copyright (c) 2015-2017 Authors and INTI
 -- Distributed under the BSD 3-Clause License
 --
 
@@ -22,6 +22,11 @@ package Numeric is
    --- To Std Logic
    function to_logic(arg: integer) return std_logic;
    function to_vector(arg: integer; size: positive; sign: boolean:=FALSE) return std_logic_vector;
+   --- Binary <-> Gray
+   function bin2gray(arg: unsigned) return unsigned;
+   function bin2gray(arg: std_logic_vector) return std_logic_vector;
+   function gray2bin(arg: unsigned) return unsigned;
+   function gray2bin(arg: std_logic_vector) return std_logic_vector;
    -- Math Functions
    function minimum(left, right: in integer) return integer;
    function maximum(left, right: in integer) return integer;
@@ -81,6 +86,34 @@ package body Numeric is
       end if;
       return std_logic_vector(to_signed(arg,size));
    end function to_vector;
+   ----------------------------------------------------------------------------
+   -- Conversions betwenn Binary and Gray codes
+   ----------------------------------------------------------------------------
+   function bin2gray(arg: unsigned) return unsigned is
+   begin
+      return shift_right(arg, 1) xor arg;
+   end bin2gray;
+
+   function bin2gray(arg: std_logic_vector) return std_logic_vector is
+   begin
+      return std_logic_vector(bin2gray(unsigned(arg)));
+   end bin2gray;
+
+   function gray2bin(arg: unsigned) return unsigned is
+      variable gray, bin : unsigned(arg'high downto 0);
+   begin
+      gray := arg;
+      bin(bin'high):=gray(gray'high);
+      for i in gray'high-1 downto 0 loop
+          bin(i):=bin(i+1) xor gray(i);
+      end loop;
+      return bin;
+   end gray2bin;
+
+   function gray2bin(arg: std_logic_vector) return std_logic_vector is
+   begin
+      return std_logic_vector(gray2bin(unsigned(arg)));
+   end gray2bin;
    ----------------------------------------------------------------------------
    -- Math Functions
    ----------------------------------------------------------------------------
