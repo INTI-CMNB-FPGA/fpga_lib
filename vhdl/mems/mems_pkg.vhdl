@@ -131,6 +131,35 @@ package Mems is
       );
    end component FIFO_async;
 
+   component FIFO is
+      generic (
+         DWIDTH       : positive:=8;     -- Data width
+         DEPTH        : positive:=8;     -- FIFO depth
+         OUTREG       : boolean :=FALSE; -- Optional Output Register
+         AFULLOFFSET  : positive:=1;     -- Almost FULL OFFSET
+         AEMPTYOFFSET : positive:=1;     -- Almost EMPTY OFFSET
+         ASYNC        : boolean :=TRUE   -- Asynchronous FIFO
+      );
+      port (
+         -- write side
+         wr_clk_i     : in  std_logic; -- Write Clock
+         wr_rst_i     : in  std_logic; -- Write Reset
+         wr_en_i      : in  std_logic; -- Write Enable
+         data_i       : in  std_logic_vector(DWIDTH-1 downto 0); -- Data Input
+         full_o       : out std_logic; -- Full Flag
+         afull_o      : out std_logic; -- Almost Full Flag
+         overflow_o   : out std_logic; -- Overflow Flag
+         -- read side
+         rd_clk_i     : in  std_logic; -- Read Clock
+         rd_rst_i     : in  std_logic; -- Read Reset
+         rd_en_i      : in  std_logic; -- Read enable
+         data_o       : out std_logic_vector(DWIDTH-1 downto 0); -- Data Output
+         empty_o      : out std_logic; -- Empty flag
+         aempty_o     : out std_logic; -- Almost Empty flag
+         underflow_o  : out std_logic; -- Underflow Flag
+         valid_o      : out std_logic  -- Read Valid
+      );
+   end component FIFO;
 
 end package Mems;
 
