@@ -21,7 +21,7 @@ use FPGALIB.Sync.all;
 entity FIFO is
    generic (
       DWIDTH       : positive:=8;     -- Data width
-      DEPTH        : positive:=8;     -- FIFO depth
+      DEPTH        : positive:=8;     -- FIFO depth (even)
       OUTREG       : boolean :=FALSE; -- Optional Output Register
       AFULLOFFSET  : positive:=1;     -- Almost FULL OFFSET
       AEMPTYOFFSET : positive:=1;     -- Almost EMPTY OFFSET
@@ -54,8 +54,9 @@ architecture RTL of FIFO is
    -- Constants
    ------------------------------------------------------------------------------------------------
 
-   constant AWIDTH    : positive:=clog2(DEPTH);
-   constant DEPTHDIFF : natural:=2**AWIDTH-DEPTH;
+   constant EVEN_DEPTH : positive := DEPTH + (DEPTH rem 2); -- To ensure only even values
+   constant AWIDTH     : positive := clog2(EVEN_DEPTH);     -- Address width in bits
+   constant DIFF_DEPTH : natural  := 2**AWIDTH-EVEN_DEPTH;
 
    ------------------------------------------------------------------------------------------------
    -- Signals
@@ -80,7 +81,7 @@ architecture RTL of FIFO is
    function next_ptr(ena : std_logic; ptr: unsigned) return unsigned is
       variable ret : unsigned(ptr'range);
    begin
-      if ena='1' and ptr(AWIDTH-1 downto 0)=DEPTH-1 then
+      if ena='1' and ptr(AWIDTH-1 downto 0)=EVEN_DEPTH-1 then
          ret := (not(ptr(AWIDTH)), others => '0');
       elsif ena='1' then
          ret := ptr + 1;
@@ -99,11 +100,11 @@ architecture RTL of FIFO is
          when "00" | "11" =>
             return wr_ptr - rd_ptr;
          when "10" =>
-            return wr_ptr - DEPTHDIFF - rd_ptr;
+            return wr_ptr - DIFF_DEPTH - rd_ptr;
          when "01" =>
             wr_aux := not(wr_ptr(AWIDTH))&wr_ptr(AWIDTH-1 downto 0);
             rd_aux := not(rd_ptr(AWIDTH))&rd_ptr(AWIDTH-1 downto 0);
-            return wr_aux - DEPTHDIFF - rd_aux;
+            return wr_aux - DIFF_DEPTH - rd_aux;
          when others =>
             wr_aux := (others => '0');
       end case;
@@ -116,7 +117,7 @@ begin
    generic map (
       AWIDTH  => AWIDTH,
       DWIDTH  => DWIDTH,
-      DEPTH   => DEPTH,
+      DEPTH   => EVEN_DEPTH,
       OUTREG  => OUTREG
    )
    port map (
@@ -180,9 +181,9 @@ begin
    end process write_p;
 
    wr_ptr      <= next_ptr(wr_en, wr_ptr_r);
-   full        <= '1' when diff_ptr(wr_ptr, rd_in_wr_ptr) = DEPTH else '0';
+   full        <= '1' when diff_ptr(wr_ptr, rd_in_wr_ptr) = EVEN_DEPTH else '0';
    full_o      <= full;
-   afull_o     <= '1' when diff_ptr(wr_ptr, rd_in_wr_ptr) >= DEPTH-AFULLOFFSET else '0';
+   afull_o     <= '1' when diff_ptr(wr_ptr, rd_in_wr_ptr) >= EVEN_DEPTH-AFULLOFFSET else '0';
    overflow_o  <= '1' when wr_en_i='1' and full_r='1' else '0';
 
    ------------------------------------------------------------------------------------------------

@@ -40,9 +40,9 @@ architecture TestBench of FIFO_tb is
       over:   in std_logic; vover:  in std_logic
    ) is
    begin
-      assert full=vfull   report "Wrong Full Flag"        severity failure;
-      assert afull=vafull report "Wrong Almost Full Flag" severity failure;
-      assert over=vover   report "Wrong Overflow Flag"    severity failure;
+      assert full=vfull   report "Wrong Full Flag"           severity failure;
+      assert afull=vafull report "Wrong Almost Full Flag"    severity failure;
+      assert over=vover   report "Wrong Overflow Flag"       severity failure;
    end procedure wr_check;
 
    procedure rd_check(
@@ -133,11 +133,13 @@ begin
       ctrl(clk, wr_en, '1', rd_en, '0', datai, x"11", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
       ctrl(clk, wr_en, '1', rd_en, '0', datai, x"22", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
       ctrl(clk, wr_en, '1', rd_en, '0', datai, x"33", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"44", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"55", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"66", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '1');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"44", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"55", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"66", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"77", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '1');
       ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
       print("* Testing Read");
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
@@ -146,14 +148,16 @@ begin
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '1');
       ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
       print("* Testing Write");
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"77", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
       ctrl(clk, wr_en, '1', rd_en, '0', datai, x"88", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
       ctrl(clk, wr_en, '1', rd_en, '0', datai, x"99", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"AA", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"BB", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"CC", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '1');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"AA", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"BB", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"CC", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"DD", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"EE", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '1');
       ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
       print("* Testing Read");
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
@@ -162,14 +166,16 @@ begin
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '1');
       ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
       print("* Testing Write");
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"DD", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"EE", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
       ctrl(clk, wr_en, '1', rd_en, '0', datai, x"FF", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"00", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"11", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"22", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '1');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"00", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"11", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"22", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"33", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"44", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"55", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '1');
       ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
       print("* Testing Read");
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
@@ -178,17 +184,19 @@ begin
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '1');
       ctrl(clk, wr_en, '0', rd_en, '0', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
       print("* Testing Write+Read");
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"33", wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"44", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
-      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"55", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"66", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
-      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"77", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
-      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"88", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"99", wr_num, rd_num);
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"AA", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
-      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"BB", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"66", wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"77", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"88", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"99", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"AA", wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"BB", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '1', datai, x"CC", wr_num, rd_num);
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"DD", wr_num, rd_num); wr_check(full, '0', afull, '0', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"EE", wr_num, rd_num); wr_check(full, '0', afull, '1', over, '0');
+      ctrl(clk, wr_en, '1', rd_en, '0', datai, x"FF", wr_num, rd_num); wr_check(full, '1', afull, '1', over, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num);
+      ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '0', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '0', aempty, '1', under, '0');
       ctrl(clk, wr_en, '0', rd_en, '1', datai, datai, wr_num, rd_num); rd_check(empty, '1', aempty, '1', under, '0');
@@ -211,8 +219,9 @@ begin
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"55" report "Received 0x"&to_str(datao,'H')&" but 0x55 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
-      assert datao=x"77" report "Received 0x"&to_str(datao,'H')&" but 0x77 awaited" severity failure;
+      assert datao=x"66" report "Received 0x"&to_str(datao,'H')&" but 0x77 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
+      -- x"77" was overflow
       assert datao=x"88" report "Received 0x"&to_str(datao,'H')&" but 0x88 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"99" report "Received 0x"&to_str(datao,'H')&" but 0x99 awaited" severity failure;
@@ -221,22 +230,24 @@ begin
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"BB" report "Received 0x"&to_str(datao,'H')&" but 0xBB awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
-      assert datao=x"DD" report "Received 0x"&to_str(datao,'H')&" but 0xDD awaited" severity failure;
+      assert datao=x"CC" report "Received 0x"&to_str(datao,'H')&" but 0xDD awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
-      assert datao=x"EE" report "Received 0x"&to_str(datao,'H')&" but 0xEE awaited" severity failure;
+      assert datao=x"DD" report "Received 0x"&to_str(datao,'H')&" but 0xEE awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
+      -- x"CC" was overflow
       assert datao=x"FF" report "Received 0x"&to_str(datao,'H')&" but 0xFF awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"00" report "Received 0x"&to_str(datao,'H')&" but 0x00 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"11" report "Received 0x"&to_str(datao,'H')&" but 0x11 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
+      assert datao=x"22" report "Received 0x"&to_str(datao,'H')&" but 0x33 awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
       assert datao=x"33" report "Received 0x"&to_str(datao,'H')&" but 0x33 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"44" report "Received 0x"&to_str(datao,'H')&" but 0x44 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
-      assert datao=x"55" report "Received 0x"&to_str(datao,'H')&" but 0x55 awaited" severity failure;
-      wait until rising_edge(clk) and valid = '1';
+      -- x"55" was overflow
       assert datao=x"66" report "Received 0x"&to_str(datao,'H')&" but 0x66 awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"77" report "Received 0x"&to_str(datao,'H')&" but 0x77 awaited" severity failure;
@@ -248,6 +259,14 @@ begin
       assert datao=x"AA" report "Received 0x"&to_str(datao,'H')&" but 0xAA awaited" severity failure;
       wait until rising_edge(clk) and valid = '1';
       assert datao=x"BB" report "Received 0x"&to_str(datao,'H')&" but 0xBB awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"CC" report "Received 0x"&to_str(datao,'H')&" but 0xBB awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"DD" report "Received 0x"&to_str(datao,'H')&" but 0xBB awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"EE" report "Received 0x"&to_str(datao,'H')&" but 0xBB awaited" severity failure;
+      wait until rising_edge(clk) and valid = '1';
+      assert datao=x"FF" report "Received 0x"&to_str(datao,'H')&" but 0xBB awaited" severity failure;
       wait;
    end process read_p;
 
