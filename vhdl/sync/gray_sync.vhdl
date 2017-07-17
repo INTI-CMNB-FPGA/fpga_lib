@@ -10,6 +10,7 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 library FPGALIB;
 use FPGALIB.Numeric.all;
 use FPGALIB.Sync.all;
@@ -28,14 +29,14 @@ entity Gray_Sync is
 end entity Gray_Sync;
 
 architecture Structural of Gray_Sync is
-   signa grayi, grayo : std_logic_vector(WIDTH-1 downto 0);
+   signal grayi, grayo : std_logic_vector(WIDTH-1 downto 0);
 begin
 
    grayi <= std_logic_vector(bin2gray(data_i));
 
    sync_i: FFchain
-   generic map(WIDTH => WIDTH, STAGES => DEPTH)
-   port map(clk_i => clk_i, rst_i => rst_i, ena_i => '1', d_i => grayi, d_o => grayo);
+   generic map(WIDTH => WIDTH, DEPTH => DEPTH)
+   port map(clk_i => clk_i, rst_i => rst_i, ena_i => '1', data_i => grayi, data_o => grayo);
 
    data_o <= unsigned(gray2bin(grayo));
 

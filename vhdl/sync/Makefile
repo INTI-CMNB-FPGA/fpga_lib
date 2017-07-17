@@ -6,7 +6,7 @@ LIBS=../../temp
 STANDALONE=1
 include ../../makes/ghdl.mk
 
-bin: sync_pkg.o ffchain.o divider.o boundary.o debounce.o syncClockDomains.o
+bin: sync_pkg.o ffchain.o gray_sync.o divider.o boundary.o debounce.o syncClockDomains.o
 test: run_ffchain_tb run_boundary_tb
 
 simul_pkg.o:
