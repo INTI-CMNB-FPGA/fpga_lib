@@ -71,8 +71,6 @@ architecture RTL of FIFO is
    -- Extra bit used for empty and full generation
    signal wr_ptr, wr_ptr_r, rd_in_wr_ptr : unsigned(AWIDTH downto 0):=(others => '0');
    signal rd_ptr, rd_ptr_r, wr_in_rd_ptr : unsigned(AWIDTH downto 0):=(others => '0');
-   signal wr_gray, rd_in_wr_gray         : std_logic_vector(AWIDTH downto 0):=(others => '0');
-   signal rd_gray, wr_in_rd_gray         : std_logic_vector(AWIDTH downto 0):=(others => '0');
 
    ------------------------------------------------------------------------------------------------
    -- Functions
@@ -130,12 +128,6 @@ begin
       data2_o => data_o
    );
 
-   wr_addr <= std_logic_vector(wr_ptr_r(AWIDTH-1 downto 0));
-   rd_addr <= std_logic_vector(rd_ptr_r(AWIDTH-1 downto 0));
-
-   wr_en   <= '1' when wr_en_i='1' and full_r/='1'  else '0';
-   rd_en   <= '1' when rd_en_i='1' and empty_r/='1' else '0';
-
    sync_g: if not(ASYNC) generate
       rd_in_wr_ptr <= rd_ptr_r;
       wr_in_rd_ptr <= wr_ptr_r;
@@ -143,28 +135,21 @@ begin
 
    async_g: if ASYNC generate
       -- Pointer from Read to Write
-      rd_gray <= std_logic_vector(bin2gray(rd_ptr_r));
-      sync_rd2wr_i: FFchain
-      generic map(WIDTH => AWIDTH+1, STAGES => 2)
-      port map(
-         clk_i => wr_clk_i, rst_i => wr_rst_i, ena_i => '1',
-         d_i => rd_gray, d_o => rd_in_wr_gray
-      );
-      rd_in_wr_ptr <= unsigned(gray2bin(rd_in_wr_gray));
+      sync_rd2wr_i: gray_sync
+      generic map(WIDTH => AWIDTH+1, DEPTH => 2)
+      port map(clk_i => wr_clk_i, rst_i => wr_rst_i, data_i => rd_ptr_r, data_o => rd_in_wr_ptr);
       -- Pointer from Write to Read
-      wr_gray <= std_logic_vector(bin2gray(wr_ptr_r));
-      sync_wr2rd_i: FFchain
-      generic map(WIDTH => AWIDTH+1, STAGES => 2)
-      port map(
-      clk_i => rd_clk_i, rst_i => rd_rst_i, ena_i => '1',
-         d_i => wr_gray, d_o => wr_in_rd_gray
-      );
-      wr_in_rd_ptr <= unsigned(gray2bin(wr_in_rd_gray));
+      sync_wr2rd_i: gray_sync
+      generic map(WIDTH => AWIDTH+1, DEPTH => 2)
+      port map(clk_i => wr_clk_i, rst_i => wr_rst_i, data_i => wr_ptr_r, data_o => wr_in_rd_ptr);
    end generate async_g;
 
    ------------------------------------------------------------------------------------------------
    -- Write Side
    ------------------------------------------------------------------------------------------------
+
+   wr_addr <= std_logic_vector(wr_ptr_r(AWIDTH-1 downto 0));
+   wr_en   <= '1' when wr_en_i='1' and full_r/='1'  else '0';
 
    write_p:
    process(wr_clk_i)
@@ -189,6 +174,9 @@ begin
    ------------------------------------------------------------------------------------------------
    -- Read Side
    ------------------------------------------------------------------------------------------------
+
+   rd_addr <= std_logic_vector(rd_ptr_r(AWIDTH-1 downto 0));
+   rd_en   <= '1' when rd_en_i='1' and empty_r/='1' else '0';
 
    read_p:
    process(rd_clk_i)
