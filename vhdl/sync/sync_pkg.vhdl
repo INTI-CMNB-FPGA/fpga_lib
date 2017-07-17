@@ -10,6 +10,7 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 package Sync is
 
@@ -26,6 +27,19 @@ package Sync is
          d_o   : out std_logic_vector(WIDTH-1 downto 0)
       );
    end component FFchain;
+
+   component Gray_Sync is
+      generic(
+         WIDTH : positive:=8;
+         DEPTH : positive:=2
+      );
+      port(
+         clk_i  : in  std_logic;
+         rst_i  : in  std_logic;
+         data_i : in  unsigned(WIDTH-1 downto 0);
+         data_o : out unsigned(WIDTH-1 downto 0)
+      );
+   end component Gray_Sync;
 
    component Divider is
       generic(
