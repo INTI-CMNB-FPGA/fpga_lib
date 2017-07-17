@@ -21,7 +21,7 @@ architecture Testbench of FFchain_tb is
    constant TEST_DATA : std_logic_vector(7 downto 0) := "00000001";
    signal clk, rst : std_logic:='0';
    signal stop : boolean;
-   signal di, do : std_logic_vector(7 downto 0):=(others => '0');
+   signal datai, datao : std_logic_vector(7 downto 0):=(others => '0');
 begin
 
    gen_clk : Clock
@@ -30,30 +30,30 @@ begin
          clk_o => clk, rst_o => rst, stop_i => stop);
 
    DUT: FFchain
-      generic map(STAGES => 5)
-      port map(clk_i => clk, rst_i => rst, ena_i => '1', d_i => di, d_o => do);
+      generic map(DEPTH => 5)
+      port map(clk_i => clk, rst_i => rst, ena_i => '1', data_i => datai, data_o => datao);
 
    test:
    process
    begin
-      print("* Testing FF Chain with 5 stages");
+      print("* Testing FF Chain with DEPTH=5");
       wait until rising_edge(clk) and rst='0';
-      di <= TEST_DATA;
+      datai <= TEST_DATA;
       wait until rising_edge(clk);
-      di <= (others=>'0');
-      assert do="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
+      datai <= (others=>'0');
+      assert datao="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
       wait until rising_edge(clk);
-      assert do="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
+      assert datao="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
       wait until rising_edge(clk);
-      assert do="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
+      assert datao="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
       wait until rising_edge(clk);
-      assert do="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
+      assert datao="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
       wait until rising_edge(clk);
-      assert do="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
+      assert datao="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
       wait until rising_edge(clk);
-      assert do=TEST_DATA  report "ERROR: d_o must be '1' but is '0'" severity failure;
+      assert datao=TEST_DATA  report "ERROR: d_o must be '1' but is '0'" severity failure;
       wait until rising_edge(clk);
-      assert do="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
+      assert datao="00000000" report "ERROR: d_o must be '0' but is '1'" severity failure;
       wait until rising_edge(clk);
       print("* FF Chain Works fine");
       stop <= TRUE;

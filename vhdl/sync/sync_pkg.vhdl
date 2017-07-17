@@ -17,14 +17,14 @@ package Sync is
    component FFchain is
       generic(
          WIDTH  : positive:=8;
-         STAGES : positive:=1
+         DEPTH  : positive:=2
       );
       port(
-         clk_i : in  std_logic;
-         rst_i : in  std_logic;
-         ena_i : in  std_logic;
-         d_i   : in  std_logic_vector(WIDTH-1 downto 0);
-         d_o   : out std_logic_vector(WIDTH-1 downto 0)
+         clk_i  : in  std_logic;
+         rst_i  : in  std_logic;
+         ena_i  : in  std_logic;
+         data_i : in  std_logic_vector(WIDTH-1 downto 0);
+         data_o : out std_logic_vector(WIDTH-1 downto 0)
       );
    end component FFchain;
 
