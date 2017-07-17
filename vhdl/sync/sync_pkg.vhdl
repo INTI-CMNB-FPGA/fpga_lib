@@ -30,12 +30,11 @@ package Sync is
 
    component Gray_Sync is
       generic(
-         WIDTH : positive:=8;
-         DEPTH : positive:=2
+         WIDTH  : positive:=8;
+         DEPTH  : positive:=2
       );
       port(
          clk_i  : in  std_logic;
-         rst_i  : in  std_logic;
          data_i : in  unsigned(WIDTH-1 downto 0);
          data_o : out unsigned(WIDTH-1 downto 0)
       );

@@ -22,7 +22,6 @@ entity Gray_Sync is
    );
    port(
       clk_i  : in  std_logic;
-      rst_i  : in  std_logic;
       data_i : in  unsigned(WIDTH-1 downto 0);
       data_o : out unsigned(WIDTH-1 downto 0)
    );
@@ -36,7 +35,7 @@ begin
 
    sync_i: FFchain
    generic map(WIDTH => WIDTH, DEPTH => DEPTH)
-   port map(clk_i => clk_i, rst_i => rst_i, ena_i => '1', data_i => grayi, data_o => grayo);
+   port map(clk_i => clk_i, rst_i => '0', ena_i => '1', data_i => grayi, data_o => grayo);
 
    data_o <= unsigned(gray2bin(grayo));
 
