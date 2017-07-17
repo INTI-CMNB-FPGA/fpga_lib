@@ -69,8 +69,11 @@ architecture RTL of FIFO is
    signal          valid_r : std_logic_vector(1 downto 0);
 
    -- Extra bit used for empty and full generation
-   signal wr_ptr, wr_ptr_r, rd_in_wr_ptr : unsigned(AWIDTH downto 0):=(others => '0');
-   signal rd_ptr, rd_ptr_r, wr_in_rd_ptr : unsigned(AWIDTH downto 0):=(others => '0');
+   signal wr_ptr_r, wr_ptr, rd_in_wr_ptr : unsigned(AWIDTH downto 0):=(others => '0');
+   signal rd_ptr_r, rd_ptr, wr_in_rd_ptr : unsigned(AWIDTH downto 0):=(others => '0');
+   -- For asynchronous version
+   signal wr_bin, rd_in_wr_bin           : unsigned(AWIDTH downto 0);
+   signal rd_bin, wr_in_rd_bin           : unsigned(AWIDTH downto 0);
 
    ------------------------------------------------------------------------------------------------
    -- Functions
@@ -134,14 +137,21 @@ begin
    end generate sync_g;
 
    async_g: if ASYNC generate
-      -- Pointer from Read to Write
+      rd_bin <= rd_ptr_r + DIFF_DEPTH when rd_ptr_r(AWIDTH)='0' else rd_ptr_r;
+
       sync_rd2wr_i: gray_sync
       generic map(WIDTH => AWIDTH+1, DEPTH => 2)
-      port map(clk_i => wr_clk_i, rst_i => wr_rst_i, data_i => rd_ptr_r, data_o => rd_in_wr_ptr);
-      -- Pointer from Write to Read
+      port map(clk_i => wr_clk_i, data_i => rd_bin, data_o => rd_in_wr_bin);
+
+      rd_in_wr_ptr <= rd_in_wr_bin - DIFF_DEPTH when rd_in_wr_bin(AWIDTH)='0' else rd_in_wr_bin;
+      --
+      wr_bin <= wr_ptr_r + DIFF_DEPTH when wr_ptr_r(AWIDTH)='0' else wr_ptr_r;
+
       sync_wr2rd_i: gray_sync
       generic map(WIDTH => AWIDTH+1, DEPTH => 2)
-      port map(clk_i => wr_clk_i, rst_i => wr_rst_i, data_i => wr_ptr_r, data_o => wr_in_rd_ptr);
+      port map(clk_i => rd_clk_i, data_i => wr_bin, data_o => wr_in_rd_bin);
+
+      wr_in_rd_ptr <= wr_in_rd_bin - DIFF_DEPTH when wr_in_rd_bin(AWIDTH)='0' else wr_in_rd_bin;
    end generate async_g;
 
    ------------------------------------------------------------------------------------------------
