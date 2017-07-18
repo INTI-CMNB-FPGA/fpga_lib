@@ -4,5 +4,5 @@
 * It uses fpga_helpers, so it which must be present at the same level of fpga_lib.
 * Vendor tools must be ready to use (added to the system path and with a valid license well
 configured).
-* Use: ```bash run.sh```
-* A *TOOL_report* file is generated for each vendor tool used.
+* Use ```make``` to do synthesis with each vendor tool. A *TOOL_report* file is generated.
+* Delete reports with ```make clean-report```.
