@@ -27,24 +27,24 @@ end entity FFchain;
 
 architecture RTL of FFchain is
    type ff_array is array (0 to DEPTH-1) of std_logic_vector(WIDTH-1 downto 0);
-   signal d_r : ff_array :=(others => (others => '0'));
+   signal data_r : ff_array :=(others => (others => '0'));
 begin
    do_chain:
    process (clk_i)
    begin
       if rising_edge(clk_i) then
          if rst_i='1' then
-            d_r <= (others => (others => '0'));
+            data_r <= (others => (others => '0'));
          elsif ena_i='1' then
             for i in 0 to DEPTH-1 loop
                if i=0 then
-                  d_r(0) <= data_i;
+                  data_r(0) <= data_i;
                else
-                  d_r(i) <= d_r(i-1);
+                  data_r(i) <= data_r(i-1);
                end if;
             end loop;
          end if;
       end if;
    end process do_chain;
-   data_o <= d_r(DEPTH-1);
+   data_o <= data_r(DEPTH-1);
 end architecture RTL;

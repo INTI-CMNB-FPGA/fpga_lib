@@ -1,5 +1,5 @@
 --
--- True Dual-Port RAM
+-- Mems top level
 --
 -- Author(s):
 -- * Rodrigo A. Melo
