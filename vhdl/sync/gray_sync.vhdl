@@ -33,7 +33,7 @@ begin
 
    grayi <= std_logic_vector(bin2gray(data_i));
 
-   sync_i: FFchain
+   i_sync: FFchain
    generic map(WIDTH => WIDTH, DEPTH => DEPTH)
    port map(clk_i => clk_i, rst_i => '0', ena_i => '1', data_i => grayi, data_o => grayo);
 

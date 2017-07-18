@@ -114,7 +114,7 @@ architecture RTL of FIFO is
 
 begin
 
-   memory_i: SimpleDualPortRAM
+   i_memory: SimpleDualPortRAM
    generic map (
       AWIDTH  => AWIDTH,
       DWIDTH  => DWIDTH,
@@ -131,15 +131,15 @@ begin
       data2_o => data_o
    );
 
-   sync_g: if not(ASYNC) generate
+   g_sync: if not(ASYNC) generate
       rd_in_wr_ptr <= rd_ptr_r;
       wr_in_rd_ptr <= wr_ptr_r;
-   end generate sync_g;
+   end generate g_sync;
 
-   async_g: if ASYNC generate
+   g_async: if ASYNC generate
       rd_bin <= rd_ptr_r + DIFF_DEPTH when rd_ptr_r(AWIDTH)='0' else rd_ptr_r;
 
-      sync_rd2wr_i: gray_sync
+      i_sync_rd2wr: gray_sync
       generic map(WIDTH => AWIDTH+1, DEPTH => 2)
       port map(clk_i => wr_clk_i, data_i => rd_bin, data_o => rd_in_wr_bin);
 
@@ -147,12 +147,12 @@ begin
       --
       wr_bin <= wr_ptr_r + DIFF_DEPTH when wr_ptr_r(AWIDTH)='0' else wr_ptr_r;
 
-      sync_wr2rd_i: gray_sync
+      i_sync_wr2rd: gray_sync
       generic map(WIDTH => AWIDTH+1, DEPTH => 2)
       port map(clk_i => rd_clk_i, data_i => wr_bin, data_o => wr_in_rd_bin);
 
       wr_in_rd_ptr <= wr_in_rd_bin - DIFF_DEPTH when wr_in_rd_bin(AWIDTH)='0' else wr_in_rd_bin;
-   end generate async_g;
+   end generate g_async;
 
    ------------------------------------------------------------------------------------------------
    -- Write Side
@@ -161,7 +161,7 @@ begin
    wr_addr <= std_logic_vector(wr_ptr_r(AWIDTH-1 downto 0));
    wr_en   <= '1' when wr_en_i='1' and full_r/='1'  else '0';
 
-   write_p:
+   p_write:
    process(wr_clk_i)
    begin
       if rising_edge(wr_clk_i) then
@@ -173,7 +173,7 @@ begin
             full_r   <= full;
          end if;
       end if;
-   end process write_p;
+   end process p_write;
 
    wr_ptr      <= next_ptr(wr_en, wr_ptr_r);
    full        <= '1' when diff_ptr(wr_ptr, rd_in_wr_ptr) = EVEN_DEPTH else '0';
@@ -188,7 +188,7 @@ begin
    rd_addr <= std_logic_vector(rd_ptr_r(AWIDTH-1 downto 0));
    rd_en   <= '1' when rd_en_i='1' and empty_r/='1' else '0';
 
-   read_p:
+   p_read:
    process(rd_clk_i)
    begin
       if rising_edge(rd_clk_i) then
@@ -203,7 +203,7 @@ begin
             empty_r  <= empty;
          end if;
       end if;
-   end process read_p;
+   end process p_read;
 
    rd_ptr      <= next_ptr(rd_en, rd_ptr_r);
    empty       <= '1' when diff_ptr(wr_in_rd_ptr, rd_ptr) = 0 else '0';

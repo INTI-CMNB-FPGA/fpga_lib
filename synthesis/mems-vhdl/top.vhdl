@@ -44,7 +44,7 @@ architecture Structural of Top is
 
 begin
 
-   sp_nc_i : SinglePortRAM
+   i_sp_nc : SinglePortRAM
    generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => FALSE, SYNCMODE => NO_CHANGE)
    port map (
       clk_i     => clk1_i,
@@ -54,7 +54,7 @@ begin
       data_o    => sp_nc_data1
    );
 
-   sp_wf_i : SinglePortRAM
+   i_sp_wf : SinglePortRAM
    generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => FALSE, SYNCMODE => WRITE_FIRST)
    port map (
       clk_i     => clk1_i,
@@ -64,7 +64,7 @@ begin
       data_o    => sp_wf_data1
    );
 
-   sp_rf_i : SinglePortRAM
+   i_sp_rf : SinglePortRAM
    generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => FALSE, SYNCMODE => READ_FIRST)
    port map (
       clk_i     => clk1_i,
@@ -74,7 +74,7 @@ begin
       data_o    => sp_rf_data1
    );
 
-   sdp_latch_i: SimpleDualPortRAM
+   i_sdp_latch: SimpleDualPortRAM
    generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => FALSE)
    port map (
       clk1_i    => clk1_i,
@@ -86,7 +86,7 @@ begin
       data2_o   => sdp_latch_data2
    );
 
-   sdp_reg_i: SimpleDualPortRAM
+   i_sdp_reg: SimpleDualPortRAM
    generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => TRUE)
    port map (
       clk1_i    => clk1_i,
@@ -98,7 +98,7 @@ begin
       data2_o   => sdp_reg_data2
    );
 
-   tdp_nc_i : TrueDualPortRAM 
+   i_tdp_nc : TrueDualPortRAM
    generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => FALSE, SYNCMODE => NO_CHANGE)
    port map (
       clk1_i    => clk1_i,
@@ -113,7 +113,7 @@ begin
       data2_o   => tdp_nc_data2
    );
 
-   tdp_wf_i : TrueDualPortRAM 
+   i_tdp_wf : TrueDualPortRAM
    generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => FALSE, SYNCMODE => WRITE_FIRST)
    port map (
       clk1_i    => clk1_i,
@@ -128,8 +128,8 @@ begin
       data2_o   => tdp_wf_data2
    );
 
-   tdp_rf_g: if isQuartus/='1' generate
-      tdp_rf_i : TrueDualPortRAM 
+   g_tdp_rf: if isQuartus/='1' generate
+      i_tdp_rf : TrueDualPortRAM
       generic map (AWIDTH => 8, DWIDTH => 8, DEPTH => 0, OUTREG => FALSE, SYNCMODE => READ_FIRST)
       port map (
          clk1_i    => clk1_i,
@@ -143,7 +143,7 @@ begin
          data1_o   => tdp_rf_data1,
          data2_o   => tdp_rf_data2
       );
-   end generate tdp_rf_g;
+   end generate g_tdp_rf;
 
    data1_o <= sp_nc_data1  when sel_i="000" else
               sp_wf_data1  when sel_i="001" else
