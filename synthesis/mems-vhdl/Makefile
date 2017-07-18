@@ -4,5 +4,5 @@
 TOOL    = vivado
 TASK    = syn
 OPT     = user
-TCLPATH = ../../../../fpga_helpers/tcl
+TCLPATH = ../../../fpga_helpers/tcl
 include $(TCLPATH)/Makefile
