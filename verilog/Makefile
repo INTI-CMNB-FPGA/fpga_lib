@@ -20,4 +20,4 @@ FILES := $(basename $(FILES))
 vhd2vl:
 	@mkdir -p mems numeric simul sync verif
 	@$(foreach FILE,$(FILES), echo "##### FROM ../vhdl/$(FILE).vhdl TO $(FILE).v"; \
-	vhd2vl --quiet ../vhdl/$(FILE).vhdl $(FILE).v;iverilog -Wall $(FILE).v;)
+	vhd2vl --quiet ../vhdl/$(FILE).vhdl $(FILE).v;iverilog -Wall -t null $(FILE).v;)
