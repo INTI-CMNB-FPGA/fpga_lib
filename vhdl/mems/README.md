@@ -173,7 +173,7 @@ q <= ram(raddr_reg);
 
 The optional output registers improve design performance by eliminating routing delay to the CLB
 flip-flops for pipelined operation. An independent clock and clock enable input is provided for
-these output registers. As a resu lt the output data registers hold the value independent of the
+these output registers. As a result the output data registers hold the value independent of the
 input register operation.
 
 All output ports are latched or registered (optional). The state of the output port does not change

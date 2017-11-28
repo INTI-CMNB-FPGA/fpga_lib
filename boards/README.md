@@ -1,8 +1,6 @@
 # Board support files
 
-YAML files in this directory are used to:
-* Generates constraints files using scripts/boardfiles.py
-* As preconfigured values to use with fpga_helpers
+YAML files in this directory are used to generates constraints files using scripts/boardfiles.py.
 
 There is a commented example in template.txt.
 
