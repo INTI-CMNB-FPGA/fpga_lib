@@ -3,6 +3,10 @@
 ODIR=../temp
 
 bin:
+	make -C mems     bin
+	make -C numeric  bin
+	make -C simul    bin
+	make -C sync     bin
 	make -C verif    bin
 
 clean-all:
