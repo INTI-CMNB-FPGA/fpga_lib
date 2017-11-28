@@ -14,12 +14,12 @@ module Blink(
    output wire blink_o
 );
 
-parameter [31:0] FREQUENCY=25E6;
-parameter [31:0] SECONDS=1;
+parameter FREQUENCY = 25e6;
+parameter SECONDS   = 1;
 
-parameter DIV = FREQUENCY * SECONDS;
+parameter DIV = FREQUENCY * SECONDS - 1;
 reg blink;
-reg [$clog2(DIV)-1:0] cnt = 0;
+reg [$clog2(DIV):0] cnt = 0;
 
 always @(posedge clk_i) begin : P1
    if (rst_i == 1'b1) begin
@@ -28,9 +28,9 @@ always @(posedge clk_i) begin : P1
    end else begin
       if (cnt == DIV) begin
          cnt = 0;
-         blink <=  ~((blink));
+         blink <=  ~(blink);
       end else begin
-        cnt = cnt + 1;
+         cnt = cnt + 1;
       end
    end
 end
