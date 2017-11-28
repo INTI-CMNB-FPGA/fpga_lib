@@ -23,11 +23,20 @@ parameter [31:0] DEPTH=2;
 
 
 
-reg [WIDTH - 1:0] data_r[0:DEPTH - 1] = 1'b0;
+reg [WIDTH - 1:0] data_r[0:DEPTH - 1];
+reg i;
+
+  initial begin
+    for (i = 0 ; i <= DEPTH ; i = i + 1) begin
+      data_r[i] = {WIDTH{1'b0}};
+    end
+  end
 
   always @(posedge clk_i) begin
     if(rst_i == 1'b1) begin
-      data_r <= {(((WIDTH - 1))-((0))+1){1'b0}};
+      for (i = 0 ; i <= DEPTH ; i = i + 1) begin
+        data_r[i] = {WIDTH{1'b0}};
+      end
     end
     else if(ena_i == 1'b1) begin
       for (i=0; i <= DEPTH - 1; i = i + 1) begin

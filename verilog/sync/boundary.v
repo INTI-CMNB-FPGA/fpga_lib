@@ -32,6 +32,7 @@ wire [BYTES3 - 1:0] comma;
 reg [WIDTH - 1:0] data_r1; reg [WIDTH - 1:0] data_r2;
 wire [WIDTH3 - 1:0] data;
 reg [31:0] index = 0;
+reg i;
 
   always @(posedge clk_i) begin
     comma_r1 <= comma_i;
@@ -44,13 +45,13 @@ reg [31:0] index = 0;
   assign data = {data_i,data_r1,data_r2};
   always @(posedge clk_i) begin
     for (i=0; i <= BYTES - 1; i = i + 1) begin
-      if(comma[BYTES2 + i - 1:BYTES + i] == pattern_i) begin
+      if(comma[BYTES2 + i - 1-:BYTES-1] == pattern_i) begin
         index <= i;
       end
     end
   end
 
-  assign comma_o = comma[BYTES + index - 1:index];
-  assign data_o = data[WIDTH + index * 8 - 1:index * 8];
+  assign comma_o = comma[BYTES + index - 1-:BYTES - 1 + 1];
+  assign data_o = data[WIDTH + index * 8 - 1-:WIDTH - 1 + 1];
 
 endmodule

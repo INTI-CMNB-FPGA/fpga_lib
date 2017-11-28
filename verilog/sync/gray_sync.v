@@ -22,7 +22,7 @@ parameter [31:0] DEPTH=2;
 
 wire [WIDTH - 1:0] grayi; wire [WIDTH - 1:0] grayo;
 
-  assign grayi = bin2gray[data_i];
+  assign grayi = bin2gray(data_i);
   FFchain #(
       .WIDTH(WIDTH),
     .DEPTH(DEPTH))
@@ -33,6 +33,6 @@ wire [WIDTH - 1:0] grayi; wire [WIDTH - 1:0] grayo;
     .data_i(grayi),
     .data_o(grayo));
 
-  assign data_o = gray2bin[grayo];
+  assign data_o = gray2bin(grayo);
 
 endmodule
