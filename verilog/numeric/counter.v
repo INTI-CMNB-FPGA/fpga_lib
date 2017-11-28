@@ -13,7 +13,7 @@ module Counter(
 input wire clk_i,
 input wire rst_i,
 input wire ena_i,
-output wire [clog2[DEPTH] - 1:0] count_o,
+output wire [$clog2(DEPTH) - 1:0] count_o,
 output reg last_o
 );
 
@@ -26,7 +26,7 @@ parameter [31:0] DEPTH=8;
 
 
 
-parameter AWIDTH = clog2[DEPTH];
+parameter AWIDTH = $clog2(DEPTH);
 reg [AWIDTH - 1:0] count = 1'b0;
 
   always @(posedge clk_i) begin
