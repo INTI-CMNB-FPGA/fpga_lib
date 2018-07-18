@@ -31,6 +31,7 @@ parser.add_argument(
 parser.add_argument(
    'filename',
    metavar='FILENAME',
+   nargs='+',
    help=''
 )
 
@@ -50,11 +51,11 @@ options = parser.parse_args()
 
 ## Parsing the command line ###################################################
 
-data = np.loadtxt(options.filename)
-
-plot.plot(data)
-
 plot.xlabel(options.xlabel)
 plot.ylabel(options.ylabel)
+
+for file in options.filename:
+    data = np.loadtxt(file)
+    plot.plot(data)
 
 plot.show()
