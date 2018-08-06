@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Graph
+# Plotter
 #
 # Authors:
 # * Bruno Valinoti
@@ -47,6 +47,16 @@ parser.add_argument(
    default='Value'
 )
 
+parser.add_argument(
+   '-p','--points',
+   action='store_true'
+)
+
+parser.add_argument(
+   '-c','--circles',
+   action='store_true'
+)
+
 options = parser.parse_args()
 
 ## Parsing the command line ###################################################
@@ -56,6 +66,11 @@ plot.ylabel(options.ylabel)
 
 for file in options.filename:
     data = np.loadtxt(file)
-    plot.plot(data)
+    if options.points:
+       plot.plot(data, linestyle='', marker='.')
+    elif options.circles:
+       plot.plot(data, linestyle='', marker='o')
+    else:
+       plot.plot(data)
 
 plot.show()
