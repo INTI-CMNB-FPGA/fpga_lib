@@ -12,6 +12,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plot
+import matplotlib as mpl
 import argparse, sys
 
 ## Parsing the command line ###################################################
@@ -57,6 +58,13 @@ parser.add_argument(
    action='store_true'
 )
 
+parser.add_argument(
+   '-l','--linewidth',
+   metavar='1',
+   default='1',
+   type=int
+)
+
 options = parser.parse_args()
 
 ## Parsing the command line ###################################################
@@ -64,13 +72,17 @@ options = parser.parse_args()
 plot.xlabel(options.xlabel)
 plot.ylabel(options.ylabel)
 
+#print(mpl.rcParams.keys())
+mpl.rcParams['lines.linewidth'] = options.linewidth
+if options.points or options.circles:
+   mpl.rcParams['lines.linestyle'] = None
+if options.points:
+   mpl.rcParams['lines.marker'] = '.'
+if options.circles:
+   mpl.rcParams['lines.marker'] = 'o'
+
 for file in options.filename:
     data = np.loadtxt(file)
-    if options.points:
-       plot.plot(data, linestyle='', marker='.')
-    elif options.circles:
-       plot.plot(data, linestyle='', marker='o')
-    else:
-       plot.plot(data)
+    plot.plot(data)
 
 plot.show()
