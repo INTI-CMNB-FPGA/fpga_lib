@@ -66,7 +66,7 @@ architecture RTL of FIFO is
    signal full,    full_r  : std_logic;
    signal empty,   empty_r : std_logic;
    signal wr_addr, rd_addr : std_logic_vector(AWIDTH-1 downto 0);
-   signal          valid_r : std_logic_vector(1 downto 0);
+   signal          valid_r : std_logic_vector(1 downto 0):=(others => '0');
 
    -- Extra bit used for empty and full generation
    signal wr_ptr_r, wr_ptr, rd_in_wr_ptr : unsigned(AWIDTH downto 0):=(others => '0');
