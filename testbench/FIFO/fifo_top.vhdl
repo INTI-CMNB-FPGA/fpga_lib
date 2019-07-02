@@ -46,7 +46,7 @@ begin
    valid_o     <= valid_a  when async_i='1' else valid_s;
 
    fifo_sync_inst: fifo
-   generic map (ASYNC => FALSE)
+   generic map (DEPTH => 4, ASYNC => FALSE)
    port map (
       -- write side
       wr_clk_i => wr_clk_i, wr_rst_i => wr_rst_i, wr_en_i => wr_en_i, data_i => data_i,
@@ -57,7 +57,7 @@ begin
    );
 
    fifo_async_inst: fifo
-   generic map (ASYNC => TRUE)
+   generic map (DEPTH => 4, ASYNC => TRUE)
    port map (
       -- write side
       wr_clk_i => wr_clk_i, wr_rst_i => wr_rst_i, wr_en_i => wr_en_i, data_i => data_i,
