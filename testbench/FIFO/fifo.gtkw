@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.79 (w)1999-2017 BSI
-[*] Tue Jul  2 18:39:11 2019
+[*] Wed Jul  3 15:20:16 2019
 [*]
 [dumpfile] "/home/ram/repos-git/fpga_lib/testbench/FIFO/build/fifo.ghw"
-[dumpfile_mtime] "Tue Jul  2 17:43:22 2019"
-[dumpfile_size] 129260
+[dumpfile_mtime] "Wed Jul  3 15:00:52 2019"
+[dumpfile_size] 129257
 [savefile] "/home/ram/repos-git/fpga_lib/testbench/FIFO/fifo.gtkw"
-[timestart] 0
+[timestart] 4
 [size] 1360 731
-[pos] 1881 -66
-*-10.783126 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 315 224
+*-4.922474 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] top.
 [treeopen] top.fifo_top.
 [sst_width] 256
@@ -21,9 +21,9 @@ top.fifo_top.async_i
 @200
 -Write Side
 @28
-top.fifo_top.wr_clk_i
-top.fifo_top.wr_rst_i
-top.fifo_top.wr_en_i
+top.fifo_top.wclk_i
+top.fifo_top.wrst_i
+top.fifo_top.wen_i
 @22
 #{top.fifo_top.data_i[7:0]} top.fifo_top.data_i[7] top.fifo_top.data_i[6] top.fifo_top.data_i[5] top.fifo_top.data_i[4] top.fifo_top.data_i[3] top.fifo_top.data_i[2] top.fifo_top.data_i[1] top.fifo_top.data_i[0]
 @28
@@ -32,11 +32,12 @@ top.fifo_top.full_o
 top.fifo_top.overflow_o
 @200
 -Read Side
+@29
+top.fifo_top.rclk_i
 @28
-top.fifo_top.rd_clk_i
-top.fifo_top.rd_rst_i
-top.fifo_top.rd_en_i
-@23
+top.fifo_top.rrst_i
+top.fifo_top.ren_i
+@22
 #{top.fifo_top.data_o[7:0]} top.fifo_top.data_o[7] top.fifo_top.data_o[6] top.fifo_top.data_o[5] top.fifo_top.data_o[4] top.fifo_top.data_o[3] top.fifo_top.data_o[2] top.fifo_top.data_o[1] top.fifo_top.data_o[0]
 @28
 top.fifo_top.valid_o

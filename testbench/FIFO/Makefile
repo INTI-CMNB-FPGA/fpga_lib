@@ -22,7 +22,7 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 analyse: $(VHDL_SOURCES) $(SIM_BUILD)
 	cd $(SIM_BUILD) && \
 	$(foreach SOURCES_VAR, $(filter VHDL_SOURCES_%, $(.VARIABLES)), \
-		$(CMD) -a $(GHDL_ARGS) $(COMPILE_ARGS) --work=$(SOURCES_VAR:VHDL_SOURCES_%=%) $($(SOURCES_VAR)) && ) \
+	$(CMD) -a $(GHDL_ARGS) $(COMPILE_ARGS) --work=$(SOURCES_VAR:VHDL_SOURCES_%=%) $($(SOURCES_VAR)) && ) \
 	$(CMD) -a $(GHDL_ARGS) $(COMPILE_ARGS) --work=$(RTL_LIBRARY) $(VHDL_SOURCES) && \
 	$(CMD) -e $(GHDL_ARGS) $(COMPILE_ARGS) --work=$(RTL_LIBRARY) $(TOPLEVEL)
 
