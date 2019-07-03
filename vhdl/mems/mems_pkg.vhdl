@@ -86,17 +86,17 @@ package Mems is
       );
       port (
          -- write side
-         wr_clk_i     : in  std_logic; -- Write Clock
-         wr_rst_i     : in  std_logic; -- Write Reset
-         wr_en_i      : in  std_logic; -- Write Enable
+         wclk_i       : in  std_logic; -- Write Clock
+         wrst_i       : in  std_logic; -- Write Reset
+         wen_i        : in  std_logic; -- Write Enable
          data_i       : in  std_logic_vector(DWIDTH-1 downto 0); -- Data Input
          full_o       : out std_logic; -- Full Flag
          afull_o      : out std_logic; -- Almost Full Flag
          overflow_o   : out std_logic; -- Overflow Flag
          -- read side
-         rd_clk_i     : in  std_logic; -- Read Clock
-         rd_rst_i     : in  std_logic; -- Read Reset
-         rd_en_i      : in  std_logic; -- Read enable
+         rclk_i       : in  std_logic; -- Read Clock
+         rrst_i       : in  std_logic; -- Read Reset
+         ren_i        : in  std_logic; -- Read enable
          data_o       : out std_logic_vector(DWIDTH-1 downto 0); -- Data Output
          empty_o      : out std_logic; -- Empty flag
          aempty_o     : out std_logic; -- Almost Empty flag

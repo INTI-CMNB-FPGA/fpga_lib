@@ -29,17 +29,17 @@ entity FIFO is
    );
    port (
       -- write side
-      wr_clk_i     : in  std_logic; -- Write Clock
-      wr_rst_i     : in  std_logic; -- Write Reset
-      wr_en_i      : in  std_logic; -- Write Enable
+      wclk_i       : in  std_logic; -- Write Clock
+      wrst_i       : in  std_logic; -- Write Reset
+      wen_i        : in  std_logic; -- Write Enable
       data_i       : in  std_logic_vector(DWIDTH-1 downto 0); -- Data Input
       full_o       : out std_logic; -- Full Flag
       afull_o      : out std_logic; -- Almost Full Flag
       overflow_o   : out std_logic; -- Overflow Flag
       -- read side
-      rd_clk_i     : in  std_logic; -- Read Clock
-      rd_rst_i     : in  std_logic; -- Read Reset
-      rd_en_i      : in  std_logic; -- Read enable
+      rclk_i       : in  std_logic; -- Read Clock
+      rrst_i       : in  std_logic; -- Read Reset
+      ren_i        : in  std_logic; -- Read enable
       data_o       : out std_logic_vector(DWIDTH-1 downto 0); -- Data Output
       empty_o      : out std_logic; -- Empty flag
       aempty_o     : out std_logic; -- Almost Empty flag
@@ -62,7 +62,7 @@ architecture RTL of FIFO is
    -- Signals
    ------------------------------------------------------------------------------------------------
 
-   signal wr_en,   rd_en   : std_logic;
+   signal wen,     ren     : std_logic;
    signal full,    full_r  : std_logic;
    signal empty,   empty_r : std_logic;
    signal wr_addr, rd_addr : std_logic_vector(AWIDTH-1 downto 0);
@@ -122,9 +122,9 @@ begin
       OUTREG  => OUTREG
    )
    port map (
-      clk1_i  => wr_clk_i, 
-      clk2_i  => rd_clk_i,
-      wen1_i  => wr_en,
+      clk1_i  => wclk_i,
+      clk2_i  => rclk_i,
+      wen1_i  => wen,
       addr1_i => wr_addr,
       addr2_i => rd_addr,
       data1_i => data_i,
@@ -141,7 +141,7 @@ begin
 
       i_sync_rd2wr: gray_sync
       generic map(WIDTH => AWIDTH+1, DEPTH => 2)
-      port map(clk_i => wr_clk_i, data_i => rd_bin, data_o => rd_in_wr_bin);
+      port map(clk_i => wclk_i, data_i => rd_bin, data_o => rd_in_wr_bin);
 
       rd_in_wr_ptr <= rd_in_wr_bin - DIFF_DEPTH when rd_in_wr_bin(AWIDTH)='0' else rd_in_wr_bin;
       --
@@ -149,7 +149,7 @@ begin
 
       i_sync_wr2rd: gray_sync
       generic map(WIDTH => AWIDTH+1, DEPTH => 2)
-      port map(clk_i => rd_clk_i, data_i => wr_bin, data_o => wr_in_rd_bin);
+      port map(clk_i => rclk_i, data_i => wr_bin, data_o => wr_in_rd_bin);
 
       wr_in_rd_ptr <= wr_in_rd_bin - DIFF_DEPTH when wr_in_rd_bin(AWIDTH)='0' else wr_in_rd_bin;
    end generate g_async;
@@ -159,14 +159,14 @@ begin
    ------------------------------------------------------------------------------------------------
 
    wr_addr <= std_logic_vector(wr_ptr_r(AWIDTH-1 downto 0));
-   wr_en   <= '1' when wr_en_i='1' and full_r/='1'  else '0';
+   wen     <= '1' when wen_i='1' and full_r/='1'  else '0';
 
    p_write:
-   process(wr_clk_i)
+   process(wclk_i)
    begin
-      if rising_edge(wr_clk_i) then
+      if rising_edge(wclk_i) then
          full_r <= '0';
-         if wr_rst_i='1' then
+         if wrst_i='1' then
             wr_ptr_r <= (others => '0');
          else
             wr_ptr_r <= wr_ptr;
@@ -175,27 +175,27 @@ begin
       end if;
    end process p_write;
 
-   wr_ptr      <= next_ptr(wr_en, wr_ptr_r);
+   wr_ptr      <= next_ptr(wen, wr_ptr_r);
    full        <= '1' when diff_ptr(wr_ptr, rd_in_wr_ptr) = EVEN_DEPTH else '0';
    full_o      <= full;
    afull_o     <= '1' when diff_ptr(wr_ptr, rd_in_wr_ptr) >= EVEN_DEPTH-AFULLOFFSET else '0';
-   overflow_o  <= '1' when wr_en_i='1' and full_r='1' else '0';
+   overflow_o  <= '1' when wen_i='1' and full_r='1' else '0';
 
    ------------------------------------------------------------------------------------------------
    -- Read Side
    ------------------------------------------------------------------------------------------------
 
    rd_addr <= std_logic_vector(rd_ptr_r(AWIDTH-1 downto 0));
-   rd_en   <= '1' when rd_en_i='1' and empty_r/='1' else '0';
+   ren     <= '1' when ren_i='1' and empty_r/='1' else '0';
 
    p_read:
-   process(rd_clk_i)
+   process(rclk_i)
    begin
-      if rising_edge(rd_clk_i) then
+      if rising_edge(rclk_i) then
          empty_r    <= '1';
-         valid_r(0) <= rd_en;
+         valid_r(0) <= ren;
          valid_r(1) <= valid_r(0);
-         if rd_rst_i='1' then
+         if rrst_i='1' then
             rd_ptr_r <= (others => '0');
             valid_r  <= (others => '0');
          else
@@ -205,11 +205,11 @@ begin
       end if;
    end process p_read;
 
-   rd_ptr      <= next_ptr(rd_en, rd_ptr_r);
+   rd_ptr      <= next_ptr(ren, rd_ptr_r);
    empty       <= '1' when diff_ptr(wr_in_rd_ptr, rd_ptr) = 0 else '0';
    empty_o     <= empty;
    aempty_o    <= '1' when diff_ptr(wr_in_rd_ptr, rd_ptr) <= AEMPTYOFFSET else '0';
-   underflow_o <= '1' when rd_en_i='1' and empty_r='1' else '0';
+   underflow_o <= '1' when ren_i='1' and empty_r='1' else '0';
    valid_o     <= valid_r(1) when OUTREG else valid_r(0);
 
 end architecture RTL;
