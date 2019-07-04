@@ -1,4 +1,4 @@
-# VHDL library
+# VHDL Library
 
 * To analyze and generate the library using ghdl: `$ make`
 * To run tests: `$ make test`
