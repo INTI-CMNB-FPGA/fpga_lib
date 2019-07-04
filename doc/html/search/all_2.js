@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['clock',['Clock',['../classClock.html',1,'']]],
-  ['counter',['Counter',['../classCounter.html',1,'']]]
+  ['blink',['Blink',['../classBlink.html',1,'']]],
+  ['boundary',['Boundary',['../classBoundary.html',1,'']]]
 ];

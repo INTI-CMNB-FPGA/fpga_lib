@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['rtl',['RTL',['../classTransLoop_1_1RTL.html',1,'RTL'],['../classSinglePortRAM_1_1RTL.html',1,'RTL'],['../classLoopCheck_1_1RTL.html',1,'RTL'],['../classTrueDualPortRAM_1_1RTL.html',1,'RTL'],['../classDebounce_1_1RTL.html',1,'RTL'],['../classFIFO_1_1RTL.html',1,'RTL'],['../classBoundary_1_1RTL.html',1,'RTL'],['../classBlink_1_1RTL.html',1,'RTL'],['../classSimpleDualPortRAM_1_1RTL.html',1,'RTL'],['../classDivider_1_1RTL.html',1,'RTL'],['../classCounter_1_1RTL.html',1,'RTL'],['../classFFchain_1_1RTL.html',1,'RTL'],['../classSyncClockDomainsBase_1_1RTL.html',1,'RTL']]]
+  ['mems_20package',['Mems Package',['../md__home_ram_repos-git_fpga_lib_vhdl_mems_README.html',1,'']]],
+  ['memory_20inference',['Memory inference',['../md_memory_inference.html',1,'']]],
+  ['mems',['Mems',['../classMems.html',1,'']]]
 ];

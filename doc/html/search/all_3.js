@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['debounce',['Debounce',['../classDebounce.html',1,'']]],
-  ['divider',['Divider',['../classDivider.html',1,'']]]
+  ['clock',['Clock',['../classClock.html',1,'']]],
+  ['counter',['Counter',['../classCounter.html',1,'']]]
 ];

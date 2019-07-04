@@ -18,35 +18,47 @@ use FPGALIB.MEMS.all;
 use FPGALIB.Numeric.all;
 use FPGALIB.Sync.all;
 
+--! A FIFO which could be configured as synchronous or asynchronous.
+
+--! In synchronous mode, the clock in both sides, write and read, must be the
+--! same. In asynchronous mode, the clocks can be unrelated and so extra
+--! resources for CDC are employed.
+--! There are full, almost full and overflow indications in the Write side and
+--! empty, almost empty and underflow indications in the Read side.
+--! The almost empty and full indications can be configured by generics, as
+--! the offset to reach empty and full respectively.
+
 entity FIFO is
    generic (
-      DWIDTH       : positive:=8;     -- Data width
-      DEPTH        : positive:=8;     -- FIFO depth (even)
-      OUTREG       : boolean :=FALSE; -- Optional Output Register
-      AFULLOFFSET  : positive:=1;     -- Almost FULL OFFSET
-      AEMPTYOFFSET : positive:=1;     -- Almost EMPTY OFFSET
-      ASYNC        : boolean :=TRUE   -- Asynchronous FIFO
+      DWIDTH       : positive:=8;     --! Data width (bits)
+      DEPTH        : positive:=8;     --! Buffer memory depth (even)
+      OUTREG       : boolean :=FALSE; --! Optional Output Register
+      AFULLOFFSET  : positive:=1;     --! Almost FULL OFFSET
+      AEMPTYOFFSET : positive:=1;     --! Almost EMPTY OFFSET
+      ASYNC        : boolean :=TRUE   --! Asynchronous FIFO
    );
    port (
       -- write side
-      wclk_i       : in  std_logic; -- Write Clock
-      wrst_i       : in  std_logic; -- Write Reset
-      wen_i        : in  std_logic; -- Write Enable
+      wclk_i       : in  std_logic;   --! Write Clock
+      wrst_i       : in  std_logic;   --! Write Reset
+      wen_i        : in  std_logic;   --! Write Enable
       data_i       : in  std_logic_vector(DWIDTH-1 downto 0); -- Data Input
-      full_o       : out std_logic; -- Full Flag
-      afull_o      : out std_logic; -- Almost Full Flag
-      overflow_o   : out std_logic; -- Overflow Flag
+      full_o       : out std_logic;   --! Full Flag
+      afull_o      : out std_logic;   --! Almost Full Flag
+      overflow_o   : out std_logic;   --! Overflow Flag
       -- read side
-      rclk_i       : in  std_logic; -- Read Clock
-      rrst_i       : in  std_logic; -- Read Reset
-      ren_i        : in  std_logic; -- Read enable
+      rclk_i       : in  std_logic;   --! Read Clock
+      rrst_i       : in  std_logic;   --! Read Reset
+      ren_i        : in  std_logic;   --! Read enable
       data_o       : out std_logic_vector(DWIDTH-1 downto 0); -- Data Output
-      empty_o      : out std_logic; -- Empty flag
-      aempty_o     : out std_logic; -- Almost Empty flag
-      underflow_o  : out std_logic; -- Underflow Flag
-      valid_o      : out std_logic  -- Read Valid
+      empty_o      : out std_logic;   --! Empty flag
+      aempty_o     : out std_logic;   --! Almost Empty flag
+      underflow_o  : out std_logic;   --! Underflow Flag
+      valid_o      : out std_logic    --! Read Valid
    );
 end entity FIFO;
+
+--! @brief Architecture definition of the FIFO.
 
 architecture RTL of FIFO is
 

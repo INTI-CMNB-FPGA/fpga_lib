@@ -1,8 +1,7 @@
-# FIFO A/SYNC
+# FIFO User guide
 
-## Basic Signaling
+**Write Side**
 
-### Write Side
 ```
               _   _   _   _   _   _   _   _
 wclk_i       | |_| |_| |_| |_| |_| |_| |_| |_
@@ -12,7 +11,8 @@ wen_i        _____/               \__________
 data_i       _____X_0_X_1_X_2_X_3_X__________
 ```
 
-### Read Side
+**Read Side**
+
 ```
               _   _   _   _   _   _   _   _  
 rclk_i       | |_| |_| |_| |_| |_| |_| |_| |_
@@ -24,9 +24,8 @@ valid_o      _________/               \______
 data_o       _________X_0_X_1_X_2_X_3_X______
 ```
 
-## Advanced Signaling
+**Write Side Flags**
 
-### Write Side
 ```
               _   _   _   _   _   _   _   _   _   _
 wclk_i       | |_| |_| |_| |_| |_| |_| |_| |_| |_| |_
@@ -42,7 +41,8 @@ full_o       _________________/
 overflow_o   _____________________/   \___/   \______
 ```
 
-### Read Side
+**Read Side Flags**
+
 ```
               _   _   _   _   _   _   _   _   _   _
 rclk_i       | |_| |_| |_| |_| |_| |_| |_| |_| |_| |_
@@ -59,5 +59,3 @@ empty_o      _________________/
                                    ___     ___
 underflow_o  _____________________/   \___/   \______
 ```
-
-## Full Sync Example
