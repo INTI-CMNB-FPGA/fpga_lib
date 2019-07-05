@@ -1,0 +1,5 @@
+<map id="FIFO" name="FIFO">
+<area shape="rect" id="node2" href="$classSimpleDualPortRAM.html" title="SimpleDualPortRAM" alt="" coords="5,80,156,107"/>
+<area shape="rect" id="node3" href="$classGray__Sync.html" title="Gray_Sync(2)" alt="" coords="181,80,290,107"/>
+<area shape="rect" id="node4" href="$classFFchain.html" title="FFchain" alt="" coords="200,5,271,32"/>
+</map>

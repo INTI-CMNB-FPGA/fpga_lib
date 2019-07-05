@@ -3,7 +3,7 @@ from debian:buster-slim
 RUN apt-get update
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-    make gcc g++ git bash-completion && \
+    make gcc g++ git bash-completion doxygen graphviz && \
     apt-get autoremove -y && apt-get clean
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \

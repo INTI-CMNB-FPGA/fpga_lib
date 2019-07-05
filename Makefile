@@ -3,6 +3,8 @@
 TESTBENCHES = $(wildcard testbench/*)
 TESTBENCHES:= $(filter-out README.md/,$(TESTBENCHES))
 
+.PHONY : doc
+
 all:
 	make -C vhdl
 
@@ -10,6 +12,10 @@ test:
 	@echo $(TESTBENCHES)
 	make -C vhdl test
 	@$(foreach TESTBENCH,$(TESTBENCHES),$(if $(wildcard $(TESTBENCH)/Makefile), make -C $(TESTBENCH);))
+
+doc:
+	@rm -fr doc/html/*
+	doxygen doc/Doxyfile
 
 clean:
 	make -C vhdl clean-all

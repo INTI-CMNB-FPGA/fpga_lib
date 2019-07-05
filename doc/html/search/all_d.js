@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['simul_20package',['Simul Package',['../md__home_ram_repos-git_fpga_lib_vhdl_simul_README.html',1,'']]],
-  ['sync_20package',['Sync Package',['../md__home_ram_repos-git_fpga_lib_vhdl_sync_README.html',1,'']]],
+  ['simul_20package',['Simul Package',['../md_vhdl_simul_README.html',1,'']]],
+  ['sync_20package',['Sync Package',['../md_vhdl_sync_README.html',1,'']]],
   ['simpledualportram',['SimpleDualPortRAM',['../classSimpleDualPortRAM.html',1,'']]],
   ['simul',['Simul',['../classSimul.html',1,'']]],
   ['simulator',['Simulator',['../classClock_1_1Simulator.html',1,'Clock']]],

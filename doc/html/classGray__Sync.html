@@ -60,16 +60,45 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#Generics">Generics</a> &#124;
-<a href="#Ports">Ports</a>  </div>
+<a href="#Ports">Ports</a> &#124;
+<a href="#Libraries">Libraries</a> &#124;
+<a href="#Use Clauses">Use Clauses</a>  </div>
   <div class="headertitle">
 <div class="title">Gray_Sync Entity Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for Gray_Sync:</div>
+<div class="dyncontent">
+<div class="center"><img src="classGray__Sync__inherit__graph.png" border="0" usemap="#Gray__Sync_inherit__map" alt="Inheritance graph"/></div>
+<map name="Gray__Sync_inherit__map" id="Gray__Sync_inherit__map">
+<area shape="rect" id="node3" href="classFIFO.html" title="A FIFO which could be configured as synchronous or asynchronous. In synchronous mode, the clock in both sides, write and read, must be the same. In asynchronous mode, the clocks can be unrelated and so extra resources for CDC are employed. There are full, almost full and overflow indications in the Write side and empty, almost empty and underflow indications in the Read side. The almost empty and full indications can be configured by generics, as the offset to reach empty and full respectively. " alt="" coords="25,155,76,181"/>
+<area shape="rect" id="node2" href="classFFchain.html" title="FFchain" alt="" coords="15,5,86,32"/>
+</map>
+</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Entities</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGray__Sync_1_1Structural.html">Structural</a> &#160;</td><td class="memItemRight" valign="bottom">architecture</td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="Libraries"></a>
+Libraries</h2></td></tr>
+ <tr class="memitem:ae4f03c286607f3181e16b9aa12d0c6d4"><td class="memItemLeft" align="right" valign="top"><a id="ae4f03c286607f3181e16b9aa12d0c6d4"></a>
+<a class="el" href="classGray__Sync.html#ae4f03c286607f3181e16b9aa12d0c6d4">IEEE</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+<tr class="memitem:a4518b072fa8e8fa5d16e60ba6ea85acb"><td class="memItemLeft" align="right" valign="top"><a id="a4518b072fa8e8fa5d16e60ba6ea85acb"></a>
+<a class="el" href="classGray__Sync.html#a4518b072fa8e8fa5d16e60ba6ea85acb">FPGALIB</a>&#160;</td><td class="memItemRight" valign="bottom"></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="Use Clauses"></a>
+Use Clauses</h2></td></tr>
+ <tr class="memitem:acd03516902501cd1c7296a98e22c6fcb"><td class="memItemLeft" align="right" valign="top"><a id="acd03516902501cd1c7296a98e22c6fcb"></a>
+<a class="el" href="classGray__Sync.html#acd03516902501cd1c7296a98e22c6fcb">std_logic_1164</a>&#160;</td><td class="memItemRight" valign="bottom">  </td></tr>
+<tr class="memitem:a2edc34402b573437d5f25fa90ba4013e"><td class="memItemLeft" align="right" valign="top"><a id="a2edc34402b573437d5f25fa90ba4013e"></a>
+<a class="el" href="classGray__Sync.html#a2edc34402b573437d5f25fa90ba4013e">numeric_std</a>&#160;</td><td class="memItemRight" valign="bottom">  </td></tr>
+<tr class="memitem:a08213b723e5c215cdee47b70d8542e46"><td class="memItemLeft" align="right" valign="top"><a id="a08213b723e5c215cdee47b70d8542e46"></a>
+<a class="el" href="classGray__Sync.html#a08213b723e5c215cdee47b70d8542e46">Numeric</a>&#160;</td><td class="memItemRight" valign="bottom">   <b>Package</b><em><a class="el" href="classNumeric.html"> &lt;Numeric&gt;</a></td></tr>
+<tr class="memitem:a480e7bc88ccaaee71a1c737afd2052b0"><td class="memItemLeft" align="right" valign="top"><a id="a480e7bc88ccaaee71a1c737afd2052b0"></a>
+<a class="el" href="classGray__Sync.html#a480e7bc88ccaaee71a1c737afd2052b0">Sync</a>&#160;</td><td class="memItemRight" valign="bottom">   <b>Package</b><em><a class="el" href="classSync.html"> &lt;Sync&gt;</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="Generics"></a>
 Generics</h2></td></tr>
@@ -88,7 +117,7 @@ Ports</h2></td></tr>
 <a class="el" href="classGray__Sync.html#a44c8e41b2d20ff180d6b416c31b216fe">data_o</a> &#160;</td><td class="memItemRight" valign="bottom"> <b><b><span class="vhdlchar">out</span><span class="vhdlchar"> </span></b></b> <b><span class="vhdlchar">unsigned</span><span class="vhdlchar"> </span><span class="vhdlchar">(</span><span class="vhdlchar"> </span><span class="vhdlchar"> </span><span class="vhdlchar"> </span><span class="vhdlchar"> </span><span class="vhdlchar">WIDTH</span><span class="vhdlchar">-</span><span class="vhdlchar"> </span> <span class="vhdldigit">1</span> <span class="vhdlchar"> </span><span class="vhdlchar">downto</span><span class="vhdlchar"> </span><span class="vhdlchar"> </span> <span class="vhdldigit">0</span> <span class="vhdlchar"> </span><span class="vhdlchar">)</span><span class="vhdlchar"> </span></b></td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>gray_sync.vhdl</li>
+<li>vhdl/sync/gray_sync.vhdl</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
