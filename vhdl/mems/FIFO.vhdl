@@ -24,7 +24,7 @@ use FPGALIB.Sync.all;
 --! same. In asynchronous mode, the clocks can be unrelated and so extra
 --! resources for CDC are employed.
 --! There are full, almost full and overflow indications in the Write side and
---! empty, almost empty and underflow indications in the Read side.
+--! valid, empty, almost empty and underflow indications in the Read side.
 --! The almost empty and full indications can be configured by generics, as
 --! the offset to reach empty and full respectively.
 
