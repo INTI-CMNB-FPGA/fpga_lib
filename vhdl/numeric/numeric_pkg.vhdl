@@ -12,24 +12,38 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
+--! Related with numerical/mathematical operations
+
+--! Mainly composed by functions to convert between types integers and std_logic_vectors, not covered in the packages std_logic_1164 and numeric_std. It also contains functions to calculate log, min and max of integers, mainly useful to work with generics, counters and function to convert between Binary Natural and Gray codes.
+
 package Numeric is
 
-   -- Conversion Functions
-   --- To Integer
+   --! Converts a std_logic into an integer
    function to_integer(arg: std_logic) return integer;
+   --! Converts a std_logic_vector into an integer
    function to_integer(arg: std_logic_vector) return integer;
+   --! Converts a std_logic_vector into a natural
    function to_natural(arg: std_logic_vector) return natural;
-   --- To Std Logic
+
+   --! Converts an integer into a std_logic
    function to_logic(arg: integer) return std_logic;
+   --! Converts an integer into a std_logic_vector
    function to_vector(arg: integer; size: positive; sign: boolean:=FALSE) return std_logic_vector;
-   --- Binary <-> Gray
+
+   --! Bin to Gray conversion between unsigned types
    function bin2gray(arg: unsigned) return unsigned;
+   --! Bin to Gray conversion between std_logic_vectorpes
    function bin2gray(arg: std_logic_vector) return std_logic_vector;
+   --! Gray to Bin conversion between unsigned types
    function gray2bin(arg: unsigned) return unsigned;
+   --! Gray to Bin conversion between std_logic_vector types
    function gray2bin(arg: std_logic_vector) return std_logic_vector;
-   -- Math Functions
+
+   --! Calculation of the minimum between two integers
    function minimum(left, right: in integer) return integer;
+   --! Calculation of the maximum between two integers
    function maximum(left, right: in integer) return integer;
+   --! Calculation of the ceiling of the logarithm to the base 2 of a integer
    function clog2(arg: natural) return natural;
 
    component Counter is

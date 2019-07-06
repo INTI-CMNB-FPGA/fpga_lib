@@ -12,6 +12,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
+--! Blocks to synchronize, such as FFs chains, frequency divisors and blocks for CDC.
+
 package Sync is
 
    component FFchain is

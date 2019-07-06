@@ -68,12 +68,14 @@ $(function() {
 <div class="title">Mems Package Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Description of memory blocks to be inferred.  
+ <a href="classMems.html#details">More...</a></p>
 <b>Package Body &gt;&gt; </b><a class="el" href="class__Mems.html">Mems</a><br />
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="Functions"></a>
 Functions</h2></td></tr>
- <tr class="memitem:a39958e4cdefe4e44a7a0601586b4ae56"><td class="memItemLeft" align="right" valign="top"><a id="a39958e4cdefe4e44a7a0601586b4ae56"></a>
-<b><b><span class="vhdlchar">positive</span><span class="vhdlchar"> </span></b></b>&#160;</td><td class="memItemRight" valign="bottom"> <a class="el" href="classMems.html#a39958e4cdefe4e44a7a0601586b4ae56">getMemorySize</a><b> ( </b><b><span class="vhdlchar">depth: </span><span class="stringliteral">in </span><span class="vhdlchar">natural</span></b><b> , <span class="vhdlchar">awidth: </span><span class="stringliteral">in </span><span class="vhdlchar">positive</span></b><b> )</b></td></tr>
+ <tr class="memitem:a39958e4cdefe4e44a7a0601586b4ae56"><td class="memItemLeft" align="right" valign="top"><b><b><span class="vhdlchar">positive</span><span class="vhdlchar"> </span></b></b>&#160;</td><td class="memItemRight" valign="bottom"> <a class="el" href="classMems.html#a39958e4cdefe4e44a7a0601586b4ae56">getMemorySize</a><b> ( </b><b><span class="vhdlchar">depth: </span><span class="stringliteral">in </span><span class="vhdlchar">natural</span></b><b> , <span class="vhdlchar">awidth: </span><span class="stringliteral">in </span><span class="vhdlchar">positive</span></b><b> )</b></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="Libraries"></a>
 Libraries</h2></td></tr>
@@ -102,7 +104,48 @@ Components</h2></td></tr>
 Types</h2></td></tr>
  <tr class="memitem:a786a1da5eba97b07847398cb62f516ec"><td class="memItemLeft" align="right" valign="top"><a id="a786a1da5eba97b07847398cb62f516ec"></a>
 <b><a class="el" href="classMems.html#a786a1da5eba97b07847398cb62f516ec">syncmode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b><span class="vhdlchar">(</span><span class="vhdlchar"> </span><span class="vhdlchar">READ_FIRST</span><span class="vhdlchar"> </span><span class="vhdlchar">,</span><span class="vhdlchar"> </span><span class="vhdlchar">WRITE_FIRST</span><span class="vhdlchar"> </span><span class="vhdlchar">,</span><span class="vhdlchar"> </span><span class="vhdlchar">NO_CHANGE</span><span class="vhdlchar"> </span><span class="vhdlchar">)</span><span class="vhdlchar"> </span></b></b></td></tr>
+<tr class="memdesc:a786a1da5eba97b07847398cb62f516ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read-During-Write Behavior. <br /></td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Description of memory blocks to be inferred. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a39958e4cdefe4e44a7a0601586b4ae56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39958e4cdefe4e44a7a0601586b4ae56">&#9670;&nbsp;</a></span>getMemorySize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> <b><span class="vhdlchar">positive</span><span class="vhdlchar"> </span></b> getMemorySize</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><b><span class="vhdlchar">depth</span><span class="vhdlchar"> </span></b><span class="stringliteral">in</span> <em><b><span class="vhdlchar"> </span><span class="vhdlchar">natural</span><span class="vhdlchar"> </span><span class="vhdlchar"> </span><span class="vhdlchar"> </span></b></em> , </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><b><span class="vhdlchar">awidth</span><span class="vhdlchar"> </span></b><span class="stringliteral">in</span> <em><b><span class="vhdlchar"> </span><span class="vhdlchar">positive</span><span class="vhdlchar"> </span><span class="vhdlchar"> </span><span class="vhdlchar"> </span></b></em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">Function</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the max memory depth based on the AWIDTH generic when the DEPTH generic is zero or the DEPTH value in other cases. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>vhdl/mems/mems_pkg.vhdl</li>
 </ul>

@@ -12,10 +12,15 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
+--! Description of memory blocks to be inferred
+
 package Mems is
 
+   --! Read-During-Write Behavior
    type syncmode_t is (READ_FIRST, WRITE_FIRST, NO_CHANGE);
 
+   --! Returns the max memory depth based on the AWIDTH generic when the DEPTH
+   --! generic is zero or the DEPTH value in other cases.
    function getMemorySize(depth: natural; awidth: positive) return positive;
 
    component SinglePortRAM is
