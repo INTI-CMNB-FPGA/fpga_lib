@@ -15,7 +15,7 @@ test:
 
 doc:
 	@rm -fr doc/html/*
-	bash docker/run.sh "doxygen doc/Doxyfile"
+	bash ../fpga_helpers/docker/run.sh "doxygen doc/Doxyfile"
 
 clean:
 	make -C vhdl clean-all
