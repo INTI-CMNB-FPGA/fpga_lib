@@ -4,7 +4,7 @@
 -- Author(s):
 -- * Rodrigo A. Melo
 --
--- Copyright (c) 2017 Authors and INTI
+-- Copyright (c) 2017-2019 Authors and INTI
 -- Distributed under the BSD 3-Clause License
 --
 -- Description:
@@ -42,7 +42,7 @@ entity FIFO is
       wclk_i       : in  std_logic;   --! Write Clock
       wrst_i       : in  std_logic;   --! Write Reset
       wen_i        : in  std_logic;   --! Write Enable
-      data_i       : in  std_logic_vector(DWIDTH-1 downto 0); -- Data Input
+      data_i       : in  std_logic_vector(DWIDTH-1 downto 0); --! Data Input
       full_o       : out std_logic;   --! Full Flag
       afull_o      : out std_logic;   --! Almost Full Flag
       overflow_o   : out std_logic;   --! Overflow Flag
@@ -50,7 +50,7 @@ entity FIFO is
       rclk_i       : in  std_logic;   --! Read Clock
       rrst_i       : in  std_logic;   --! Read Reset
       ren_i        : in  std_logic;   --! Read enable
-      data_o       : out std_logic_vector(DWIDTH-1 downto 0); -- Data Output
+      data_o       : out std_logic_vector(DWIDTH-1 downto 0); --! Data Output
       empty_o      : out std_logic;   --! Empty flag
       aempty_o     : out std_logic;   --! Almost Empty flag
       underflow_o  : out std_logic;   --! Underflow Flag
@@ -73,6 +73,8 @@ architecture RTL of FIFO is
    ------------------------------------------------------------------------------------------------
    -- Signals
    ------------------------------------------------------------------------------------------------
+
+   signal rst              : std_logic;
 
    signal wen,     ren     : std_logic;
    signal full,    full_r  : std_logic;
@@ -126,6 +128,8 @@ architecture RTL of FIFO is
 
 begin
 
+   rst <= wrst_i or rrst_i;
+
    i_memory: SimpleDualPortRAM
    generic map (
       AWIDTH  => AWIDTH,
@@ -149,6 +153,9 @@ begin
    end generate g_sync;
 
    g_async: if ASYNC generate
+      -----------------------------------
+      -- From read to write side (CDC) --
+      -----------------------------------
       rd_bin <= rd_ptr_r + DIFF_DEPTH when rd_ptr_r(AWIDTH)='0' else rd_ptr_r;
 
       i_sync_rd2wr: gray_sync
@@ -156,7 +163,9 @@ begin
       port map(clk_i => wclk_i, data_i => rd_bin, data_o => rd_in_wr_bin);
 
       rd_in_wr_ptr <= rd_in_wr_bin - DIFF_DEPTH when rd_in_wr_bin(AWIDTH)='0' else rd_in_wr_bin;
-      --
+      -----------------------------------
+      -- From write to read side (CDC) --
+      -----------------------------------
       wr_bin <= wr_ptr_r + DIFF_DEPTH when wr_ptr_r(AWIDTH)='0' else wr_ptr_r;
 
       i_sync_wr2rd: gray_sync
@@ -178,7 +187,7 @@ begin
    begin
       if rising_edge(wclk_i) then
          full_r <= '0';
-         if wrst_i='1' then
+         if rst='1' then
             wr_ptr_r <= (others => '0');
          else
             wr_ptr_r <= wr_ptr;
@@ -207,7 +216,7 @@ begin
          empty_r    <= '1';
          valid_r(0) <= ren;
          valid_r(1) <= valid_r(0);
-         if rrst_i='1' then
+         if rst='1' then
             rd_ptr_r <= (others => '0');
             valid_r  <= (others => '0');
          else

@@ -2,6 +2,8 @@
 
 In the following explanation, a FIFO configured with a memory depth of 4, and indications of almost empty and full of 1, was used.
 
+**NOTE:** `wrst_i` and `rrst_i` are interconnected without a CDC technique (which could produce a try to use the FIFO in an internal reset state). It is a responsibility of the user to guarantee the duration to ensure the reset of both sides.
+
 ## Write Side
 
 ```
