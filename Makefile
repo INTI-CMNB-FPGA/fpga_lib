@@ -9,9 +9,9 @@ all:
 	make -C vhdl
 
 test:
-	@echo $(TESTBENCHES)
 	make -C vhdl test
 	@$(foreach TESTBENCH,$(TESTBENCHES),$(if $(wildcard $(TESTBENCH)/Makefile), make -C $(TESTBENCH);))
+	make -C scripts test
 
 doc:
 	@rm -fr doc/html/*
