@@ -1,53 +1,33 @@
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import Timer, RisingEdge, FallingEdge, Edge, Event, ClockCycles
-from cocotb.result import TestFailure, TestError, ReturnValue, SimFailure
-from cocotb.binary import BinaryValue
-from random import randint
+from cocotb.triggers import RisingEdge, ClockCycles
+from cocotb.result import TestFailure, TestSuccess
+from cocotb.regression import TestFactory
 
-DEBUG = 1
+DEBUG = 0
 
-@cocotb.test()
-def test_01_sync(dut):
-    """
-    Test of the FIFO Sync
-    """
-    cocotb.fork(Clock(dut.wclk_i, 4).start())
-    cocotb.fork(Clock(dut.rclk_i, 4).start())
-    dut.async_i  <= 0
+@cocotb.coroutine
+def test(dut, wclk, rclk, async):
+    if not async and (wclk != rclk):
+       raise TestSuccess("Test of the SYNC version with different clock domains is SKIPPED.")
+    cocotb.fork(Clock(dut.wclk_i, wclk).start())
+    cocotb.fork(Clock(dut.rclk_i, rclk).start())
+    dut.async_i <= async
     yield reset(dut)
     yield test_signaling(dut)
     yield test_running(dut)
 
-@cocotb.test()
-def test_02_async_wr(dut):
-    """
-    Test of the FIFO aSync (with write faster than read)
-    """
-    cocotb.fork(Clock(dut.wclk_i, 4).start())
-    cocotb.fork(Clock(dut.rclk_i, 6).start())
-    dut.async_i  <= 1
-    yield reset(dut)
-    yield test_signaling(dut)
-    yield test_running(dut)
-
-@cocotb.test()
-def test_03_async_rd(dut):
-    """
-    Test of the FIFO aSync (with read faster than write)
-    """
-    cocotb.fork(Clock(dut.wclk_i, 10).start())
-    cocotb.fork(Clock(dut.rclk_i, 4).start())
-    dut.async_i  <= 1
-    yield reset(dut)
-    yield test_signaling(dut)
-    yield test_running(dut)
+factory = TestFactory(test)
+factory.add_option("wclk",  [4,10])
+factory.add_option("rclk",  [4,10])
+factory.add_option("async", [0,1])
+factory.generate_tests()
 
 @cocotb.coroutine
 def reset(dut):
     dut.wrst_i <= 1
     dut.wen_i  <= 0
-    dut.data_i   <= 0
+    dut.data_i <= 0
     dut.rrst_i <= 1
     dut.ren_i  <= 0
     yield ClockCycles(dut.wclk_i, 3)
